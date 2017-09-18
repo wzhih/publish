@@ -10,3 +10,40 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+
+//将后台用户的角色转换出来
+function roleConversion($role){
+    switch ($role){
+        case 0:
+            return '超级管理员';
+        case 1:
+            return '管理员';
+        case 2:
+            return '客服';
+    }
+}
+
+/**
+ * 后台用户检查权限，当用户角色等级低于权限等级时，跳转error
+ * @param int $role 用户角色等级
+ * @param int $permission 权限等级
+ * @return bool
+ */
+function checkPermission($role , $permission){
+    if($role < $permission){
+        return false;
+    }
+    return true;
+}
+
+
+/**
+ * 发送验证消息
+ * @param $phone
+ * @return bool
+ */
+function sendMessage($phone){
+
+    return true;
+}
+
