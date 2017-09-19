@@ -3,20 +3,22 @@ namespace app\admin\controller;
 
 use think\Controller;
 use think\Db;
+use think\Request;
 
 class Index extends Controller
 {
+    public function _initialize()
+    {
+        //此处判断是否登陆
+    }
+
     public function index()
     {
-        return 'admin/index/index';
+        return $this->fetch();
     }
 
     public function test(){
-        if(!checkPermission(1,2)){
-            $this->error('权限不足');
-        }
-        $data = Db::name('admin')->find();
-        $this->assign("data", $data);
-        return $this->fetch();
+        return $this->fetch('/layout/main');
     }
+
 }
