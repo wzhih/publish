@@ -245,4 +245,8 @@ return [
     //融云
     'APP_KEY' => 'bmdehs6pb1fxs',
     'APP_SECRET' => 'N1dQuczgFS',
+
+    //阿里云短信
+    'AccessKeyID' => 'LTAIobhHocXhN0Cw',
+    'AccessKeySecret' => 'LzY422JoVFYA4uXnpyBzbSLvLEEFpJ',
 ];

@@ -11,6 +11,7 @@
 
 // 应用公共文件
 use api\RongCloud;
+use api_demo\SmsDemo;
 
 //将后台用户的角色转换出来
 function roleConversion($role){
@@ -40,12 +41,25 @@ function checkPermission($role , $permission){
 
 /**
  * 发送验证消息
- * @param $phone
- * @return bool
+ * @param $phone 验证手机号
+ * @param $code 验证码
+ * @return bool 是否发送成功
  */
-function sendMessage($phone){
+function sendMessage($phone='18814128257' , $code='123456789'){
+    $accessKeyId = config('AccessKeyID');//参考本文档步骤2
+    $accessKeySecret = config('AccessKeySecret');//参考本文档步骤2
 
-    return true;
+    $Sms = new SmsDemo($accessKeyId , $accessKeySecret);
+    $acsResponse = $Sms->sendSms(
+                        '华软出版社' ,
+                        'SMS_98720006' ,
+                        $phone ,
+                        array('code'=>$code)
+                    );
+    if($acsResponse->Code == 'OK'){
+        return true;
+    }
+    return false;
 }
 
 /**
