@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+use api\RongCloud;
 
 //将后台用户的角色转换出来
 function roleConversion($role){
@@ -45,5 +46,23 @@ function checkPermission($role , $permission){
 function sendMessage($phone){
 
     return true;
+}
+
+/**
+ * 获取用户token
+ * @param $userId
+ * @param $name
+ * @param $portraitUri
+ * @return mixed
+ */
+function getUserToken($userId, $name, $portraitUri=null){
+    $appKey = config('APP_KEY');
+    $appSecret = config('APP_SECRET');
+
+    $RongCloud = new RongCloud($appKey,$appSecret);
+    // 获取 Token 方法
+    $result = $RongCloud->user()->getToken($userId ,$name , $portraitUri);
+
+    return $result;
 }
 

@@ -243,6 +243,6 @@ return [
     ],
 
     //融云
-    'APP_KEY' => 'e0x9wycfxxx5q',
-    'APP_SECRET' => 'F7sI8rkLtv',
+    'APP_KEY' => 'bmdehs6pb1fxs',
+    'APP_SECRET' => 'N1dQuczgFS',
 ];

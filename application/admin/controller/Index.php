@@ -4,8 +4,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Db;
 use think\Request;
-use api\RongCloud;
-use api\Test;
+
 
 class Index extends Controller
 {
@@ -20,17 +19,9 @@ class Index extends Controller
     }
 
     public function test(){
-        //(new Test())->index();return;
-        $appKey = config('APP_KEY');
-        $appSecret = config('APP_SECRET');
-        $jsonPath = "jsonsource/";
-        $RongCloud = new RongCloud($appKey,$appSecret);
-        // 获取 Token 方法
-        $result = $RongCloud->user()->getToken('userId1', 'username', 'http://www.rongcloud.cn/images/logo.png');
         echo "getToken    ";
-        print_r($result);
+        print_r(getUserToken(1,'admin' , 'logo'));
         return;
-        return $this->fetch('/layout/main');
     }
 
 }
