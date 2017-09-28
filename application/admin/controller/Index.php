@@ -15,16 +15,16 @@ class Index extends Controller
 
     public function index()
     {
+
         return $this->fetch();
     }
 
     public function test(){
-        return;
-        var_dump(sendMessage());
-        return;
+        // var_dump(sendMessage());
+        // return;
 
         echo "getToken    ";
-        print_r(getUserToken(1,'admin' , 'logo'));
+        // print_r(getUserToken(1,'admin' , 'logo'));
         return;
     }
 

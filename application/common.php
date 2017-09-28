@@ -12,6 +12,7 @@
 // 应用公共文件
 use api\RongCloud;
 use api_demo\SmsDemo;
+use think\captcha\Captcha;
 
 //将后台用户的角色转换出来
 function roleConversion($role){
@@ -69,7 +70,7 @@ function sendMessage($phone='18814128257' , $code='123456789'){
  * @param $portraitUri
  * @return mixed
  */
-function getUserToken($userId, $name, $portraitUri=null){
+function getUserToken($userId, $name, $portraitUri='logo'){
     $appKey = config('APP_KEY');
     $appSecret = config('APP_SECRET');
 
@@ -80,3 +81,16 @@ function getUserToken($userId, $name, $portraitUri=null){
     return $result;
 }
 
+function generateCaptcha($config=null){
+    if($config == null){
+        $config = [
+            'codeSet' => '0123456789',
+            'length'  => 4,
+            'imageH'  => 0,
+            'imageW'  => 0
+        ];
+    }
+
+    $captcha = new Captcha($config);
+    return $captcha->entry();
+}
