@@ -11,7 +11,7 @@
 
 // 应用公共文件
 use api\RongCloud;
-use api_demo\SmsDemo;
+use AliyunSms\SmsDemo;
 use think\captcha\Captcha;
 
 /**
