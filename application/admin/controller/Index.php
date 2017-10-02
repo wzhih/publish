@@ -23,13 +23,7 @@ class Index extends Controller
         return $this->fetch();
     }
 
-    public function test(){
-        // var_dump(sendMessage());
-        // return;
 
-        echo "getToken    ";
-        // print_r(getUserToken(1,'admin' , 'logo'));
-        return;
-    }
+
 
 }
