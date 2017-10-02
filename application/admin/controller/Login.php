@@ -15,10 +15,10 @@ class Login extends Controller{
         $password = input('password');
         $captcha = input('captcha');
         if(empty($username) || empty($password) || empty($captcha)){
-            return $this->error('用户名,密码以及验证码皆不能为空');
+            return $this->error('用户名,密码以及验证码皆不能为空' , url('admin/Login/login'));
         }
         if(!captcha_check($captcha)){
-            return $this->error('验证码错误');
+            return $this->error('验证码错误' , url('admin/Login/login'));
         }
 
         $result = Db::name('admin')
@@ -29,18 +29,19 @@ class Login extends Controller{
                     'password' => [md5($password) , \PDO::PARAM_STR]
                 ])
             ->find();
-        if($result){
-            return $this->error('用户名或密码错误');
+        if(!$result){
+            return $this->error('用户名或密码错误' , url('admin/Login/login'));
         }
         //登陆之后，将信息存入session
-
+        session('userInfo' , $result);
+        session('login' , true);
 
         return $this->redirect('admin/Index/index');
     }
 
     public function logout(){
         //清除登陆信息
-
+        session(null);
         return $this->fetch('login');
     }
 

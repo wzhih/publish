@@ -14,14 +14,14 @@
     <img src="__PUBLIC__assets/img/logo-big.svg" width="300" height="45" />
 </div>
 <div class="col-sm-6 col-md-4 col-lg-3" style="margin:40px auto; float:none;">
-    <form method="post" action="{:url('admin/Login/index')}">
+    <form id="loginForm" method="post" action="{:url('admin/Login/index')}">
         <div class="col-xs-12">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">
                         <i class="fa fa-fw fa-user"></i>
                     </div>
-                    <input type="text" name="username" class="form-control" placeholder="用户名" />
+                    <input type="text" id="username" name="username" class="form-control" placeholder="用户名" />
                 </div>
             </div>
             <div class="form-group">
@@ -29,7 +29,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-fw fa-lock"></i>
                     </div>
-                    <input type="password" name="password" class="form-control" placeholder="密码" />
+                    <input type="password" id="password" name="password" class="form-control" placeholder="密码" />
                 </div>
             </div>
             <div>
@@ -45,15 +45,67 @@
                     <div class="input-group-addon">
                         <i class="fa fa-fw fa-pie-chart"></i>
                     </div>
-                    <input type="captcha" name="captcha" class="form-control" placeholder="验证码" />
+                    <input type="captcha" id="captcha" name="captcha" class="form-control" placeholder="验证码" />
                 </div>
             </div>
         </div>
 
         <div class="col-xs-12">
-            <button type="submit" class="btn btn-block btn-primary">登陆</button>
+            <button type="button" id="login" class="btn btn-block btn-primary">登陆</button>
         </div>
     </form>
 </div>
+<script src="__PUBLIC__assets/js/lib/jquery-2.1.3.min.js"></script>
+<script src="__PUBLIC__assets/js/bootstrap.min.js"></script>
+<script>
+    $("#login").click(function () {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var captcha = $('#captcha').val();
+        if(username == null || username == ''){
+            console.log('用户名为空');
+            $('#myModal').modal();
+            return;
+        }
+        if(password == null || password == ''){
+            console.log('密码为空');
+            $('#myModal').modal();
+            return;
+        }
+        if(captcha == null || captcha == ''){
+            console.log('验证码为空');
+            $('#myModal').modal();
+            return;
+        }
+
+
+        $("#loginForm").submit();
+    });
+</script>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title text-danger" id="myModalLabel">
+                    错误提示
+                </h4>
+            </div>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove"></span>好像忘记填选某些重要的选项了！>_<
+                请确保填写正确
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 </body>
 </html>

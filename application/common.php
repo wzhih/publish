@@ -14,7 +14,12 @@ use api\RongCloud;
 use api_demo\SmsDemo;
 use think\captcha\Captcha;
 
-//将后台用户的角色转换出来
+/**
+ * 将后台用户的角色转换出来
+ *
+ * @param $role
+ * @return string
+ */
 function roleConversion($role){
     switch ($role){
         case 0:
@@ -28,6 +33,7 @@ function roleConversion($role){
 
 /**
  * 后台用户检查权限，当用户角色等级低于权限等级时，跳转error
+ *
  * @param int $role 用户角色等级
  * @param int $permission 权限等级
  * @return bool
@@ -42,6 +48,7 @@ function checkPermission($role , $permission){
 
 /**
  * 发送验证消息
+ *
  * @param $phone 验证手机号
  * @param $code 验证码
  * @return bool 是否发送成功
@@ -65,6 +72,7 @@ function sendMessage($phone='18814128257' , $code='123456789'){
 
 /**
  * 获取用户token
+ *
  * @param $userId
  * @param $name
  * @param $portraitUri
@@ -81,6 +89,12 @@ function getUserToken($userId, $name, $portraitUri='logo'){
     return $result;
 }
 
+/**
+ * 生成验证码
+ *
+ * @param null $config
+ * @return \think\Response
+ */
 function generateCaptcha($config=null){
     if($config == null){
         $config = [
