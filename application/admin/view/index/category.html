@@ -1,0 +1,189 @@
+{extend name="layout/main"}
+{block name='title'}出版物管理{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <h3 style="margin:0">出版物类别管理</h3>
+    <p class="text-primary h4">请谨慎操作，对于出版物类别的增删，将会影响到该类别全部出版物。</p>
+    <p class="text-warning h5">例如:当你删除图书类别的时候，属于该类别的出版物也会被删除!</p>
+
+    <ul id="myTab" class="nav nav-tabs">
+        {foreach $data as $vo}
+        <li>
+            <a href="#{$vo.id}" data-toggle="tab" data-categoryid="{$vo.id}">
+                {$vo.category}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="category-remove glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </a>
+        </li>
+        {/foreach}
+        <li>
+            <a href="#puls" data-toggle="tab">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        {foreach $data as $vo}
+        {if condition="isset($vo.child)"}
+        <div class="tab-pane fade" id="{$vo.id}">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>小类别名称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $vo.child as $ch}
+                <tr>
+                    <td>{$ch.category}</td>
+                    <td data-categoryid="{$ch.id}" data-categoryname="{$ch.category}">
+                        <a class="btn btn-info category-save" href="#">修改</a>
+                        <a class="btn btn-danger category-remove" data-toggle="tooltip" title="点击之后删除此类别以及此类别出版物">删除</a>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            <form action="{:url('admin/Index/addCategory')}" method="post" class="form-horizontal" role="form">
+                <input type="hidden" name="pid" value="{$vo.id}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">类别名</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="cname" class="form-control"
+                               placeholder="请输入类别">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">添加</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {else /}
+        <div class="tab-pane fade in active" id="{$vo.id}">
+            <p>无</p>
+            <form action="{:url('admin/Index/addCategory')}" method="post" class="form-horizontal" role="form">
+                <input type="hidden" name="pid" value="{$vo.id}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">类别名</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="cname" class="form-control"
+                               placeholder="请输入类别">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">添加</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {/if}
+        {/foreach}
+
+        <div class="tab-pane fade in active" id="puls">
+            <br>
+            <p>增加出版物类别</p>
+            <form action="{:url('admin/Index/addCategory')}" method="post" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="categoryname" class="col-sm-2 control-label">类别名</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="cname" class="form-control" id="categoryname"
+                               placeholder="请输入类别(此添加类别为大类别)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">添加</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/Index/saveCategory')}" method="post" class="form-inline" role="form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="save-form-cid" name="cid" value="">
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <input type="text" id="save-form-cname" name="cname" class="form-control"
+                                   placeholder="请输入类别">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        提交更改
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+{/block}
+
+{block name='js'}
+<script>
+    $(function () {
+        $('.cm-submenu').eq(0).click();
+        $('.cm-submenu').eq(0).children('ul').children('li').eq(0).addClass('active');
+
+        $('#myTab a:first').tab('show');
+        $("[data-toggle='tooltip']").tooltip();
+    });
+
+    $('.category-remove').click(function () {
+        var cid = $(this).parent().data('categoryid');
+        var r = confirm("删除分类的后果可是很严重的哦！");
+        if (r == true) {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('admin/Index/deleteCategory')}",
+                data: {'cid': cid},
+                async: true,
+                success: function (result) {
+                    console.log(result);
+                    if (result == 0) {
+                        alert('删除失败');
+                    } else {
+                        location.reload();
+                    }
+                }
+            });
+        }
+        event.stopPropagation();//阻止事件冒泡
+    });
+
+    $('.category-save').click(function () {
+        var cid = $(this).parent().data('categoryid');
+        var cname = $(this).parent().data('categoryname');
+
+        $('#save-form-cid').val(cid);
+        $('#save-form-cname').val(cname);
+
+        $('#save').modal();
+    });
+
+</script>
+{/block}
