@@ -1,0 +1,137 @@
+{extend name="layout/main"}
+{block name='title'}出版物管理/出版物列表{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <h3 style="margin:0">出版物列表</h3>
+    <div class="nav nabbar-nav" role="navigation">
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="{:url('admin/Index/showPublication')}">全部</a></li>
+                {foreach $category as $row}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {$row.category} <b
+                            class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {foreach $row.child as $r}
+                        <li><a href="{:url('admin/Index/showPublication',['cid'=>$r.id])}">{$r.category}</a></li>
+                        {/foreach}
+                    </ul>
+                </li>
+                {/foreach}
+            </ul>
+
+            <form action="{:url('admin/Index/showPublication')}" method="post" class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="publication" placeholder="查找出版物"/>
+                </div>
+                <button type="submit" class="btn btn-default">提交</button>
+            </form>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <caption>此类总数：{$data->total()}</caption>
+            <thead>
+            <tr class="row">
+                <th>id</th>
+                <th class="col-sm-1">封面</th>
+                <th class="col-sm-2">ISBN</th>
+                <th>书名</th>
+                <th class="col-sm-1">定价</th>
+                <th class="col-sm-1">作者</th>
+                <th>开本</th>
+                <th>页数</th>
+                <th>中国图书分类</th>
+                <th>出版日期</th>
+                <th>库存</th>
+                <th>类别</th>
+                <th class="col-sm-1 text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $data as $d}
+            <tr class="row">
+                <td>{$d.pid}</td>
+                <td>
+                    <a href="#" class="thumbnail">
+                        <img src="{$d.cover}" alt="通用的占位符缩略图">
+                    </a>
+                </td>
+                <td>{$d.ISBN}</td>
+                <td>{$d.name}</td>
+                <td>{$d.price}</td>
+                <td>{$d.author}</td>
+                <td>{$d.size}</td>
+                <td>{$d.pages}</td>
+                <td>{$d.chinaClassification}</td>
+                <td>{$d.date}</td>
+                <td>{$d.number}</td>
+                <td>{$d.category}</td>
+                <td class="text-center" data-pid="{$d.pid}" data-pname="{$d.name}">
+                    <a class="btn btn-info publication-save" href="#">修改</a>
+                    <hr>
+                    <button class="btn btn-danger publication-remove" data-toggle="tooltip" title="点击之后删除此出版物">删除</button>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        {$data->render()}
+    </div>
+</div>
+
+<!-- 删除确认模态框 -->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/Index/deletePublication')}" method="post">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    删除确认
+                </h4>
+            </div>
+            <div class="modal-body">
+                确认删除:<strong id="determine"></strong>?
+                <input type="hidden" name="pid" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    确认
+                </button>
+            </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+{/block}
+
+{block name='js'}
+<script>
+    $(function () {
+        $('.cm-submenu').eq(0).click();
+        $('.cm-submenu').eq(0).children('ul').children('li').eq(1).addClass('active');
+
+        $("[data-toggle='tooltip']").tooltip();
+    });
+
+    $('.publication-remove').click(function () {
+        var id = $(this).parent().data('pid');
+        var name = $(this).parent().data('pname');
+        $('#determine').text(name);
+        $('#determine').next().val(id);
+        $('#delModal').modal();
+    });
+
+</script>
+{/block}

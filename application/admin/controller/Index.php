@@ -82,4 +82,73 @@ class Index extends Controller
         }
         return $this->error('更改失败');
     }
+
+    //根据条件显示出版物
+    public function showPublication(){
+        //列出出版物类别，以便根据类别查询出版物
+        $category = Db::name('category')
+            ->where('id' , '<>' , 1)
+            ->order('parent_id')
+            ->select();
+        $category = arraySequence(list_to_tree($category) , 'id');
+
+        //传入类别id，查询出该类别所有出版物
+        $cid = input('cid');
+        $map = [];
+        if(!empty($cid)){
+            $map['c.id'] = $cid;
+        }
+        //默认日期倒序显示最新的出版物
+        $dateSort = input('dateSort' , 'desc');
+
+        //传入搜索关键字，以此搜索出版物
+        $publication = input('publication');
+        if(!empty($publication)){
+            $map['p.name'] = ['like','%'.$publication.'%'];
+
+        }
+
+        $result = Db::name('publication')
+                    ->alias('p')
+                    ->join('category c' , 'c.id=p.c_id')
+                    ->field('p.id as pid,p.*,c.*')
+                    ->where($map)
+                    ->order('p.date '.$dateSort.',p.id '.$dateSort)
+                    ->paginate(10 , false , [
+                        'query'=>['publication'=>$publication]
+                    ]);
+
+        $this->assign('category' , $category);
+        $this->assign('data' , $result);
+        return $this->fetch();
+    }
+    //增加出版物
+    public function addPublication(){
+
+    }
+    //删除出版物
+    public function deletePublication(){
+        $id = input('pid');
+        if(empty($id)){
+            return false;
+        }
+        $result = Db::name('publication')
+            ->where('id' , ':id')
+            ->bind([
+                'id' => [$id , \PDO::PARAM_INT]
+            ])
+            ->delete();
+
+        if($result === false){
+            $this->error('删除失败');
+        }
+        return $this->success('删除成功');
+    }
+    //修改出版物
+    public function savePublication(){
+        $id = input('pid');
+
+    }
+
+
 }
