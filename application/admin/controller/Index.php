@@ -56,15 +56,15 @@ class Index extends Controller
         $category = input('cname');
         $pid = input('pid',1);
         if(empty($category)){
-            return $this->error('添加失败');
+            $this->error('添加失败');
         }
 
         $result = Db::name('category')->data(['category'=>$category,'parent_id'=>$pid])->insert();
 
         if($result){
-            return $this->success('添加成功');
+            $this->success('添加成功');
         }
-        return $this->error('添加失败');
+        $this->error('添加失败');
     }
 
     //出版物类别修改
@@ -73,14 +73,14 @@ class Index extends Controller
         $category = input('cname');
 
         if(empty($cid) || empty($category)){
-            return $this->error('类别名不能为空');
+            $this->error('类别名不能为空');
         }
         $result = Db::name('category')->update(['category'=>$category,'id'=>$cid]);
 
         if($result !== false){
-            return $this->success('更改成功');
+            $this->success('更改成功');
         }
-        return $this->error('更改失败');
+        $this->error('更改失败');
     }
 
     //根据条件显示出版物
@@ -113,7 +113,7 @@ class Index extends Controller
                     ->join('category c' , 'c.id=p.c_id')
                     ->field('p.id as pid,p.*,c.*')
                     ->where($map)
-                    ->order('p.date '.$dateSort.',p.id '.$dateSort)
+                    ->order('p.id '.$dateSort.',p.date '.$dateSort)
                     ->paginate(10 , false , [
                         'query'=>['publication'=>$publication]
                     ]);
@@ -122,9 +122,41 @@ class Index extends Controller
         $this->assign('data' , $result);
         return $this->fetch();
     }
-    //增加出版物
-    public function addPublication(){
+    //显示增加，修改出版物页面
+    public function savePublication(){
+        //根据有无出版物id，判断是增加还是修改
+        $pid = input('pid');
 
+        if($pid){
+            $data = Db::name('publication')->where('id' , $pid)->find();
+
+            $this->assign('data' , $data);
+        }
+
+        $category = Db::name('category')
+            ->where('id' , '<>' , 1)
+            ->order('parent_id')
+            ->select();
+        $category = arraySequence(list_to_tree($category) , 'id');
+
+        $this->assign('category' , $category);
+        return $this->fetch();
+    }
+    //增加出版物方法
+    public function addPublication(){
+        $data = input('post.');
+        $cover = uploading('cover');
+        if($cover){
+            $data['cover'] = $cover;
+        }
+        $result = Db::name('publication')->data($data)->insert();
+
+        if($result == false){
+            $this->error('增加出版物失败');
+        }
+        $this->success('增加出版物成功',
+            url('admin/Index/showPublication',['publication'=>$data['name']])
+        );
     }
     //删除出版物
     public function deletePublication(){
@@ -142,12 +174,23 @@ class Index extends Controller
         if($result === false){
             $this->error('删除失败');
         }
-        return $this->success('删除成功');
+        $this->success('删除成功');
     }
     //修改出版物
-    public function savePublication(){
-        $id = input('pid');
+    public function updatePublication(){
+        $data = input('post.');
+        $cover = uploading('cover');
+        if($cover){
+            $data['cover'] = $cover;
+        }
+        $result = Db::name('publication')->data($data)->update();
 
+        if($result === false){
+            $this->error('修改出版物失败');
+        }
+        $this->success('修改出版物成功',
+            url('admin/Index/showPublication',['publication'=>$data['name']])
+        );
     }
 
 

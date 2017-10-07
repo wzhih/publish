@@ -56,7 +56,11 @@
                 <td>{$d.pid}</td>
                 <td>
                     <a href="#" class="thumbnail">
-                        <img src="{$d.cover}" alt="通用的占位符缩略图">
+                        {if condition="strpos($d.cover,'http')===false"}
+                        <img src="__PUBLIC__{$d.cover}">
+                        {else/}
+                        <img src="{$d.cover}">
+                        {/if}
                     </a>
                 </td>
                 <td>{$d.ISBN}</td>
@@ -70,7 +74,7 @@
                 <td>{$d.number}</td>
                 <td>{$d.category}</td>
                 <td class="text-center" data-pid="{$d.pid}" data-pname="{$d.name}">
-                    <a class="btn btn-info publication-save" href="#">修改</a>
+                    <a class="btn btn-info publication-save" href="{:url('admin/Index/savePublication',['pid'=>$d.pid])}">修改</a>
                     <hr>
                     <button class="btn btn-danger publication-remove" data-toggle="tooltip" title="点击之后删除此出版物">删除</button>
                 </td>

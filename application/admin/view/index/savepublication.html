@@ -1,0 +1,155 @@
+{extend name="layout/main"}
+{block name='title'}出版物管理/出版物增加或修改{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <div class="panel panel-primary">
+        <div class="panel-heading">出版物</div>
+        <div class="panel-body">
+            <form action="{$data?url('admin/Index/updatePublication'):url('admin/Index/addPublication')}" method="post"
+                  enctype="multipart/form-data" class="form-horizontal" role="form">
+                <input type="hidden" name="id" value="{$data.id?$data.id:''}">
+
+                <div class="form-group">
+                    <label for="ISBN" class="col-sm-1 control-label">ISBN</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="ISBN"
+                               name="ISBN" value="{$data.ISBN?$data.ISBN:''}" placeholder="请输入ISBN">
+                    </div>
+                    <label for="pname" class="col-sm-1 control-label">名字</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="pname" required
+                               name="name" value="{$data.name?$data.name:''}" placeholder="请输入名字">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category" class="col-sm-1 control-label">选择分类</label>
+                    <div class="col-sm-4">
+                        <select name="c_id" class="form-control" id="category">
+                            {foreach $category as $row}
+                            <option disabled="disabled" class="disabled " value="{$row.id}">{$row.category}</option>
+                            {if condition="$row.child"}
+                            {foreach $row.child as $child}
+                            {if condition="isset($data) && ($data.c_id==$child.id)"}
+                            <option value="{$child.id}" selected>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {$child.category}
+                            </option>
+                            {else/}
+                            <option value="{$child.id}">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {$child.category}
+                            </option>
+                            {/if}
+                            {/foreach}
+                            {/if}
+                            {/foreach}
+                        </select>
+                    </div>
+                    <label for="cover" class="col-sm-1 control-label">封面</label>
+                    <div class="col-sm-4">
+                        <input type="file" class="" id="cover"
+                               name="cover">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="author" class="col-sm-1 control-label">作者</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="author" required
+                               name="author" value="{$data.author?$data.author:''}" placeholder="请输入作者">
+                    </div>
+                    <label for="price" class="col-sm-1 control-label">价格</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="price" required
+                               name="price" value="{$data.price?$data.price:''}" placeholder="请输入价格">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="size" class="col-sm-1 control-label">开本</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="size"
+                               name="size" value="{$data.size?$data.size:''}" placeholder="请输入开本">
+                    </div>
+                    <label for="pages" class="col-sm-1 control-label">页数</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="pages"
+                               name="pages" value="{$data.pages?$data.pages:''}" placeholder="请输入页数">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date" class="col-sm-1 control-label">发布日期</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control" id="date" required
+                               name="date" value="{$data.date?$data.date:''}" placeholder="请输入发布日期">
+                    </div>
+                    <label for="number" class="col-sm-1 control-label">库存</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" id="number" min="0" required
+                               name="number" value="{$data.number?$data.number:''}" placeholder="请输入库存">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="chinaClassification" class="col-sm-1 control-label">中国图书分类</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="chinaClassification"
+                               name="chinaClassification"
+                               value="{$data.chinaClassification?$data.chinaClassification:''}" placeholder="请输入中国图书分类">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="keyContent" class="col-sm-1 control-label">卖点提炼</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" rows="3" name="keyContent" id="keyContent"
+                                  placeholder="请输入卖点提炼">{$data.keyContent?$data.keyContent:''}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="describe" class="col-sm-1 control-label">内容提要</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" rows="8" name="describe" id="describe"
+                                  placeholder="请输入内容提要">{$data.describe?$data.describe:''}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="authorDescribe" class="col-sm-1 control-label">作者简介</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" rows="9" name="authorDescribe" id="authorDescribe"
+                                  placeholder="请输入作者简介">{$data.authorDescribe?$data.authorDescribe:''}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group text-center" style="margin-top:20px">
+                    <button type="reset" class="btn btn-default">清除</button>
+                    <button type="submit" class="btn btn-primary">确认</button>
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer">
+            <label class="">提示：封面可不上传</label>
+        </div>
+    </div>
+</div>
+
+
+{/block}
+
+{block name='js'}
+<script>
+    $(function () {
+        $('.cm-submenu').eq(0).click();
+        $('.cm-submenu').eq(0).children('ul').children('li').eq(2).addClass('active');
+
+        $("[data-toggle='tooltip']").tooltip();
+    });
+
+
+</script>
+{/block}

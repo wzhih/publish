@@ -109,6 +109,30 @@ function generateCaptcha($config=null){
     return $captcha->entry();
 }
 
+/**
+ * @param string $name 上传文件名
+ * @param string $path 文件保存路径
+ * @param array $validate 上传验证
+ * @return bool|string
+ */
+function uploading($name , $path = 'uploads'.DS.'cover' , $validate = []){
+    $paths = ROOT_PATH . 'public' . DS . $path;
+    $file = request()->file($name);
+
+    if(empty($file)){
+        return false;
+    }
+
+    $info = $file->validate($validate)->move($paths);
+
+    if($info){
+        return $path . DS . $info->getSaveName();
+    }else{
+        return false;
+    }
+
+}
+
 
 /**
  * 无极限分类，把返回的数据集转换成Tree

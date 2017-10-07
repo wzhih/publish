@@ -50,12 +50,12 @@ class Login extends Controller{
     }
 
     public function test(){
-        $result = Db::name('category')
-            ->where('parent_id' , '<>' , 0)
-            ->order('parent_id')
-            ->select();
-
-        var_dump((list_to_tree($result)));
+//        $result = Db::name('category')
+//            ->where('parent_id' , '<>' , 0)
+//            ->order('parent_id')
+//            ->select();
+//
+//        var_dump((list_to_tree($result)));
 
         // var_dump(sendMessage());
         // return;
