@@ -81,6 +81,12 @@
 
         $("#loginForm").submit();
     });
+
+    $("input").keydown(function(){
+        if(event.keyCode == 13){
+            $("#login").click();
+        }
+    });
 </script>
 
 <!-- 模态框（Modal） -->
