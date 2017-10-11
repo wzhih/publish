@@ -1,22 +1,11 @@
 <?php
 namespace app\admin\controller;
 
-use think\Controller;
 use think\Db;
-use think\Request;
 
 
-class Index extends Controller
+class Index extends Base
 {
-    public function _initialize()
-    {
-        //此处判断是否登陆
-        $isLogin = session('login');
-        if(!$isLogin){
-            $this->error('你还未登录，请登录之后操作!' , url('admin/Login/login'));
-        }
-    }
-
     public function index()
     {
 
@@ -122,6 +111,7 @@ class Index extends Controller
         $this->assign('data' , $result);
         return $this->fetch();
     }
+
     //显示增加，修改出版物页面
     public function savePublication(){
         //根据有无出版物id，判断是增加还是修改
@@ -142,6 +132,7 @@ class Index extends Controller
         $this->assign('category' , $category);
         return $this->fetch();
     }
+
     //增加出版物方法
     public function addPublication(){
         $data = input('post.');
@@ -158,6 +149,7 @@ class Index extends Controller
             url('admin/Index/showPublication',['publication'=>$data['name']])
         );
     }
+
     //删除出版物
     public function deletePublication(){
         $id = input('pid');
@@ -176,6 +168,7 @@ class Index extends Controller
         }
         $this->success('删除成功');
     }
+
     //修改出版物
     public function updatePublication(){
         $data = input('post.');
