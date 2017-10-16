@@ -1,0 +1,214 @@
+{extend name="layout/main"}
+{block name='title'}用户管理/用户列表{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <h3 style="margin:0">用户列表<button class="btn btn-success pull-right" id="addAdmin" data-toggle="tooltip" title="新增用户" type="button">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button></h3>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr class="row">
+                <th>id</th>
+                <th>名字</th>
+                <th>角色</th>
+                <th class="col-sm-4">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $data as $d}
+            <tr class="row">
+                <td>{$d.id}</td>
+                <td>{$d.name}</td>
+                <td>{$d.role==1?'管理员':'客服'}</td>
+                <td data-id="{$d.id}" data-name="{$d.name}" data-role="{$d.role}">
+                    <button class="btn btn-primary saveAdmin" type="button">修改</button>
+                    <button class="btn btn-danger delAdmin"  type="button">删除</button>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        {$data->render()}
+    </div>
+</div>
+
+<!-- 删除确认模态框 -->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/Admin/deleteAdmin')}" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        删除确认
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    确认删除:<strong id="determine"></strong>?
+                    <input type="hidden" name="id" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        确认
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!-- 修改模态框 -->
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/Admin/saveAdmin')}" method="post" class="form-horizontal" role="form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="ModalLabel">
+                        修改用户
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id" name="id" value="">
+                    <div class="form-group">
+                        <label for="admin" class="col-sm-2 control-label">名字</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control" id="admin" placeholder="请输入名字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin" class="col-sm-2 control-label">选择列表</label>
+                        <div class="col-sm-10">
+                            <select id="role" name="role" class="form-control">
+                                <option value="1">管理员</option>
+                                <option value="2">客服</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="old" class="col-sm-2 control-label">老密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="old" class="form-control" id="old" placeholder="若不修改密码，请不要输入">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new" class="col-sm-2 control-label">新密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="new" class="form-control" id="new" placeholder="请输入新密码">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        确认
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!-- 新增用户模态框 -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/Admin/addAdmin')}" method="post" class="form-horizontal" role="form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="addModalLabel">
+                        新增用户
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="admin" class="col-sm-2 control-label">名字</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control" id="addName" placeholder="请输入名字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin" class="col-sm-2 control-label">选择列表</label>
+                        <div class="col-sm-10">
+                            <select id="addRole" name="role" class="form-control">
+                                <option value="1">管理员</option>
+                                <option value="2">客服</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="password" class="form-control" id="addPassword" placeholder="请输入新密码">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        确认
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+{/block}
+
+{block name='js'}
+<script>
+    $(function () {
+        $('#cm-menu-scroller > ul > li:nth-child(3)').addClass('active');
+
+        $("[data-toggle='tooltip']").tooltip();
+    });
+
+    $('.delAdmin').click(function () {
+        var id = $(this).parent().data('id');
+        var name = $(this).parent().data('name');
+        var role = $(this).parent().data('role');
+
+        $('#determine').text(name);
+        $('#determine').next().val(id);
+        $('#delModal').modal();
+    });
+    
+    $('.saveAdmin').click(function () {
+        var id = $(this).parent().data('id');
+        var name = $(this).parent().data('name');
+        var role = $(this).parent().data('role');
+
+        $('#id').val(id);
+        $('#admin').val(name);
+        $('#role').val(role);
+
+        $('#saveModal').modal();
+    });
+
+    $('#addAdmin').click(function () {
+
+        $('#addModal').modal();
+    });
+
+</script>
+{/block}

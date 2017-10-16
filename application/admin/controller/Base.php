@@ -12,6 +12,8 @@ use think\Controller;
 
 class Base extends Controller
 {
+    public $userInfo;
+
     public function _initialize()
     {
         //此处判断是否登陆
@@ -19,6 +21,7 @@ class Base extends Controller
         if(!$isLogin){
             $this->error('你还未登录，请登录之后操作!' , url('admin/Login/login'));
         }
+        $this->userInfo = session('userInfo');
     }
 
 }
