@@ -68,7 +68,7 @@ class Admin extends Base
         }
 
         if($old && $new){
-            $user = Db::name('admin')->where('password' , $old)->find();
+            $user = Db::name('admin')->where('id' , $id)->where('password' , $old)->find();
             if($user){
                 $data['password'] = $new;
             }
