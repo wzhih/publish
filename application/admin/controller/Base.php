@@ -18,10 +18,11 @@ class Base extends Controller
     {
         //此处判断是否登陆
         $isLogin = session('login');
-        if(!$isLogin){
-            $this->error('你还未登录，请登录之后操作!' , url('admin/Login/login'));
+        if (!$isLogin) {
+            $this->error('你还未登录，请登录之后操作!', url('admin/Login/login'));
         }
         $this->userInfo = session('userInfo');
+        $this->assign('user', $this->userInfo);
     }
 
 }

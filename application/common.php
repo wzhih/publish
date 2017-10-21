@@ -20,8 +20,9 @@ use think\captcha\Captcha;
  * @param $role
  * @return string
  */
-function roleConversion($role){
-    switch ($role){
+function roleConversion($role)
+{
+    switch ($role) {
         case 0:
             return '超级管理员';
         case 1:
@@ -38,8 +39,9 @@ function roleConversion($role){
  * @param int $permission 权限等级
  * @return bool
  */
-function checkPermission($role , $permission){
-    if($role < $permission){
+function checkPermission($role, $permission)
+{
+    if ($role < $permission) {
         return false;
     }
     return true;
@@ -53,18 +55,19 @@ function checkPermission($role , $permission){
  * @param $code 验证码
  * @return bool 是否发送成功
  */
-function sendMessage($phone='18814128257' , $code='123456789'){
+function sendMessage($phone = '18814128257', $code = '123456789')
+{
     $accessKeyId = config('AccessKeyID');//参考本文档步骤2
     $accessKeySecret = config('AccessKeySecret');//参考本文档步骤2
 
-    $Sms = new SmsDemo($accessKeyId , $accessKeySecret);
+    $Sms = new SmsDemo($accessKeyId, $accessKeySecret);
     $acsResponse = $Sms->sendSms(
-                        '华软出版社' ,
-                        'SMS_98720006' ,
-                        $phone ,
-                        array('code'=>$code)
-                    );
-    if($acsResponse->Code == 'OK'){
+        '华软出版社',
+        'SMS_98720006',
+        $phone,
+        array('code' => $code)
+    );
+    if ($acsResponse->Code == 'OK') {
         return true;
     }
     return false;
@@ -78,13 +81,14 @@ function sendMessage($phone='18814128257' , $code='123456789'){
  * @param $portraitUri
  * @return mixed
  */
-function getUserToken($userId, $name, $portraitUri='logo'){
+function getUserToken($userId, $name, $portraitUri = 'logo')
+{
     $appKey = config('APP_KEY');
     $appSecret = config('APP_SECRET');
 
-    $RongCloud = new RongCloud($appKey,$appSecret);
+    $RongCloud = new RongCloud($appKey, $appSecret);
     // 获取 Token 方法
-    $result = $RongCloud->user()->getToken($userId ,$name , $portraitUri);
+    $result = $RongCloud->user()->getToken($userId, $name, $portraitUri);
 
     return $result;
 }
@@ -95,13 +99,14 @@ function getUserToken($userId, $name, $portraitUri='logo'){
  * @param null $config
  * @return \think\Response
  */
-function generateCaptcha($config=null){
-    if($config == null){
+function generateCaptcha($config = null)
+{
+    if ($config == null) {
         $config = [
             'codeSet' => '0123456789',
-            'length'  => 4,
-            'imageH'  => 0,
-            'imageW'  => 0
+            'length' => 4,
+            'imageH' => 0,
+            'imageW' => 0
         ];
     }
 
@@ -115,19 +120,20 @@ function generateCaptcha($config=null){
  * @param array $validate 上传验证
  * @return bool|string
  */
-function uploading($name , $path = 'uploads'.DS.'cover' , $validate = []){
+function uploading($name, $path = 'uploads' . DS . 'cover', $validate = [])
+{
     $paths = ROOT_PATH . 'public' . DS . $path;
     $file = request()->file($name);
 
-    if(empty($file)){
+    if (empty($file)) {
         return false;
     }
 
     $info = $file->validate($validate)->move($paths);
 
-    if($info){
+    if ($info) {
         return $path . DS . $info->getSaveName();
-    }else{
+    } else {
         return false;
     }
 
@@ -143,10 +149,11 @@ function uploading($name , $path = 'uploads'.DS.'cover' , $validate = []){
  * @param string $root 初始等级标记字段
  * @return array
  */
-function list_to_tree($list, $pk='id', $pid = 'parent_id', $child = 'child', $root = 1) {
+function list_to_tree($list, $pk = 'id', $pid = 'parent_id', $child = 'child', $root = 1)
+{
     // 创建Tree
     $tree = array();
-    if(is_array($list)) {
+    if (is_array($list)) {
         // 创建基于主键的数组引用
         $refer = array();
         foreach ($list as $key => $data) {
@@ -155,10 +162,10 @@ function list_to_tree($list, $pk='id', $pid = 'parent_id', $child = 'child', $ro
 
         foreach ($list as $key => $data) {
             // 判断是否存在parent
-            $parentId =  $data[$pid];
+            $parentId = $data[$pid];
             if ($root == $parentId) {
                 $tree[] =& $list[$key];
-            }else{
+            } else {
                 if (isset($refer[$parentId])) {
                     $parent =& $refer[$parentId];
                     $parent[$child][] =& $list[$key];
