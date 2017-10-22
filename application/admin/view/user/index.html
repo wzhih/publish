@@ -1,0 +1,106 @@
+{extend name="layout/main"}
+{block name='title'}会员管理{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <h3 style="margin:0">会员管理
+    </h3>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr class="row">
+                <th>id</th>
+                <th>名字</th>
+                <th>电话号码</th>
+                <th>性别</th>
+                <th>地址</th>
+                <th class="col-sm-4">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $data as $d}
+            <tr class="row">
+                <td>{$d.id}</td>
+                <td>{$d.name}</td>
+                <td>{$d.phone}</td>
+                <td>{$d.sex}</td>
+                <td>{$d.address}</td>
+                <td data-id="{$d.id}" data-name="{$d.name}">
+                    <button class="btn btn-primary saveUser" type="button">修改</button>
+                    <button class="btn btn-danger delUser" type="button">删除</button>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        {$data->render()}
+    </div>
+</div>
+
+<!-- 删除确认模态框 -->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/User/delete')}" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        删除确认
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    确认删除:<strong id="determine"></strong>?
+                    <input type="hidden" name="id" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        确认
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+
+{/block}
+
+{block name='js'}
+<script>
+    $(function () {
+        $('#cm-menu-scroller > ul > li:nth-child(4)').addClass('active');
+
+        $("[data-toggle='tooltip']").tooltip();
+    });
+
+    $('.delUser').click(function () {
+        var id = $(this).parent().data('id');
+        var name = $(this).parent().data('name');
+
+        $('#determine').text(name);
+        $('#determine').next().val(id);
+        $('#delModal').modal();
+    });
+
+    $('.saveUser').click(function () {
+//        var id = $(this).parent().data('id');
+//        var name = $(this).parent().data('name');
+//        var role = $(this).parent().data('role');
+//
+//        $('#id').val(id);
+//        $('#admin').val(name);
+//        $('#role').val(role);
+
+        $('#saveModal').modal();
+    });
+
+</script>
+{/block}
