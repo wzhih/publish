@@ -32,6 +32,14 @@ class Login extends Controller{
         if(!$result){
             return $this->error('用户名或密码错误' , url('admin/Login/login'));
         }
+
+        if(!$result['token']) {
+            $id = Db::name('admin')->where($data)->value('id');
+            $token = getUserToken($id, $name);
+            if($token['code'] == 200) {
+                Db::name('admin')->where('id', $id)->update(['token' => $token['token']]);
+            }
+        }
         //登陆之后，将信息存入session
         session('userInfo' , $result);
         session('login' , true);

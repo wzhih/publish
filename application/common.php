@@ -81,7 +81,7 @@ function sendMessage($phone = '18814128257', $code = '123456789')
  * @param $portraitUri
  * @return mixed
  */
-function getUserToken($userId, $name, $portraitUri = 'logo')
+function getUserToken($userId, $name = 'name', $portraitUri = 'logo')
 {
     $appKey = config('APP_KEY');
     $appSecret = config('APP_SECRET');
@@ -90,7 +90,7 @@ function getUserToken($userId, $name, $portraitUri = 'logo')
     // 获取 Token 方法
     $result = $RongCloud->user()->getToken($userId, $name, $portraitUri);
 
-    return $result;
+    return json_decode($result, true);
 }
 
 /**

@@ -22,6 +22,7 @@ class Base extends Controller
             $this->error('你还未登录，请登录之后操作!', url('admin/Login/login'));
         }
         $this->userInfo = session('userInfo');
+        $this->assign('appkey', config('APP_KEY'));
         $this->assign('user', $this->userInfo);
     }
 

@@ -15,7 +15,7 @@ class Admin extends Base
     public function _initialize()
     {
         parent::_initialize();
-        if ($this->request->action() != 'changepassword') {
+        if ($this->request->action() != 'changepassword' && $this->request->action() != 'showadmin') {
             if ($this->userInfo['role'] != 1) {
                 //如果不是管理员角色，不能操作此控制器
                 $this->error('权限不足');
@@ -34,6 +34,12 @@ class Admin extends Base
         $result = Db::name('admin')->data($data)->insert();
 
         if ($result) {
+            $id = Db::name('admin')->where($data)->value('id');
+            $token = getUserToken($id, $name);
+            if($token['code'] == 200) {
+                Db::name('admin')->where('id', $id)->update(['token' => $token['token']]);
+            }
+
             $this->success('添加成功');
         }
         $this->error('添加失败');
