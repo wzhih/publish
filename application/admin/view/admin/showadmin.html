@@ -23,7 +23,7 @@
             {foreach $data as $d}
             <tr class="row">
                 <td>{$d.id}</td>
-                <td>{$d.name}</td>
+                <td ng-click="setconversation({$d.id},'{$d.name}')">{$d.name}</td>
                 <td>{$d.role==1?'管理员':'客服'}</td>
                 <td data-id="{$d.id}" data-name="{$d.name}" data-role="{$d.role}">
                     <button class="btn btn-primary saveAdmin" type="button">修改</button>

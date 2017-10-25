@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 use think\Controller;
+use think\Db;
 
 class Base extends Controller
 {
@@ -26,4 +27,25 @@ class Base extends Controller
         $this->assign('user', $this->userInfo);
     }
 
+    public function userList() {
+        $data = Db::name('admin')->select();
+
+        $result = [];
+        foreach ($data as $d) {
+            $result[] = ['id' => $d['id'], 'name' => $d['name'], 'portraitUri' => 'logo'];
+        }
+
+        return json(['userlist' => $result]);
+    }
+
+    public function online() {
+        $data = Db::name('admin')->select();
+
+        $result = [];
+        foreach ($data as $d) {
+            $result[] = ['id' => $d['id'], 'status' => true];
+        }
+
+        return json(['data' => $result]);
+    }
 }
