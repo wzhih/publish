@@ -8,6 +8,11 @@
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </button>
     </h3>
+    <blockquote>
+        <p>
+            <strong>点击用户<em>名字</em>，可与其即时通讯</strong>
+        </p>
+    </blockquote>
 
     <div class="table-responsive">
         <table class="table table-hover">
@@ -23,7 +28,7 @@
             {foreach $data as $d}
             <tr class="row">
                 <td>{$d.id}</td>
-                <td ng-click="setconversation({$d.id},'{$d.name}')">{$d.name}</td>
+                <td ng-click="setconversation({$d.id},'{$d.name}')" class="text-primary">{$d.name}</td>
                 <td>{$d.role==1?'管理员':'客服'}</td>
                 <td data-id="{$d.id}" data-name="{$d.name}" data-role="{$d.role}">
                     <button class="btn btn-primary saveAdmin" type="button">修改</button>
