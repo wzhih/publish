@@ -3,7 +3,11 @@
 
 {block name='main'}
 <div class="container-fluid cm-container-white">
-    <h3 style="margin:0">会员管理</h3>
+    <h3 style="margin:0">会员管理
+        <button class="btn btn-success pull-right" id="addUser" data-toggle="tooltip" title="新增会员" type="button">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+    </h3>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -24,7 +28,7 @@
                 <td>{$d.phone}</td>
                 <td>{$d.sex}</td>
                 <td>{$d.address}</td>
-                <td data-id="{$d.id}" data-name="{$d.name}">
+                <td data-id="{$d.id}" data-name="{$d.name}" data-phone="{$d.phone}" data-sex="{$d.sex}" data-address="{$d.address}">
                     <button class="btn btn-primary saveUser" type="button">修改</button>
                     <button class="btn btn-danger delUser" type="button">删除</button>
                 </td>
@@ -68,8 +72,133 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<!-- 新增用户模态框 -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/User/add')}" method="post" class="form-horizontal" role="form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="addModalLabel">
+                        新增会员
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="addName" class="col-sm-2 control-label">名字</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control" id="addName" placeholder="请输入名字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addPhone" class="col-sm-2 control-label">电话号码</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="phone" class="form-control" id="addPhone" placeholder="请输入电话号码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addPassword" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="password" class="form-control" id="addPassword"
+                                   placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addSex" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10">
+                            <select id="addSex" name="sex" class="form-control">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addAddress" class="col-sm-2 control-label">地址</label>
+                        <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" name="address" id="addAddress"
+                                  placeholder="请输入地址"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        确认
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 
+<!-- 修改用户模态框 -->
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/User/update')}" method="post" class="form-horizontal" role="form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="saveModalLabel">
+                        新增会员
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id" name="id" value="">
+                    <div class="form-group">
+                        <label for="saveName" class="col-sm-2 control-label">名字</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control" id="saveName" placeholder="请输入名字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="savePhone" class="col-sm-2 control-label">电话号码</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="phone" class="form-control" id="savePhone" placeholder="请输入电话号码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="savePassword" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="password" class="form-control" id="savePassword"
+                                   placeholder="若不更新密码，请不要输入密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="saveSex" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10">
+                            <select id="saveSex" name="sex" class="form-control">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="saveAddress" class="col-sm-2 control-label">地址</label>
+                        <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" name="address" id="saveAddress"
+                                  placeholder="请输入地址"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        确认
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 {/block}
 
 {block name='js'}
@@ -90,15 +219,26 @@
     });
 
     $('.saveUser').click(function () {
-//        var id = $(this).parent().data('id');
-//        var name = $(this).parent().data('name');
-//        var role = $(this).parent().data('role');
-//
-//        $('#id').val(id);
-//        $('#admin').val(name);
-//        $('#role').val(role);
+        var id = $(this).parent().data('id');
+        var name = $(this).parent().data('name');
+        var phone = $(this).parent().data('phone');
+        var pwd = $(this).parent().data('password');
+        var sex = $(this).parent().data('sex');
+        var address = $(this).parent().data('address');
+
+        $('#id').val(id);
+        $('#saveName').val(name);
+        $('#savePhone').val(phone);
+        $('#savePassword').val(pwd);
+        $('#saveSex').val(sex);
+        $('#saveAddress').val(address);
 
         $('#saveModal').modal();
+    });
+
+    $('#addUser').click(function () {
+
+        $('#addModal').modal();
     });
 
 </script>
