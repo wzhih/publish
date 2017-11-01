@@ -1,0 +1,498 @@
+@charset "UTF-8";
+body, html {
+  background: #f7f7f7;
+  font-size: 100%;
+}
+
+.bg-white {
+  background: #ffffff;
+}
+
+.header {
+  height: 90px;
+  line-height: 90px;
+}
+
+.logo img {
+  width: auto;
+  height: 45px;
+  margin-top: -10px;
+}
+
+.home {
+  font-size: 16px;
+  font-family: font-max;
+  display: block;
+  height: 90px;
+  line-height: 90px;
+  text-align: right;
+}
+
+.home:hover {
+  color: #0082fe;
+}
+
+.container_fluid.bg-white {
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+}
+
+.login {
+  width: 100%;
+  margin: 50px auto 100px;
+  background: #ffffff;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  padding: 35px;
+}
+
+.user h1 {
+  font-size: 24px;
+  font-family: font-max;
+  
+  text-align: center;
+  padding: 0 0 35px 0;
+  margin: 0;
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.input-group-addon {
+  background: transparent;
+  position: relative;
+}
+
+.input-group-addon:after {
+  content: '';
+  width: 1px;
+  height: 70%;
+  background: #ccc;
+  position: absolute;
+  left: 100%;
+  top: 15%;
+  z-index: 99;
+}
+
+.input-group .input-group-addon {
+  border-right: none;
+}
+
+.input-group input {
+  border-left: none;
+}
+
+.user .input-group {
+  margin-top: 20px;
+}
+
+.input-group * {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.user .input-group.warning * {
+  border-color: #fc4343;
+}
+
+.user .input-group.warning em {
+  display: block;
+}
+
+.btn_code[disabled] {
+  opacity: 1;
+  background: #ccc;
+  font-size: 12px;
+  padding: 6px 2px;
+}
+
+.codeActive {
+  background: #ff6600;
+  cursor: pointer;
+}
+
+.user .input-group em {
+  display: none;
+  position: absolute;
+  top: 105%;
+  left: 0;
+  font-size: 12px;
+  color: #fc4343;
+}
+
+.user .input_img {
+  width: 80%;
+  height: 34px;
+  background: #ccc;
+  overflow: hidden;
+  line-height: 34px;
+  margin-top: 20px;
+  float: right;
+}
+
+.input_img img {
+  width: 100%;
+  height: 100%;
+  margin-top: -3px;
+}
+
+.input_submit {
+  margin: 30px auto;
+}
+
+.input_submit p {
+  line-height: 20px;
+  text-align: right;
+  font-size: 14px;
+  overflow: hidden;
+  padding: 2px 0;
+}
+
+.input_submit p a {
+  color: #999;
+}
+
+.reg_line {
+  margin-top: 15px;
+}
+
+.input_submit .reg_line a {
+  color: #0082fe;
+}
+
+.btn_submit {
+  width: 100%;
+  background: #0082fe;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  font-family: font-max;
+}
+
+.btn_code {
+  width: 100%;
+  height: 35px;
+  background: #ff791f;
+  font-size: 14px;
+  color: #ffffff;
+  font-family: font-max;
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.btn_submit:hover, .btn_code:hover {
+  background: #ccc;
+}
+
+.ditch_title {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.ditch_title:before, .ditch_title:after {
+  content: '';
+  width: 25%;
+  height: 1px;
+  background: #dbdbdb;
+  position: absolute;
+  left: 0;
+  top: 15px;
+}
+
+.ditch_title:after {
+  left: auto;
+  right: 0;
+}
+
+.ditch_title span {
+  font-family: font-max;
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.ditch_text {
+  text-align: center;
+  line-height: 40px;
+  margin-top: 10px;
+}
+
+.ditch_text a i {
+  font-size: 40px;
+  color: #19d100;
+  vertical-align: middle;
+  margin-top: -10px;
+}
+
+.ditch_text a:hover i {
+  color: #676767;
+}
+
+.reg_label {
+  font-size: 14px;
+  height: 20px;
+  line-height: 20px;
+  margin: 25px auto;
+}
+
+/*checkbox*/
+.plus_checkbox {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  position: relative;
+  padding-left: 25px;
+  font-size: 12px;
+  line-height: 16px;
+  vertical-align: middle;
+  margin-top: -3px;
+}
+
+.plus_checkbox input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  z-index: 9;
+}
+
+.plus_checkbox div {
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  border: 1px solid #0082fe;
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+}
+
+.plus_checkbox div.active {
+  border-color: #fc4343;
+}
+
+.plus_checkbox div i {
+  color: #0082fe;
+  margin: -3px 0 0 -1px;
+}
+
+.input_submit p.login_line {
+  text-align: left;
+}
+
+.reg_label a {
+  color: #0082fe;
+}
+
+.input_submit p a:hover, .reg_label a:hover {
+  color: #0457A9;
+}
+
+/*dialog*/
+.dialog {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
+}
+
+.dialog .lost {
+  position: relative;
+  margin: 0 auto;
+  -webkit-transform: translateY(30%);
+  -moz-transform: translateY(30%);
+  -ms-transform: translateY(30%);
+  -o-transform: translateY(30%);
+  transform: translateY(30%);
+}
+
+.dialog .closed {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.form-control:focus {
+  border-color: #ccc;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+  outline: none;
+}
+
+.btn.active, .btn:active {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn.focus, .btn:focus, .btn:hover {
+  color: #ffffff;
+}
+
+.btn {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.model {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+.mod_text {
+  width: 400px;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 0 20px;
+}
+
+.mod_header {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px solid #e6e6e6;
+  font-family: font-max;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.mod_text span.icon-close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.mod_content {
+  width: 100%;
+  height: auto;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.mod_submit {
+  text-align: center;
+  height: 60px;
+  line-height: 60px;
+}
+
+/*微信登录*/
+.wx_dia {
+  width: 0;
+  height: 542px;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: rgb(51, 51, 51);
+  -webkit-border-radius:0 2px 2px 0;
+  -moz-border-radius:0 2px 2px 0;
+  border-radius:0 2px 2px 0;
+  -webkit-transition: all .4s ease-in-out;
+  -moz-transition: all .4s ease-in-out;
+  -ms-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.wx_con {
+  width: 100%;
+  height: 100%;
+  padding:30px;
+}
+
+.wx_img {
+  width: 100%;
+  height: 240px;
+  background: #ffffff;
+  padding: 15px;
+  margin-top:90px;
+}
+
+.wx_img img {
+  width: 100%;
+  height: 100%;
+}
+
+.wx_con p {
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  line-height: 40px;
+  height:40px;
+  overflow: hidden;
+  background: #232323;
+  border-radius: 20px;
+  margin-top: 25px;
+  box-shadow: inset 0 5px 10px -5px #191919,0 1px 0 0 #444;
+  -moz-box-shadow: inset 0 5px 10px -5px #191919,0 1px 0 0 #444;
+  -webkit-box-shadow: inset 0 5px 10px -5px #191919,0 1px 0 0 #444;
+}
+
+.user.login{
+  -webkit-transition: all .4s ease-in-out;
+  -moz-transition: all .4s ease-in-out;
+  -ms-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  position: relative;
+}
+
+.wx_hover{
+  -webkit-transform: translateX(-150px);
+  -moz-transform: translateX(-150px);
+  -ms-transform: translateX(-150px);
+  -o-transform: translateX(-150px);
+  transform: translateX(-150px);
+}
+
+.wx_hover .wx_dia{
+  width:300px;
+}
+
+.wx_closed{
+  color: #ffffff;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  font-size: 20px;
+}

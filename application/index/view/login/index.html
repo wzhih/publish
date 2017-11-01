@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)#/login -->
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="”renderer”" content="”webkit”">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>华软出版社</title>
+
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/login.css">
+
+    <script type="text/javascript" src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>
+
+</head>
+<body>
+<!-- header -->
+<div class="container_fluid bg-white">
+    <div class="container header">
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a class="logo" href="#/">
+                    <img src="__PUBLIC__static/portal/img/logo.png" alt="华软出版社">
+                </a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4 pull-right">
+                <a class="home" href="/">返回首页</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- content -->
+<div class="container content">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12 col-md-offset-4 col-sm-offset-3">
+            <div class="user login">
+                <h1>会员登录</h1>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon iconfont icon-yonghuming"></i></span>
+                        <input name="username" type="text" class="form-control user_phone" placeholder="用户名/手机号"
+                               maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)"
+                               onafterpaste="this.value=this.value.replace(/\D/g,&#39;&#39;)" onblur="phoneVer(this)">
+                        <em>手机号码不能为空！</em></div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon iconfont icon-mima"></i></span>
+                        <input name="password" type="password" class="form-control user_password" placeholder="密码"
+                               onblur="passwordVer(this)">
+                        <em>请输入密码！</em></div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon iconfont icon-verify"></i></span>
+                                <input name="verifyCode" type="text" class="form-control user_ver" placeholder="验证码"
+                                       maxlength="5" onblur="verNull(this)">
+                                <em>验证码不能为空</em></div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input_img"><img class="verCodeImg" src=""
+                                                        onclick="verCode(this)"></div>
+                        </div>
+                    </div>
+                    <div class="input_submit">
+                        <p><a class="get_password" href="javascript:void(0);">忘记密码?</a></p>
+                        <p>
+                            <button type="button" class="btn btn_submit" id="loginBtn">登录</button>
+                        </p>
+                        <p class="reg_line"><a href='{:url("index/register/index")}'>立即注册</a></p>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- dialog -->
+<div class="dialog" style="display: none;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12 col-md-offset-4 col-sm-offset-3">
+                <div class="user login reg lost">
+                    <span class="icon iconfont icon-close closed"></span>
+                    <h1>找回密码</h1>
+                    <form id="lostForm">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon iconfont icon-yonghuming"></i></span>
+                            <input name="username" type="text" class="form-control user_name" placeholder="用户名/手机号"
+                                   maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)"
+                                   onafterpaste="this.value=this.value.replace(/\D/g,&#39;&#39;)"
+                                   onblur="phoneVer(this)">
+                            <em></em></div>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon iconfont icon-mima"></i></span>
+                            <input name="password" type="password" class="form-control user_pass" placeholder="请输入新密码"
+                                   onblur="passwordVer(this)">
+                            <em>请输入密码！</em></div>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon iconfont icon-mima"></i></span>
+                            <input type="password" name="confirmPwd" class="form-control user_confirmPwd" placeholder="再次输入新密码"
+                                   onblur="passwordVerAgain(this)">
+                            <em>请输入密码！</em></div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon iconfont icon-verify"></i></span>
+                                    <input name="verifyCode" type="text" class="form-control user_verAgin" placeholder="请输入验证码"
+                                           maxlength="5" onblur="verNull(this)">
+                                    <em>验证码不能为空</em></div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="input_img"><img class="verCodeImg"
+                                                            src=""
+                                                            onclick="verCode(this)"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon iconfont icon-yanzhengma"></i></span>
+                                    <input name="dynamicCode" type="text" class="form-control user_dyCode"
+                                           placeholder="手机动态码" maxlength="4"
+                                           onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)"
+                                           onafterpaste="this.value=this.value.replace(/\D/g,&#39;&#39;)"
+                                           onblur="codeNull(this)">
+                                    <em>动态码不能为空</em></div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="input_img">
+                                    <button type="button" class="btn btn_code user_code_btn" onclick="getPhoneCode()">
+                                        获取动态码
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input_submit">
+                            <p>
+                                <button type="button" class="btn btn_submit" id="lostSubmit">完成</button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提示窗口 -->
+<div class="model">
+    <div class="mod_text">
+        <span class="icon iconfont icon-close"></span>
+        <div class="mod_header">提示</div>
+        <div class="mod_content">
+            提示信息
+        </div>
+        <div class="mod_submit">
+            <button class="btn btn-info" type="button">确定</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__static/portal/js/login.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        if ('' != '') {
+            $('.mod_content').text('您已登录，不可以重复登录！');
+            $('.model').fadeIn();
+            $('.model button,.model span.icon-close').on('click', function () {
+                $('.model').fadeOut();
+                window.location.href = '/';
+            });
+        }
+
+        //登录
+        $('#loginBtn').on('click', function () {
+            var name = phoneVer('.user_phone');
+            var pass = passwordVer('.user_password');
+            var yzm = verNull('.user_ver');
+            if (name && pass && yzm) {
+                $.ajax({
+                    type: 'post',
+                    url: '{:url("index/login/login")}',
+                    data: $('#loginForm').serialize(),
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.status) {
+                            window.location.href = res.data;
+                        } else {
+                            $('.mod_content').text(res.msg);
+                            $('.model').fadeIn();
+                            $('.model button,.model span.icon-close').on('click', function () {
+                                $('.model').fadeOut();
+                                $('.verCodeImg').attr('src', '{:url("index/login/getchaptcha")}?v=' + Math.random());
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+        //找回密码
+        $('#lostSubmit').on('click', function () {
+            var name = phoneVer('.user_name');
+            var pass = passwordVer('.user_pass');
+            var password = passwordVerAgain('.user_confirmPwd');
+            var yzm = codeNull('.user_verAgin');
+            var code = codeNull('.user_dyCode');
+            if (name && pass && password && yzm && code) {
+                $.ajax({
+                    type: 'post',
+                    url: '{:url("index/login/resetPassword")}',
+                    data: $('#lostForm').serialize(),
+                    dataType: 'json',
+                    success: function (res) {
+                        $('.mod_content').text(res.msg);
+                        $('.model').fadeIn();
+                        $('.model button,.model span.icon-close').on('click', function () {
+                            $('.model').fadeOut();
+                            if (res.status) {
+                                $('.dialog').hide();
+                                $('.verCodeImg').attr('src', '{:url("index/login/getchaptcha")}?v=' + Math.random());
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    /** 获取动态码 **/
+    function getPhoneCode() {
+        var name = phoneVer('.user_name');
+        var yzm = verNull('.user_verAgin');
+        if (name && yzm) {
+            $.ajax({
+                url: '{:url("index/register/getPhoneCode")}',
+                data: {
+                    phone: $('.user_name').val(),
+                    verifyCode: $('.user_verAgin').val(),
+                    update:true
+                },
+                success: function (res) {
+                    if (res.status) {
+                        phoneCode('.user_code_btn');
+                        $('.user_ver').val(null);
+                        $('.verCodeImg').attr('src', '{:url("index/login/getchaptcha")}?v=' + Math.random());
+                    } else {
+                        $('.mod_content').text(res.msg);
+                        $('.model').fadeIn();
+                        $('.model button,.model span.icon-close').off('click').on('click', function () {
+                            $('.model').fadeOut();
+                            $('.verCodeImg').attr('src', '{:url("index/login/getchaptcha")}?v=' + Math.random());
+                        });
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+
+</body>
+</html>

@@ -108,6 +108,13 @@ function generateCaptcha($config = null)
             'imageH' => 0,
             'imageW' => 0
         ];
+    } else {
+        $config = array_merge([
+            'codeSet' => '0123456789',
+            'length' => 4,
+            'imageH' => 0,
+            'imageW' => 0
+        ], $config);
     }
 
     $captcha = new Captcha($config);
@@ -192,5 +199,20 @@ function arraySequence($array, $field, $sort = 'SORT_ASC')
     }
     array_multisort($arrSort[$field], constant($sort), $array);
     return $array;
+}
+
+/**
+ * 将结果转化为json，并且结构确定
+ * @param bool $status
+ * @param string $msg
+ * @param array $data
+ */
+function json_result($status = true, $msg = 'success', $data = [])
+{
+    return json([
+        'status' => $status,
+        'msg'    => $msg,
+        'data'   => $data
+    ]);
 }
 

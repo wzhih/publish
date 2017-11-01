@@ -1,0 +1,23 @@
+
+
+@font-face {
+  font-family: 'font-max';//方正大标宋
+src: url('../font/fzdbsjw-webfont.eot'); /* IE9 Compat Modes */
+  src: url('../font/fzdbsjw-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../font/fzdbsjw-webfont.woff') format('woff'), /* Modern Browsers */
+  url('../font/FZDBSJW.TTF')  format('truetype'), /* Safari, Android, iOS */
+  url('../font/fzdbsjw-webfont.svg#font-max') format('svg'); /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'font-min';//方正兰亭黑
+src: url('../font/fzlthjw-webfont.eot'); /* IE9 Compat Modes */
+  src: url('../font/fzlthjw-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../font/fzlthjw-webfont.woff') format('woff'), /* Modern Browsers */
+  url('../font/FZLTHJW.TTF')  format('truetype'), /* Safari, Android, iOS */
+  url('../font/fzlthjw-webfont.svg#font-min') format('svg'); /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}

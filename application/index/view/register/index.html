@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)/reg -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="”renderer”" content="”webkit”">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>华软出版社</title>
+    
+<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">
+<link rel="stylesheet" href="__PUBLIC__static/portal/css/iconfont.css">
+<link rel="stylesheet" href="__PUBLIC__static/portal/css/font.css">
+<link rel="stylesheet" href="__PUBLIC__static/portal/css/common.css">
+<link rel="stylesheet" href="__PUBLIC__static/portal/css/login.css">
+
+<script type="text/javascript" src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>
+
+</head>
+<body>
+<!-- header -->
+<div class="container_fluid bg-white">
+    <div class="container header">
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a class="logo" href="/">
+                    <img src="__PUBLIC__static/portal/img/logo.png" alt="华软出版社">
+                </a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4 pull-right">
+                <a class="home" href="/">返回首页</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- content -->
+<div class="container content">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12 col-md-offset-4 col-sm-offset-3">
+            <div class="user login reg">
+                <h1>注册</h1>
+                <form id="regForm">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon iconfont icon-yonghuming"></i></span>
+                        <input name="username" type="text" class="form-control user_phone" placeholder="请输入手机号码" maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)" onafterpaste="this.value=this.value.replace(/\D/g,&#39;&#39;)" onblur="phoneVer(this)">
+                    <em></em></div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon iconfont icon-mima"></i></span>
+                        <input name="password" type="password" class="form-control user_password" placeholder="请设置登录密码" onblur="passwordVer(this)">
+                    <em></em></div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon iconfont icon-mima"></i></span>
+                        <input name="confirmPwd" type="password" class="form-control user_confirmPwd" placeholder="再次输入登录密码" onblur="passwordVerAgain(this)">
+                    <em></em></div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon iconfont icon-verify"></i></span>
+                                <input name="verifyCode" type="text" class="form-control user_ver" placeholder="请输入验证码" maxlength="5" onblur="verNull(this)">
+                            <em></em></div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input_img"><img class="verCodeImg" src="__PUBLIC__static/portal/img/kaptcha.jpg" onclick="verCode(this)"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon iconfont icon-yanzhengma"></i></span>
+                                <input name="dynamicCode" type="text" class="form-control user_code" placeholder="手机动态码" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)" onafterpaste="this.value=this.value.replace(/\D/g,&#39;&#39;)" onblur="codeNull(this)">
+                            <em></em></div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="input_img">
+                                <button type="button" class="btn btn_code user_code_btn" onclick="getPhoneCode()">
+                                    获取动态码
+                                </button>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    <div class="input_submit">
+                        <p>
+                            <button type="button" class="btn btn_submit reg_upload">注册</button>
+                        </p>
+                        <p class="reg_line login_line">我已注册现在就<a href="{:url('index/login/index')}">登录</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="model">
+    <div class="mod_text">
+        <span class="icon iconfont icon-close"></span>
+        <div class="mod_header">提示</div>
+        <div class="mod_content">
+            提示信息
+        </div>
+        <div class="mod_submit">
+            <button class="btn btn-info" type="button">确定</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__static/portal/js/login.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //注册
+        $('.reg_upload').on('click', function () {
+            var name = phoneVer('.user_phone');
+            var pass = passwordVer('.user_password');
+            var password = passwordVerAgain('.user_confirmPwd');
+            var yzm = codeNull('.user_ver');
+            var code = codeNull('.user_code');
+//      var label = labelCheck();
+            var label = true;
+            if (name && pass && password && yzm && code && label) {
+                $.ajax({
+                    url: '{:url("index/register/register")}',
+                    data: $('#regForm').serialize(),
+                    method: "post",
+                    success: function (res) {
+                        $('.mod_content').text(res.msg);
+                        $('.model').fadeIn();
+                        $('.model button,.model span.icon-close').on('click', function () {
+                            if (res.status) {
+                                window.location.href = '{:url("index/login/index")}';
+                            } else {
+                                $('.verCodeImg').attr('src', '{:url("index/login/getchaptcha")}?v=' + Math.random());
+                            }
+                            $('.model').fadeOut();
+                        });
+                    }
+                });
+            }
+        });
+    });
+    
+    /** 获取动态码 **/
+    function getPhoneCode() {
+        var name = phoneVer('.user_phone');
+        var yzm = verNull('.user_ver');
+        if (name && yzm) {
+            $.ajax({
+                url: '{:url("index/register/getPhoneCode")}',
+                data: {
+                    phone: $('.user_phone').val(),
+                    verifyCode: $('.user_ver').val()
+                },
+                success: function (res) {
+                    if (res.status) {
+                        phoneCode('.user_code_btn');
+                        $('.user_ver').val(null);
+                        $('.verCodeImg').attr('src', '{:url("index/login/getchaptcha")}?v=' + Math.random());
+                    } else {
+                        $('.mod_content').text(res.msg);
+                        $('.model').fadeIn();
+                        $('.model button,.model span.icon-close').off('click').on('click', function () {
+                            $('.model').fadeOut();
+                            $('.verCodeImg').attr('src', '{:url("index/login/getchaptcha")}?v=' + Math.random());
+                        });
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+
+</body></html>
