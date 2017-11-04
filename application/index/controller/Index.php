@@ -1,12 +1,85 @@
 <?php
+
 namespace app\index\controller;
+
+use think\Db;
 
 class Index extends Base
 {
     public function index()
     {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } .think_default_text{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p> ThinkPHP V5<br/><span style="font-size:30px">十年磨一剑 - 为API开发设计的高性能框架</span></p><span style="font-size:22px;">[ V5.0 版本由 <a href="http://www.qiniu.com" target="qiniu">七牛云</a> 独家赞助发布 ]</span></div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_bd568ce7058a1091"></thinkad>';
+        $cid = $this->getInputCId();
+
+        $this->assign('cid', $cid);
+        return $this->fetch();
     }
 
+    public function getHeadNav()
+    {
+        $cid = $this->getInputCId();
+        $result = $this->getFirstCategory();
 
+        foreach ($result as &$value) {
+            $value['url'] = url("index/index/index", "cid={$value['id']}");
+
+            if ($value['id'] == $cid) {
+                $value['class'] = 'active';
+            } else {
+                $value['class'] = '';
+            }
+        }
+
+        return json_result(true, 'success', $result);
+    }
+
+    private function getInputCId()
+    {
+        $cid = input('cid', 0);//根据类型id的不同显示不同的页面
+
+        if ($cid == 0) {
+            $cid = Db::name('category')
+                ->where("parent_id", 1)
+                ->where('id', '<>', 1)
+                ->order('id')
+                ->value('id');
+        }
+
+        return $cid;
+    }
+
+    public function search()
+    {
+        $name = input('searchName');
+
+        return $name;
+    }
+
+    public function getSwiper()
+    {
+        $result = Db::name('swiper')->select();
+
+        return json_result(true, 'success', $result);
+    }
+
+    public function getCategory()
+    {
+        $cid = input('cid');
+
+        $result = $this->getSecondCategory($cid);
+
+        return json_result(true, 'success', $result);
+    }
+
+    public function getBookList()
+    {
+        $cid = input('childId');
+        $row = input('row', 9);
+        $page = input('page', 1);
+
+        $data = Db::name('publication')->where('c_id', $cid)
+            ->limit($row * ($page - 1), $row)
+            ->select();
+
+        return json_result(true, 'success', $data);
+    }
 }

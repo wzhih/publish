@@ -1,0 +1,112 @@
+@charset "utf-8";
+/* CSS Document */
+/*
+* Basic Cascading Style Sheet
+* Intructions: none
+* Version: 1.0
+* Updated: 2017-06-19
+*/
+
+
+
+/*首页*/
+#index .book-floor .classifyName{width:65%;margin:0 auto;padding:0px;text-align:center;border:none;float:none}
+#index .book-floor .level-classify a{float:none;display:inline-block}
+#index .book-floor .floor-name{position:relative}
+#index .book-floor .more{font-size:16px;color:#676767;position:absolute;right:85px;top:8px;}
+#index .book-floor .more:hover{text-decoration:none;}
+/*轮播*/
+/*.swiper-banner{width:100%;}*/
+/*.swiper-slide img{width:100%;}*/
+/*.swiper-pagination.pagination-sjj{position:relative;text-align:left;}*/
+/*.swiper-container-horizontal>.swiper-pagination-bullets.pagination-sjj, .swiper-pagination-custom.pagination-sjj, .swiper-pagination-fraction.pagination-sjj{margin-top:28px;}*/
+/*.pagination-sjj .swiper-pagination-bullet{width:14.5%;height:40px;border-top:solid 1px #000;border-radius:0px;background:transparent;opacity: 1;transition:ease 1s;}*/
+/*.pagination-sjj .swiper-pagination-bullet-active{background:transparent;border-top:solid 2px #4889c1;min-width:27%;width:auto;}*/
+/*.pagination-sjj .swiper-pagination-bullet>span{opacity:0;-webkit-transtion:all ease 1s;transition:all ease 1s;}*/
+/*.pagination-sjj .swiper-pagination-bullet-active>span{color:#4889c1;opacity: 1;display:inline-block;width:100%;white-space: nowrap;text-overflow: ellipsis;overflow:hidden;}*/
+/*.swiper-container-horizontal>.swiper-pagination-bullets.pagination-sjj .swiper-pagination-bullet{margin:0 3% 0 0;line-height:40px;font-size:20px;float:left;}*/
+
+ 首页轮播分页样式
+.swiper-slide img {
+  width: 100%;
+}
+
+.swiper-pagination.pagination-sjj {
+  position: relative;
+  text-align: left;
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets.pagination-sjj, .swiper-pagination-custom.pagination-sjj, .swiper-pagination-fraction.pagination-sjj {
+  margin-top: 28px;
+}
+
+.pagination-sjj .swiper-pagination-bullet {
+  width: 14.5%;
+  height: 40px;
+  border-top: solid 1px #030303;
+  border-radius: 0px;
+  background: transparent;
+  opacity: 1;
+  transition: ease 1s;
+}
+
+.pagination-sjj .swiper-pagination-bullet-active {
+  background: transparent;
+  border-top: solid 2px #0457A9;
+  width: 27%;
+}
+
+.pagination-sjj .swiper-pagination-bullet > span {
+  opacity: 0;
+  -webkit-transtion: all ease 1s;
+  transition: all ease 1s;
+  cursor: default;
+  font-family:font-max;
+}
+
+.pagination-sjj .swiper-pagination-bullet-active > span {
+  color: #0457A9;
+  opacity: 1;
+  display: inline-block;
+  width: 100%;
+  /*white-space: nowrap;*/
+  /*text-overflow: ellipsis;*/
+  overflow: hidden;
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets.pagination-sjj .swiper-pagination-bullet {
+  margin: 0 3% 0 0;
+  line-height: 40px;
+  font-size: 20px;
+  float: left;
+}
+/*自定义样式*/
+.swiper-button-prev, .swiper-button-next,.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+  display: none;
+  background: transparent;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  color: rgba(255, 255, 255, .7);
+  margin-top: -85px;
+  line-height: 50px;
+}
+
+.swiper_con .swiper-button-prev, .swiper_con .swiper-button-next {
+  margin-top: -50px;
+  color: #676767;
+}
+
+.swiper-container:hover .swiper-button-prev, .swiper-container:hover .swiper-button-next, .swiper_con:hover .swiper-button-prev, .swiper_con:hover .swiper-button-next {
+  display: block;
+}
+
+.swiper-button-prev i, .swiper-button-next i {
+  font-size: 50px;
+  vertical-align: super;
+}
+
+.swiper_con .swiper-button-prev i, .swiper_con .swiper-button-next i {
+  font-size: 32px;
+}
+

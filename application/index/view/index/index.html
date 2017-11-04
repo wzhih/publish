@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" href="__PUBLIC__static/portal/css/iconfont(1).css">
+
+    <script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>
+    <script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>
+
+    <title>首页</title>
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/index.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/cssAuto.css">
+</head>
+
+<body>
+{include file="layout/head" /}
+
+{include file="layout/search" /}
+
+<div id="index" class="warp">
+    {include file="layout/swiper" /}
+
+    <div class="book-floor">
+        <div class="floor-name">
+            <h2 class="font-max font-size-h2">分 类 热 销
+                <span class="line line-fl"></span>
+                <span class="line line-fr"></span>
+            </h2>
+        </div>
+        <div class="classifyName level-classify level1">
+
+        </div>
+        <ul class="bookList">
+
+        </ul>
+    </div>
+</div>
+
+{include file="layout/foot" /}
+
+<div class="goBack"></div>
+
+<script src="__PUBLIC__static/portal/js/swiper.min.js"></script>
+<script src="__PUBLIC__static/portal/js/common.js"></script>
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+        $(window).scroll(function () {
+            var _t = $(window).scrollTop();
+            if (_t > 100) {
+                $('.goBack').addClass('active').attr('title', '返回顶部');
+            } else {
+                $('.goBack').removeClass('active').attr('title', '向下翻页');
+            }
+        });
+        $(document).on('click', function (e) {
+            if (e.target.className == 'goBack') {
+                $('body,html').animate({
+                    scrollTop: 500
+                }, 300);
+            } else if (e.target.className == 'goBack active') {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 500);
+            }
+        })
+    });
+
+    var index = new Vue({
+        el: "#index",
+        data: {
+            hotTagId: "",
+        }
+    });
+
+    var barnnerDatas = [];
+    $(function () {
+        /*分类*/
+        $.post("{:url('index/index/getCategory')}", {"cid":cid}, function (data) {
+            if (data.status) {
+                var datas = data.data;
+                console.log("热门分类标签：" + JSON.stringify(datas));
+                var ele = "";
+                if (datas.length > 0) {
+                    for (var i = 0; i < datas.length; i++) {
+                        ele += "<a href='javascript:void(0);' bookTagId='" + datas[i].id + "'";
+                        if (i == 0) {
+                            ele += " class='active' "
+                        }
+                        ele += ">" + datas[i].category + "</a>";
+                    }
+                    $(".classifyName").append(ele);
+                    index.hotTagId = datas[0].id;
+                    hotClassifyClick();
+                    getBookList(".bookList", {"childId": datas[0].id, "rows": 9, "page": 1});
+                }
+
+            } else {
+                console.log(data.msg);
+            }
+
+        });
+        /*加载轮播*/
+        $.post("{:url('index/index/getSwiper')}", function (data) {
+            if (data.status) {
+                console.log("轮播:" + JSON.stringify(data));
+                var datas = data.data;
+                barnnerDatas = datas;
+                var ele = "";
+                if (datas.length > 0) {
+                    for (var i = 0; i < datas.length; i++) {
+                        var url = datas[i].book_url;
+
+                        if (i < 5) {
+                            ele += '<div class="swiper-slide"><a href="' + url + '" target="_blank"><img src="/' + datas[i].photo_url +
+                                '"/></a></div>';
+                        }
+                    }
+                    $("#index .swiper-wrapper").append(ele);
+                }
+                init_swiper(barnnerDatas);
+            } else {
+                console.log(data.msg);
+            }
+
+        });
+    });
+
+    /*轮播*/
+    function init_swiper(barnnerDatas) {
+        console.log(barnnerDatas[0].describe);
+        var mySwiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            loop: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            paginationBulletRender: function (swiper, index, className) {
+                console.log(index);
+                return '<div class="' + className + '"><span>' + barnnerDatas[index].describe + '</span></div>';
+            },
+            speed: 1000,
+            effect: 'fade',
+            autoplay: 3000,
+            autoplayDisableOnInteraction: false,
+        });
+
+        $('.swiper-pagination').on('mouseover', 'div.swiper-pagination-bullet', function () {
+            var index = $(this).index();
+            if (index + 1 != mySwiper.activeIndex) {
+                mySwiper.slideTo(index + 1, 500, false);
+                /*切换到第一个slide，速度为1秒*/
+            }
+        });
+        $('.swiper-container').hover(function () {
+            mySwiper.stopAutoplay();
+        }, function () {
+            mySwiper.startAutoplay();
+        });
+
+    }
+
+    /*点击热销分类加载图书列表*/
+    function hotClassifyClick() {
+        $(".classifyName.level-classify a").each(function () {
+            $(this).click(function () {
+                var bookTagId = $(this).attr("bookTagId");
+                $(this).addClass("active").siblings().removeClass("active");
+                index.hotTagId = bookTagId;
+                getBookList(".bookList", {"childId": bookTagId, "rows": 9, "page": 1});
+            });
+
+        });
+    }
+
+    $(window).scroll(function () {
+        var t = document.documentElement.scrollTop || document.body.scrollTop;
+        if (t > 218) {
+            $(".classifySearch-p").addClass("fix");
+            tag = false;
+            $('.allClassisy').removeClass('active');
+        }
+        else {
+            $(".classifySearch-p").removeClass("fix");
+        }
+    });
+
+</script>
+
+</body>
+
+</html>

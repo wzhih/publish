@@ -1,0 +1,204 @@
+{
+  "data": [
+    {
+      "name": "关于我们",
+      "bottomNavItem": [
+        {
+          "name": "社长寄语",
+          "urlType": 1,
+          "id": "e9608ab5-033a-439a-bdb6-cc4321ab0f72",
+          "sectionUrl": "/p/z/1498643618053.html",
+          "edit": false,
+          "seq": 2
+        },
+        {
+          "name": "企业简介",
+          "urlType": 1,
+          "id": "307450de-587c-4fc0-b9f2-d50f929bac78",
+          "sectionUrl": "/p/z/1498629678412.html",
+          "edit": false,
+          "seq": 3
+        },
+        {
+          "name": "组织机构",
+          "urlType": 1,
+          "id": "d2b0285c-81cf-4aa7-aaa4-0524896b2da8",
+          "sectionUrl": "/p/z/1498616821928.html",
+          "edit": false,
+          "seq": 4
+        },
+        {
+          "name": "部门介绍",
+          "urlType": 2,
+          "id": "185ad723-f0ac-46ca-8f5f-b0dfed02f1d6",
+          "sectionUrl": "/department",
+          "edit": false,
+          "seq": 5
+        }
+      ],
+      "id": "835953a1-849c-4865-bacf-df2006f42468"
+    },
+    {
+      "name": "产品中心",
+      "bottomNavItem": [
+        {
+          "name": "图书",
+          "urlType": 1,
+          "id": "f5f0f120-3fc8-45e5-8fb4-ccef322577c0",
+          "sectionUrl": "/shopping/index",
+          "edit": false,
+          "seq": 1
+        },
+        {
+          "name": "期刊",
+          "urlType": 1,
+          "id": "1e4bb423-e226-49c9-8237-96d772162687",
+          "sectionUrl": "/periodical",
+          "edit": false,
+          "seq": 2
+        },
+        {
+          "name": "资源下载",
+          "urlType": 1,
+          "id": "95d1369c-0144-492f-96b8-60ba4be57b9f",
+          "sectionUrl": "/download",
+          "edit": false,
+          "seq": 3
+        },
+        {
+          "name": "新书目录",
+          "urlType": 1,
+          "id": "b3559aa2-3ef3-4ab6-939d-52800b2de87e",
+          "sectionUrl": "/newBook",
+          "edit": false,
+          "seq": 4
+        }
+      ],
+      "id": "688d7231-aceb-4e42-a21b-00bb6d2c02a2"
+    },
+    {
+      "name": "社区服务",
+      "bottomNavItem": [
+        {
+          "name": "异步社区",
+          "urlType": 2,
+          "id": "dded6c36-f193-4331-ba95-e7e0ee1a8c0f",
+          "sectionUrl": "http://www.epubit.com.cn",
+          "edit": false,
+          "seq": 1
+        },
+        {
+          "name": "图灵社区",
+          "urlType": 2,
+          "id": "d5d3c273-051b-4709-8cad-c2a88c15900b",
+          "sectionUrl": "http://www.ituring.com.cn/",
+          "edit": false,
+          "seq": 2
+        },
+        {
+          "name": "人邮教育",
+          "urlType": 2,
+          "id": "3350de48-f1e1-4449-9127-d037bba6ee6e",
+          "sectionUrl": "http://www.ryjiaoyu.com/",
+          "edit": false,
+          "seq": 3
+        }
+      ],
+      "id": "0a54d01c-f3d6-4464-a9da-b32dec503dc5"
+    },
+    {
+      "name": "下属公司",
+      "bottomNavItem": [
+        {
+          "name": "童趣出版",
+          "urlType": 2,
+          "id": "95f8b5ed-e828-491f-bc7b-eba09d687ce7",
+          "sectionUrl": "http://www.childrenfun.com.cn/",
+          "edit": false,
+          "seq": 1
+        },
+        {
+          "name": "信通传媒",
+          "urlType": 2,
+          "id": "77a861f2-bb72-49ee-a796-8650c52203c0",
+          "sectionUrl": "http://www.bjxintong.com.cn/",
+          "edit": false,
+          "seq": 2
+        },
+        {
+          "name": "普华文化",
+          "urlType": 2,
+          "id": "8ec3e46c-0ea0-49dd-80d4-0147bf9788d4",
+          "sectionUrl": "https://m.weibo.cn/p/1005051935391743",
+          "edit": false,
+          "seq": 3
+        },
+        {
+          "name": "图灵文化",
+          "urlType": 2,
+          "id": "0ffe9cf5-ccc7-4597-9a0c-caad80dca4c4",
+          "sectionUrl": "http://www.ituring.com.cn/",
+          "edit": false,
+          "seq": 4
+        }
+      ],
+      "id": "ef72ccee-4955-45d2-a975-6cf170874f8e"
+    },
+    {
+      "name": "联系我们",
+      "bottomNavItem": [
+        {
+          "name": "读者服务",
+          "urlType": 1,
+          "id": "9f270295-d50e-4de4-b5f5-10e86f3ccbdd",
+          "sectionUrl": "/p/z/1500018735928.html",
+          "edit": false,
+          "seq": 1
+        },
+        {
+          "name": "销售服务",
+          "urlType": 1,
+          "id": "7c4f117b-2d51-4c5f-8a6b-2e1b80d2fea4",
+          "sectionUrl": "/p/z/1498726669365.html",
+          "edit": false,
+          "seq": 2
+        },
+        {
+          "name": "投稿咨询",
+          "urlType": 1,
+          "id": "a0a85fbd-1e87-475b-8c0f-26e17bf70c6a",
+          "sectionUrl": "/author",
+          "edit": false,
+          "seq": 3
+        },
+        {
+          "name": "教材服务",
+          "urlType": 2,
+          "id": "8164580e-acc7-4701-bb4d-8e162ab57adc",
+          "sectionUrl": "http://www.ryjiaoyu.com/article/72",
+          "edit": false,
+          "seq": 4
+        },
+        {
+          "name": "图书馆服务",
+          "urlType": 2,
+          "id": "59d332df-abb7-4439-9be3-bd1251ae5519",
+          "sectionUrl": "http://www.ptpress.com.cn:8989",
+          "edit": false,
+          "seq": 5
+        },
+        {
+          "name": "经销商园地",
+          "urlType": 2,
+          "id": "1e7c2bfd-368e-4f0d-8eda-b548c744af09",
+          "sectionUrl": "http://124.205.220.185:8085/html/b2c/html/login.html",
+          "edit": false,
+          "seq": 6
+        }
+      ],
+      "id": "946d1232-0925-4eed-9d2a-aed685f0e823"
+    }
+  ],
+  "msg": "返回数据成功！",
+  "status": true
+}

@@ -1,0 +1,39 @@
+
+@media screen and (max-width:769px){
+    .font-size-h2{font-size:24px;}
+    #index .book-floor .more{font-size:14px;right:5px;}
+    #index .book-floor .classifyName{width:95%}
+    #detail .detail_fl,#detail .detail_fr,#detail .detail_fr .info p{width:100%;padding-bottom:16px;}
+    #detail .detail_fl .bigImg{height:290px;}
+    #detail .swiper-container{margin:30px 0;}
+    #detail .swiper-container{height:100px;}
+    .book-detail-other{margin-top:30px;}
+    .book-detail-other .tab{padding:0 5%;}
+    .book-detail-other .tab>li{white-space: nowrap;text-overflow: ellipsis;font-size:16px;}
+    #detail{margin-top:30px;}
+    #detail .slideBanner{width:70%;margin:0 auto}
+    #detail .bookBaseInfo{display:none;}
+    #detail .mobile-con{display:block}
+    .order_box{width:100%;}
+    .goods_flow{width:auto;padding:10px;}
+    #refund .pros .pro_th{font-size:14px;}
+    #refund .pros .item>li>a{float:left;}
+    #refund .pros .item>li.info span{white-space: nowrap;text-overflow: ellipsis;overflow:hidden}
+    #refund .pros .item>li.info img{margin-left:25px;}
+    #refund .sumRefundMony>span{width:60%;}
+    #refund .examine{width:92%;}
+    #refund .key_attr .count .amount{border-width:1px;}
+    #refund .refund-info label{width:auto;}
+    #refund .inHand{width:70%}
+}
+
+@media screen and (min-width:1200px){
+    #refund .order_box{
+        width:1200px;
+    }
+}
+@media screen and (min-width:992px) and (max-width:1200px){
+    #refund .order_box{
+        width:95%;
+    }
+}

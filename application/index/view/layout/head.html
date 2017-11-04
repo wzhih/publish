@@ -1,0 +1,80 @@
+<!--头部-->
+<div id="head">
+    <div class="con">
+        <a href="/" class="logo">
+            <img src="__PUBLIC__static/portal/img/logo.png" alt="华软出版社">
+        </a>
+        <nav class="head-nav-fl fl">
+            <a v-for="item in menuList" v-bind:href="item.url" v-bind:title="item.category" v-bind:class="item.class">
+                {{ item.category }}
+            </a>
+            <a href="#" title="关于我们" target="_blank">关于我们</a>
+        </nav>
+        <nav class="head-nav-fr fr">
+            <a href="/shopping/car" class="cart">
+                <i class="icon iconfont icon-gouwuche2"></i>(
+                <span>0</span>)
+            </a>
+            <a href='{:url("index/login/index")}' target="_blank" class="login" style="margin-left: 20px;">登录</a>
+            <s>|</s>
+            <a href='{:url("index/register/index")}'>注册</a>
+        </nav>
+    </div>
+</div>
+<script>
+    var cid = "{$cid}";
+    var getBook = "{:url('index/index/getBook')}";
+    var getBooks = "{:url('index/index/getBookList')}";
+    var _public = "__PUBLIC__";
+    var head = new Vue({
+        el: "#head",
+        data: {
+            cartNum: 0,
+            menuList: []
+        },
+        mounted: function () {
+            var userName = '';
+            var _this = this;
+            //购物车数量
+            if (userName) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{:url("index/shop/getShopCartList")}',
+                    data: {},
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        _this.items = res.data;
+                        var carSums = 0;
+                        $.each(_this.items, function (index, item) {
+                            carSums += item.quantity;
+                        });
+
+                        _this.cartNum = carSums;
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+            ;
+            //菜单获取
+            $.ajax({
+                type: 'POST',
+                url: '{:url("index/index/getHeadNav")}',
+                data: {"cid": cid},
+                dataType: 'json',
+                success: function (res) {
+
+                    if (res.status) {
+                        _this.menuList = res.data;
+                    }
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
+        }
+    });
+</script>
+<!--头部end-->

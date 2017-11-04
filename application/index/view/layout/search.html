@@ -1,0 +1,107 @@
+<!--分类搜索-->
+<div class="classifySearch-p">
+    <div class="classifySearch">
+        <div class="classifySearchBar">
+            <div class="classify" onclick="getClassify()">搜索
+                <i class="icon iconfont icon-fenlei"></i>
+            </div>
+            <div class="allSearch">
+                <input type="text" class="search_txt" placeholder="请输入搜索关键字" value="">
+                <a href="javascript:void(0);" onclick="searchBookByName();return false;">
+                    <i class="icon iconfont icon-search1 search_btn"></i>
+                </a>
+            </div>
+        </div>
+        <div class="allClassisy">
+            <!--一级分类-->
+            <div class="level-classify level1">
+            </div>
+            <!--一级分类 end-->
+            <!--&lt;!&ndash;二级分类&ndash;&gt;-->
+            <!--<div class="level-classify level2 font-size-14">-->
+
+            <!--</div>-->
+            <!--&lt;!&ndash;二级分类 end&ndash;&gt;-->
+            <!--收起-->
+            <p>
+                <a href="javascript:void(0);"
+                   onclick="$('.allClassisy').removeClass('active');tag=false;return false;" class="up">
+                    <i class="icon iconfont icon-xiangshangjiantou up_btn"></i>
+                </a>
+            </p>
+            <!--收起 end-->
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.search_txt').bind('keypress', function (event) {
+            if (event.keyCode == "13") {
+                searchBookByName();
+                return false;
+            }
+        });
+    });
+
+    var tag = false;
+    function getClassify() {
+        if (tag) {
+            $(".allClassisy").fadeOut();
+            $(".allClassisy").fadeOut("slow");
+            $(".allClassisy").fadeOut(3000);
+            $('.allClassisy').removeClass('active');
+            tag = false;
+        } else {
+
+            $.post("{:url('index/index/getCategory')}", {"cid":cid}, function (data) {
+                if (data.status) {
+                    var datas = data.data;
+                    var ele = "";
+                    if (datas.length > 0) {
+                        ele = "<a href='{:url('index/shop/getBooks')}?cid=0' target='_blank'";
+
+                        if (("".length == 0 && "".length == 0 && "".length == 0) || "" == "") {
+                            ele += "class='active'";
+                        }
+                        ele += ">全部</a>";
+
+                        for (var i = 0; i < datas.length; i++) {
+                            ele += "<a href='{:url('index/shop/getBooks')}?cid="+ datas[i].id +"'";
+
+                            ele += "'>" + datas[i].category + "</a>";
+                        }
+                        $(".classifySearch .level1").html("");
+                        $(".classifySearch .level1").append(ele);
+                    }
+                    tag = true;
+
+                    $('.allClassisy').addClass('active');
+
+                    $(".allClassisy").fadeIn();
+                    $(".allClassisy").fadeIn("slow");
+                    $(".allClassisy").fadeIn(3000);
+
+                } else {
+                    alert(data.msg);
+                }
+            }, 'json');
+        }
+
+
+    }
+
+    function searchBookByName() {
+        console.log("进入搜索");
+
+        var searchName = $(".allSearch .search_txt").val();
+        console.log(searchName);
+
+        if (searchName == null || searchName == '') {
+            return false;
+        }
+
+        window.open("{:url('index/index/search')}" + '?searchName=' + searchName);
+    }
+
+</script>
+<!--分类搜索end-->

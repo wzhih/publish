@@ -45,7 +45,7 @@ class Login extends Controller
         }
 
         session('user', $result);
-        return json_result(true, '登陆成功', url('admin/login/login'));
+        return json_result(true, '登陆成功', url('index/index/index'));
     }
 
     public function logout(){

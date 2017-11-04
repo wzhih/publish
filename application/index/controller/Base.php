@@ -8,6 +8,7 @@
 
 namespace app\index\controller;
 
+use think\Db;
 use think\Controller;
 
 class Base extends Controller
@@ -20,6 +21,30 @@ class Base extends Controller
     public function test()
     {
         echo "Base Controller test";
+    }
+
+    //获取一级分类
+    protected function getFirstCategory()
+    {
+        return Db::name('category')
+            ->where("parent_id", 1)
+            ->where('id', '<>', 1)
+            ->select();
+    }
+
+    //根据父id获取二级分类
+    protected function getSecondCategory($cid)
+    {
+        if ($cid) {
+            return Db::name('category')
+                ->where('parent_id', '<>', 1)
+                ->where('parent_id', '=', $cid)
+                ->select();
+        }
+
+        return Db::name('category')
+            ->where('parent_id', '<>', 1)
+            ->select();
     }
 
 }
