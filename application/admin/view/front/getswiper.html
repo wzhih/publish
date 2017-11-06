@@ -1,0 +1,114 @@
+{extend name="layout/main"}
+{block name='title'}前台设置/轮播{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <h3 style="margin:0">
+        轮播列表
+    </h3>
+    <blockquote>
+        <p>
+            <strong>更新前台轮播图片信息。图片尺寸应为1200*500</strong>
+        </p>
+    </blockquote>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr class="row">
+                <th>id</th>
+                <th>链接</th>
+                <th>图片</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $data as $d}
+            <tr class="row">
+                <td>{$d.id}</td>
+                <td>{$d.book_url}</td>
+                <td class="thumbnail"><img src="__PUBLIC__{$d.photo_url}"></td>
+                <td>{$d.describe}</td>
+                <td data-id="{$d.id}" data-book="{$d.book_url}" data-photo="{$d.photo_url}" data-desc="{$d.describe}">
+                    <button class="btn btn-primary saveSwiper" type="button">修改</button>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- 新增用户模态框 -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{:url('admin/Front/setSwiper')}" enctype="multipart/form-data" method="post" class="form-horizontal" role="form">
+                <input type="hidden" name="id" id="id" />
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="addModalLabel">
+                        修改
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="book" class="col-sm-2 control-label">链接</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="book_url" class="form-control" id="book" placeholder="请输入链接">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="photo">更换图片</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="" id="photo"
+                                   name="photo_url">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc" class="col-sm-2 control-label">描述</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="describe" class="form-control" id="desc" placeholder="请输入描述">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        确认
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+{/block}
+
+{block name='js'}
+<script>
+    $(function () {
+        $('.cm-submenu').eq(1).click();
+        $('.cm-submenu').eq(1).children('ul').children('li').eq(0).addClass('active');
+
+//        $("[data-toggle='tooltip']").tooltip();
+    });
+
+    $('.saveSwiper').click(function () {
+        var id = $(this).parent().data('id');
+        var book = $(this).parent().data('book');
+        var desc = $(this).parent().data('desc');
+
+        $('#id').val(id);
+        $('#desc').val(desc);
+        $('#book').val(book);
+
+        $('#Modal').modal();
+    });
+
+</script>
+
+{/block}
