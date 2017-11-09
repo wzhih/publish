@@ -112,7 +112,7 @@
         $.post("{:url('index/index/getCategory')}", {"cid":cid}, function (data) {
             if (data.status) {
                 var datas = data.data;
-                console.log("热门分类标签：" + JSON.stringify(datas));
+                // console.log("热门分类标签：" + JSON.stringify(datas));
                 var ele = "";
                 if (datas.length > 0) {
                     for (var i = 0; i < datas.length; i++) {
@@ -136,7 +136,7 @@
         /*加载轮播*/
         $.post("{:url('index/index/getSwiper')}", function (data) {
             if (data.status) {
-                console.log("轮播:" + JSON.stringify(data));
+                // console.log("轮播:" + JSON.stringify(data));
                 var datas = data.data;
                 barnnerDatas = datas;
                 var ele = "";
@@ -161,7 +161,7 @@
 
     /*轮播*/
     function init_swiper(barnnerDatas) {
-        console.log(barnnerDatas[0].describe);
+        // console.log(barnnerDatas[0].describe);
         var mySwiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             paginationClickable: true,
@@ -169,7 +169,7 @@
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev',
             paginationBulletRender: function (swiper, index, className) {
-                console.log(index);
+                // console.log(index);
                 return '<div class="' + className + '"><span>' + barnnerDatas[index].describe + '</span></div>';
             },
             speed: 1000,
