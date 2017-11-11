@@ -34,8 +34,8 @@ class Login extends Controller{
         }
 
         if(!$result['token']) {
-            $id = Db::name('admin')->where($data)->value('id');
-            $token = getUserToken($id, $name);
+            $id = $result['id'];
+            $token = getUserToken($id, $result['name']);
             if($token['code'] == 200) {
                 Db::name('admin')->where('id', $id)->update(['token' => $token['token']]);
             }
