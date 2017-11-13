@@ -70,7 +70,7 @@
 
 {include file="layout/foot" /}
 
-<div class="goBack"></div>
+{include file="layout/goback" /}
 
 <script>
     $(function () {
@@ -84,26 +84,6 @@
                 });
             }
         });
-
-        $(window).scroll(function () {
-            var _t = $(window).scrollTop();
-            if (_t > 100) {
-                $('.goBack').addClass('active').attr('title', '返回顶部');
-            } else {
-                $('.goBack').removeClass('active').attr('title', '向下翻页');
-            }
-        });
-        $(document).on('click', function (e) {
-            if (e.target.className == 'goBack') {
-                $('body,html').animate({
-                    scrollTop: 500
-                }, 300);
-            } else if (e.target.className == 'goBack active') {
-                $('body,html').animate({
-                    scrollTop: 0
-                }, 500);
-            }
-        })
     });
 
     var index = new Vue({
@@ -212,18 +192,6 @@
 
         });
     }
-
-    $(window).scroll(function () {
-        var t = document.documentElement.scrollTop || document.body.scrollTop;
-        if (t > 218) {
-            $(".classifySearch-p").addClass("fix");
-            tag = false;
-            $('.allClassisy').removeClass('active');
-        }
-        else {
-            $(".classifySearch-p").removeClass("fix");
-        }
-    });
 
 </script>
 
