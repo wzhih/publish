@@ -58,7 +58,7 @@
                     var datas = data.data;
                     var ele = "";
                     if (datas.length > 0) {
-                        ele = "<a href='{:url('index/shop/getBooks')}?cid=0' target='_blank'";
+                        ele = "<a href='{:url('index/index/getBookListByCategory')}?cid="+ cid +"&childId=0' target='_blank'";
 
                         if (("".length == 0 && "".length == 0 && "".length == 0) || "" == "") {
                             ele += "class='active'";
@@ -66,7 +66,7 @@
                         ele += ">全部</a>";
 
                         for (var i = 0; i < datas.length; i++) {
-                            ele += "<a href='{:url('index/shop/getBooks')}?cid="+ datas[i].id +"'";
+                            ele += "<a href='{:url('index/index/getBookListByCategory')}?cid="+ cid +"&childId="+ datas[i].id +"'";
 
                             ele += "'>" + datas[i].category + "</a>";
                         }

@@ -1,0 +1,42 @@
+@charset "utf-8";
+#search .bookList {
+    margin-top: 0px;
+    text-align: left;
+    transition: all .4s ease-out;
+    -webkit-transition: all .4s ease-out;
+    min-height: 40px;
+}
+
+#search .bookList .no_data {
+    color: #9b9b9b;
+}
+
+#search .sort {
+    border: solid 1px #ededed;
+    overflow: hidden;
+    margin-bottom: 20px;
+    float: left;
+    border-bottom: none
+}
+
+#search .sort span {
+    line-height: 25px;
+    float: left;
+    padding: 2px 20px;
+    border-right: solid 1px #ededed;
+    border-bottom: solid 1px #ededed;
+    cursor: pointer
+}
+
+#search .sort span .icon {
+    font-size: 12px;
+}
+
+#search .sort span:last-child {
+    border-right: none;
+}
+
+#search .sort span.active {
+    background: #f2f2f2;
+    color: #0457A9;
+}

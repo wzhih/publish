@@ -70,6 +70,13 @@ class Index extends Base
         return json_result(true, 'success', $result);
     }
 
+    public function getBook()
+    {
+        $bookId = input('bookId', 1);
+
+        
+    }
+
     public function getBookList()
     {
         $cid = input('childId');
@@ -81,5 +88,26 @@ class Index extends Base
             ->select();
 
         return json_result(true, 'success', $data);
+    }
+
+    //根据类别，返回书籍信息
+    public function getBookListByCategory()
+    {
+        $cid = $this->getInputCId();//大类型
+        $childId = input('childId', 0);//小类型
+
+        $childIds[] = $childId;
+        if ($childId == 0) {
+            $childIds = Db::name('category')->where('parent_id', $cid)->column('id');
+        }
+
+        $config = [
+            'query' => ['cid' => $cid, 'childId' => $childId],
+        ];
+        $data = DB::name('publication')->where('c_id', 'IN', $childIds)->paginate(12, false, $config);
+
+        $this->assign('cid', $cid);
+        $this->assign('data', $data);
+        return $this->fetch('list');
     }
 }
