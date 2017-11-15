@@ -57,13 +57,19 @@
 
 <div id="search" class="warp">
     <div class="sort">
-        <span tag="publish" class="active" id="new">最新</span>
-        <span tag="price-up" class="" id="price_up">价格
+        <a href="{:url('index/index/getbooklistbycategory',['cid'=>$cid,'childId'=>$childId])}?order=date DESC">
+            <span tag="publish" class="{$order==1?'active':''}" id="new">最新</span>
+        </a>
+        <a href="{:url('index/index/getbooklistbycategory',['cid'=>$cid,'childId'=>$childId,'order'=>'price'])}">
+            <span tag="price-up" class="{$order==2?'active':''}" id="price_up">价格
             <i class="icon iconfont icon-z089"></i>
         </span>
-        <span tag="price-up" class="" id="price_down">价格
+        </a>
+        <a href="{:url('index/index/getbooklistbycategory',['cid'=>$cid,'childId'=>$childId])}?order=price DESC">
+            <span tag="price-up" class="{$order==3?'active':''}" id="price_down">价格
             <i class="icon iconfont icon-z090"></i>
         </span>
+        </a>
     </div>
     <div class="book-floor">
         <ul class="bookList">

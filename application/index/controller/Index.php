@@ -95,6 +95,7 @@ class Index extends Base
     {
         $cid = $this->getInputCId();//大类型
         $childId = input('childId', 0);//小类型
+        $order = input('order','date desc');
 
         $childIds[] = $childId;
         if ($childId == 0) {
@@ -102,11 +103,28 @@ class Index extends Base
         }
 
         $config = [
-            'query' => ['cid' => $cid, 'childId' => $childId],
+            'query' => ['cid' => $cid, 'childId' => $childId, 'order' => $order],
         ];
-        $data = DB::name('publication')->where('c_id', 'IN', $childIds)->paginate(12, false, $config);
+        $data = DB::name('publication')
+            ->where('c_id', 'IN', $childIds)
+            ->order($order)
+            ->paginate(12, false, $config);
+
+        switch ($order){
+            case 'date DESC':
+                $order = 1;
+                break;
+            case 'price':
+                $order = 2;
+                break;
+            case 'price DESC':
+                $order = 3;
+                break;
+        }
 
         $this->assign('cid', $cid);
+        $this->assign('childId', $childId);
+        $this->assign('order', $order);
         $this->assign('data', $data);
         return $this->fetch('list');
     }
