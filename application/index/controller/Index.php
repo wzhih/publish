@@ -49,9 +49,38 @@ class Index extends Base
 
     public function search()
     {
-        $name = input('searchName');
+        $cid = $this->getInputCId();//在哪一大分类下查询
+        $name = input('name');
+        $order = input('order','date desc');
 
-        return $name;
+        $childIds = Db::name('category')->where('parent_id', $cid)->column('id');
+
+        $config = [
+            'query' => ['cid' => $cid, 'name' => $name, 'order' => $order],
+        ];
+        $data = DB::name('publication')
+            ->where('c_id', 'IN', $childIds)
+            ->where('name', 'LIKE', "%$name%")
+            ->order($order)
+            ->paginate(12, false, $config);
+
+        switch ($order){
+            case 'date DESC':
+                $order = 1;
+                break;
+            case 'price':
+                $order = 2;
+                break;
+            case 'price DESC':
+                $order = 3;
+                break;
+        }
+
+        $this->assign('cid', $cid);
+        $this->assign('name', $name);
+        $this->assign('order', $order);
+        $this->assign('data', $data);
+        return $this->fetch();
     }
 
     public function getSwiper()

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>首页</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/search.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+    <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/swiper.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/common.js"></script>
+
+    <style>
+        .pagination > li > a,
+        .pagination > li > span {
+            padding: 0.1rem 0.2rem;
+            font-size: 0.15rem;
+        }
+    </style>
+</head>
+
+<body>
+{include file="layout/head" /}
+
+{include file="layout/search" /}
+
+<div id="search" class="warp">
+    <div class="sort">
+        <a href="{:url('index/index/search',['cid'=>$cid,'name'=>$name])}?order=date DESC">
+            <span tag="publish" class="{$order==1?'active':''}" id="new">最新</span>
+        </a>
+        <a href="{:url('index/index/search',['cid'=>$cid,'name'=>$name,'order'=>'price'])}">
+            <span tag="price-up" class="{$order==2?'active':''}" id="price_up">价格
+            <i class="icon iconfont icon-z089"></i>
+        </span>
+        </a>
+        <a href="{:url('index/index/search',['cid'=>$cid,'name'=>$name])}?order=price DESC">
+            <span tag="price-up" class="{$order==3?'active':''}" id="price_down">价格
+            <i class="icon iconfont icon-z090"></i>
+        </span>
+        </a>
+    </div>
+    <div class="book-floor">
+        <ul class="bookList">
+            {foreach $data as $value}
+            <li class="item" title="{$value.name}">
+                <a href="javascript:void(0)" target="_blank"
+                   style="background:url(__PUBLIC__static/portal/img/bg/bg{:mt_rand(1, 7)}.png)">
+                    <img class="book-img-shadow"
+                         src="{$value.cover}" style="display: inline;">
+                </a>
+                <p>
+                    <a target="_blank" href="#">{$value.name}</a>
+                </p>
+                <p>
+                    <a href="#">￥{$value.price}</a>
+                </p>
+            </li>
+            {/foreach}
+        </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    {$data->render()}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+    });
+
+</script>
+
+</body>
+
+</html>
