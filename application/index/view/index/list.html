@@ -75,16 +75,16 @@
         <ul class="bookList">
             {foreach $data as $value}
             <li class="item" title="{$value.name}">
-                <a href="javascript:void(0)" target="_blank"
+                <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}"
                    style="background:url(__PUBLIC__static/portal/img/bg/bg{:mt_rand(1, 7)}.png)">
                     <img class="book-img-shadow"
                          src="{$value.cover}" style="display: inline;">
                 </a>
                 <p>
-                    <a target="_blank" href="#">{$value.name}</a>
+                    <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}">{$value.name}</a>
                 </p>
                 <p>
-                    <a href="#">￥{$value.price}</a>
+                    <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}">￥{$value.price}</a>
                 </p>
             </li>
             {/foreach}

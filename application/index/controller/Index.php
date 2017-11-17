@@ -101,9 +101,19 @@ class Index extends Base
 
     public function getBook()
     {
+        $cid = $this->getInputCId();//大类型
         $bookId = input('bookId', 1);
 
-        
+        $bookInfo = Db::name('publication')->find(['id' => $bookId]);
+        $bookInfo['img'] = json_decode($bookInfo['img'], true);
+
+        $offset = mt_rand(99, 1999);
+        $rand = Db::name('publication')->limit($offset, 9)->select();
+
+        $this->assign('book', $bookInfo);
+        $this->assign('rand', $rand);
+        $this->assign('cid', $cid);
+        return $this->fetch('book');
     }
 
     public function getBookList()

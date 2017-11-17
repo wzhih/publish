@@ -8,14 +8,14 @@
             <a v-for="item in menuList" v-bind:href="item.url" v-bind:title="item.category" v-bind:class="item.class">
                 {{ item.category }}
             </a>
-            <a href="#" title="关于我们" target="_blank">关于我们</a>
+            <a href="#" title="关于我们">关于我们</a>
         </nav>
         <nav class="head-nav-fr fr">
             <a href="/shopping/car" class="cart">
                 <i class="icon iconfont icon-gouwuche2"></i>(
                 <span>0</span>)
             </a>
-            <a href='{:url("index/login/index")}' target="_blank" class="login" style="margin-left: 20px;">登录</a>
+            <a href='{:url("index/login/index")}' class="login" style="margin-left: 20px;">登录</a>
             <s>|</s>
             <a href='{:url("index/register/index")}'>注册</a>
         </nav>
@@ -23,7 +23,7 @@
 </div>
 <script>
     var cid = "{$cid}";
-    var getBook = "{:url('index/index/getBook')}";
+    var getBook = "{:url('index/index/getBook',['cid' => $cid])}";
     var getBooks = "{:url('index/index/getBookList')}";
     var _public = "__PUBLIC__";
     var head = new Vue({

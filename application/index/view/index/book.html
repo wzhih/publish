@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>首页</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/search.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+    <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/swiper.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/common.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/detail.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/cssAuto.css">
+
+</head>
+
+<body>
+{include file="layout/head" /}
+
+{include file="layout/search" /}
+
+<div id="detail" class="warp">
+    <div class="detl-top detail_fl fl">
+        <div class="bigImg" style="background: url('__PUBLIC__static/portal/img/bg/bg1.png');">
+            <img src="{$book['cover']}" title="{$book['name']}" alt="{$book['name']}" id="bigimg" class="book-img-shadow">
+        </div>
+        <div class="slideBanner">
+            <div class="swiper-container swiper-container-horizontal">
+                <div class="swiper-wrapper bookList">
+                    <div bgimg="__PUBLIC__static/portal/img/bg/bg1.png" class="swiper-slide item swiper-slide-active"
+                         style="width: 138.667px; margin-right: 20px; background: url('__PUBLIC__static/portal/img/bg/bg1.png');">
+                        <img src="{$book['cover']}" alt="{$book['name']}" class="book-img-shadow">
+                    </div>
+                    {foreach $book['img'] as $img}
+                    <div class="swiper-slide item item-white" style="width: 138.667px; margin-right: 20px;">
+                        <img src="{$img}" alt="{$book['name']}"
+                             class="book-img-white">
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="swiper-button-prev swiper-button-disabled"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+    <div class="detl-top detail_fr fr">
+        <div class="info">
+            <p class="book-name font-max">{$book['name']}</p>
+            <p class="book-author color-base3">{$book['author']} 编著</p>
+            <p class="book-summary font-min">{$book['keyContent']}</p>
+        </div>
+        <div class="key_attr">
+            <p style="margin-bottom: 50px;">
+                    <span class="price-p">￥
+                        <span class="price">{$book['price']}</span>
+                    </span>
+                <span>
+                        <span style="margin-left: 20px; font-size: 14px; color: rgb(255, 101, 0); margin-right: 20px;">[
+                            <span>8.0</span>折]</span>
+                        [
+                        <s style="font-size: 14px;">定价:{$book['price'] / 8 * 10}元</s>]
+                    </span>
+            </p>
+            <dl>
+                <dt>数量</dt>
+                <dd>
+                    <div class="count">
+                        <span class="btn no_minus">-</span>
+                        <input type="number" min="1" step="1" name="quantity" id="quantity" onafterpaste="return false"
+                               class="amount" style="height: 32px; line-height: 32px;">
+                        <span class="btn plus">+</span>
+                    </div>
+                    <!---->
+                </dd>
+            </dl>
+            <dl>
+                <dt class="cart-dt">购买</dt>
+                <dd>
+                    <a href="javascript:void(0);" class="cart-btn">立即购买</a>
+                    <!---->
+                </dd>
+            </dl>
+            <dl>
+                <dt>收藏</dt>
+                <dd>
+                    <i class="icon iconfont_24"></i>
+                    <!---->
+                </dd>
+            </dl>
+            <!--<dl>-->
+                <!--<dt>分享</dt>-->
+                <!--<dd>-->
+                    <!--<div class="share_main share_box">-->
+                        <!--<div class="bshare-custom">-->
+                            <!--<a title="分享到QQ空间" class="bshare-qzone icons" href="javascript:;"></a>-->
+                            <!--<a title="分享到QQ好友" class="bshare-qqim icons" href="javascript:;"></a>-->
+                            <!--<a title="分享到微信" class="bshare-weixin icons" href="javascript:;"></a>-->
+                            <!--<a title="分享到新浪微博" class="bshare-sinaminiblog icons" href="javascript:;"></a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</dd>-->
+            <!--</dl>-->
+        </div>
+    </div>
+    <div class="book-detail-other">
+        <ul class="tab">
+            <li class="active">图书详情</li>
+            <li>图书目录</li>
+            <!---->
+            <li>内容简介</li>
+            <li>作者简介</li>
+        </ul>
+        <ul class="tab-con">
+            <li class="active">
+                <table class="bookBaseInfo">
+                    <tbody>
+                    <tr>
+                        <td width="25%">ISBN：{$book['ISBN']}</td>
+                        <td width="25%">语种：中文版</td>
+                        <td width="25%">包装：平装</td>
+                    </tr>
+                    <tr>
+                        <td>开本：{$book['size']}</td>
+                        <td>出版时间：{$book['date']}</td>
+                        <td>页数：{$book['pages']}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="mobile-con">
+                    <p>ISBN：{$book['ISBN']}</p>
+                    <p>语种：中文版</p>
+                    <p>包装：平装</p>
+                    <p>开本：{$book['size']}</p>
+                    <p>页数：{$book['pages']}</p>
+                </div>
+            </li>
+            <li>
+                <div id="myarticle" class="catalog_box">
+                    <div><p>{$book['bookDir']}</p></div>
+                </div>
+            </li>
+            <!---->
+            <li>
+                <div>
+                    <p>
+                        {$book['describe']}
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <p>
+                        {$book['authorDescribe']}
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="book-floor">
+        <div class="floor-name">
+            <h2 class="font-max font-size-h2">推荐图书
+                <span class="line line-fl"></span>
+                <span class="line line-fr"></span>
+            </h2>
+        </div>
+        <ul class="bookList">
+            {foreach $rand as $value}
+            <li class="item" title="{$value.name}">
+                <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}"
+                   style="background:url(__PUBLIC__static/portal/img/bg/bg{:mt_rand(1, 7)}.png)">
+                    <img class="book-img-shadow"
+                         src="{$value.cover}" style="display: inline;">
+                </a>
+                <p>
+                    <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}">{$value.name}</a>
+                </p>
+                <p>
+                    <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}">￥{$value.price}</a>
+                </p>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+</div>
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 3,
+            spaceBetween: 20,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+
+        $('.item').click(function () {
+            var src = $(this).children()[0].src;
+            var name = $(this).children()[0].className;
+
+            $('#bigimg')[0].src = src;
+            console.log(name);
+
+            if (name != 'book-img-shadow') {
+                $('.bigImg > img').removeClass('book-img-shadow').addClass('book-img-white');
+                $('.bigImg').css('background', '');
+            } else {
+
+                $('.bigImg > img').removeClass('book-img-white').addClass('book-img-shadow');
+                $('.bigImg').css('background', 'url(\'__PUBLIC__static/portal/img/bg/bg1.png\')');
+            }
+        });
+        
+        $('.tab > li').click(function () {
+            $('.tab > li').removeClass('active');
+            $('.tab-con > li').removeClass('active');
+
+            $(this).addClass('active');
+
+            $('.tab-con > li').eq($('.tab > li').index(this)).addClass('active');
+        });
+        
+        $('.no_minus').click(function () {
+            var val = $("#quantity").val();
+            if (val > 1) {
+                $("#quantity").val(val-1);
+            }
+        });
+        $('.plus').click(function () {
+            var val = $("#quantity").val();
+            $("#quantity").val(Number(val)+1);
+        });
+
+        $('.cart-btn').click(function () {
+
+        });
+    });
+
+</script>
+
+</body>
+
+</html>

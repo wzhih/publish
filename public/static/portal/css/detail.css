@@ -1,0 +1,81 @@
+@charset "utf-8";
+/* CSS Document */
+/*
+* Basic Cascading Style Sheet
+* Intructions: none
+* Version: 1.0
+* Updated: 2017-06-19
+*/
+#detail{margin-top:78px;}
+#detail .detl-top{height:570px;}
+#detail .detail_fl{width:44%;height:100%;padding:0 3%}
+#detail .detail_fl .bigImg{width:1%;height:415px;display:table-cell;text-align:center;vertical-align:middle;border: 1px solid #ddd;}
+#detail .detail_fl .bigImg img{height:230px;width:auto;}
+/*缩略图轮播*/
+#detail .swiper-container{width:100%;height:122px;margin-top:60px;}
+#detail .swiper-container .bookList{margin-top:0px;height:100%;}
+#detail .swiper-container .bookList .item{display:table-cell\9;vertical-align:middle\9;height:98%;border:solid 1px transparent; -webkit-transition: all .3s ease-in-out;  -moz-transition: all .3s ease-in-out;  -ms-transition: all .3s ease-in-out;  -o-transition: all .3s ease-in-out;  transition: all .3s ease-in-out;}
+#detail .detail_fl .book-img-shadow{height:70px;}
+#detail .book-img-white{width:auto;height:80px;max-width:80%;  vertical-align: middle;-webkit-transition: all .3s ease-in-out;  -moz-transition: all .3s ease-in-out;  -ms-transition: all .3s ease-in-out;  -o-transition: all .3s ease-in-out;  transition: all .3s ease-in-out;}
+#detail .swiper-container .bookList .item.item-white,#detail .swiper-container .bookList .item.book-img-shadow{border-color:#ddd;}
+#detail .swiper-container .bookList .item:hover,#detail .swiper-container .bookList .item.active{border-color:#676767;}
+ .swiper-slide {
+    text-align: center;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+#detail .detail_fr{width:45%;font-size:16px;}
+#detail .detail_fr .book-name{font-size:24px;}
+#detail .detail_fr .info{border-bottom:solid 1px #e5e5e5;padding-bottom:30px;}
+#detail .detail_fr .info p{width:80%;padding-bottom:30px;word-break: break-all;}
+#detail .detail_fr .book-summary{line-height:30px;}
+/*价格 数量 加入购物车*/
+.key_attr{width:100%;padding:20px 0 6px 0;float:left;z-index:2;position: relative;background:#fff;}
+.key_attr .price-p{font-size:30px;font-weight:bold;font-family:font-min;margin-bottom:50px;}
+.key_attr .price-p .price{font-size:45px;}
+
+.key_attr dl{width:100%;float:left;padding-bottom:20px;}
+.key_attr dl dt{float:left;min-width:80px;text-indent:10px;line-height:35px;}
+.key_attr dl dd{float:left;cursor: pointer;}
+
+/*数量 购买*/
+.key_attr .count .btn,.key_attr .count .amount,.key_attr .cart-btn{height:32px;line-height:32px;float:left;border:solid 1px #7f7f7f;text-align:center;cursor:pointer;    border-radius: 0px; padding: 0;}
+.key_attr .count .btn{width:35px;display:inline-block;font-size:18px;}
+.key_attr .count .amount{width:176px;border-width:1px 0 1px 0;}
+.key_attr .cart-btn{height:48px;line-height:48px;display:inline-block;width:250px;}
+.key_attr .cart-dt{line-height:48px;}
+
+/*图书其它详情*/
+.book-detail-other{width:100%;float:left;margin-top:80px;position:relative;}
+.book-detail-other .tab{padding:0 10%;border-top:solid 1px #7f7f7f;display: -webkit-box;display: -moz-box;  display: -o-box;text-align:center}
+.book-detail-other .tab>li{-moz-box-flex: 1;  -webkit-box-flex: 1;  box-flex: 1;float:left\0;padding:0 5%\0;font-size:20px;font-family:font-max;font-weight:bold;line-height:60px;border-top:solid 2px transparent;margin-top:-2px;-webkit-transtion:all ease 1s;transition:all ease 1s;cursor: pointer;}
+.book-detail-other .tab>li.active,.book-detail-other .tab>li:hover{border-color:#0457A9;color:#0457A9;}
+.book-detail-other .tab-con{width:100%\0;overflow:hidden\0;}
+.book-detail-other .tab-con li{width:90%;margin:20px auto;display:none;font-size: 16px;  line-height: 30px;text-align:left;}
+.book-detail-other .tab-con li.active{display:block;}
+.book-detail-other .tab-con li img{max-width: 1200px; vertical-align:middle;margin:0px auto;display: block;}
+#detail .book-floor{margin-top:80px;}
+
+.bookBaseInfo{width:100%;font-size:16px;margin:0px auto;color:#030303;}
+.bookBaseInfo td{height:50px;padding-left:12%;}
+.bookBaseInfo img{height:125px;width:auto;}
+
+.slideBanner{position: relative;}
+.slideBanner .swiper-button-prev{left:auto;right:103%;}
+.slideBanner .swiper-button-next{right:auto;left:103%;}
+#detail{overflow:initial;}
+#detail:after{content:'';display:table;clear:both;}
+
+#detail .mobile-con{display:none}
