@@ -54,21 +54,36 @@
 <div id="detail" class="warp">
     <div class="detl-top detail_fl fl">
         <div class="bigImg" style="background: url('__PUBLIC__static/portal/img/bg/bg1.png');">
+            {if condition="strpos($book['cover'],'http')===false"}
+            <img src="__PUBLIC__{$book['cover']}" title="{$book['name']}" alt="{$book['name']}" id="bigimg" class="book-img-shadow">
+            {else/}
             <img src="{$book['cover']}" title="{$book['name']}" alt="{$book['name']}" id="bigimg" class="book-img-shadow">
+            {/if}
         </div>
         <div class="slideBanner">
             <div class="swiper-container swiper-container-horizontal">
                 <div class="swiper-wrapper bookList">
                     <div bgimg="__PUBLIC__static/portal/img/bg/bg1.png" class="swiper-slide item swiper-slide-active"
                          style="width: 138.667px; margin-right: 20px; background: url('__PUBLIC__static/portal/img/bg/bg1.png');">
+                        {if condition="strpos($book['cover'],'http')===false"}
+                        <img src="__PUBLIC__{$book['cover']}" alt="{$book['name']}" class="book-img-shadow">
+                        {else/}
                         <img src="{$book['cover']}" alt="{$book['name']}" class="book-img-shadow">
+                        {/if}
                     </div>
-                    {foreach $book['img'] as $img}
-                    <div class="swiper-slide item item-white" style="width: 138.667px; margin-right: 20px;">
-                        <img src="{$img}" alt="{$book['name']}"
-                             class="book-img-white">
-                    </div>
-                    {/foreach}
+                    {if condition="$book['img']"}
+                        {if condition="strpos($book['img'],'http')===false"}
+                            <div class="swiper-slide item item-white" style="width: 138.667px; margin-right: 20px;">
+                                <img src="__PUBLIC__{$book['img']}" alt="{$book['name']}"
+                                     class="book-img-white">
+                            </div>
+                        {else/}
+                            <div class="swiper-slide item item-white" style="width: 138.667px; margin-right: 20px;">
+                                <img src="{$book['img']}" alt="{$book['name']}"
+                                     class="book-img-white">
+                            </div>
+                        {/if}
+                    {/if}
                 </div>
             </div>
             <div class="swiper-button-prev swiper-button-disabled"></div>
@@ -201,8 +216,13 @@
             <li class="item" title="{$value.name}">
                 <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}"
                    style="background:url(__PUBLIC__static/portal/img/bg/bg{:mt_rand(1, 7)}.png)">
+                    {if condition="strpos($value.cover,'http')===false"}
+                    <img class="book-img-shadow"
+                         src="__PUBLIC__{$value.cover}" style="display: inline;">
+                    {else/}
                     <img class="book-img-shadow"
                          src="{$value.cover}" style="display: inline;">
+                    {/if}
                 </a>
                 <p>
                     <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}">{$value.name}</a>

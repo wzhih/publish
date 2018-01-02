@@ -99,6 +99,7 @@ class Index extends Base
         //传入搜索关键字，以此搜索出版物
         $publication = input('publication');
         if (!empty($publication)) {
+            $publication = urldecode($publication);
             $map['p.name'] = ['like', '%' . $publication . '%'];
 
         }
@@ -118,7 +119,7 @@ class Index extends Base
         return $this->fetch();
     }
 
-    //显示增加，修改出版物页面
+    //显示 增加/修改 出版物页面
     public function savePublication()
     {
         //根据有无出版物id，判断是增加还是修改
@@ -145,8 +146,12 @@ class Index extends Base
     {
         $data = input('post.');
         $cover = uploading('cover');
+        $img = uploading('img');
         if ($cover) {
             $data['cover'] = $cover;
+        }
+        if ($img) {
+            $data['img'] = $img;
         }
         $result = Db::name('publication')->data($data)->insert();
 
@@ -183,8 +188,12 @@ class Index extends Base
     {
         $data = input('post.');
         $cover = uploading('cover');
+        $img = uploading('img');
         if ($cover) {
             $data['cover'] = $cover;
+        }
+        if ($img) {
+            $data['img'] = $img;
         }
         $result = Db::name('publication')->data($data)->update();
 

@@ -1,8 +1,9 @@
 <?php
 namespace app\admin\controller;
 
-use think\Controller;
+use PDO;
 use think\Db;
+use think\Controller;
 
 class Login extends Controller{
 
@@ -25,8 +26,8 @@ class Login extends Controller{
             ->where('name' , ':name')
             ->where('password' , ':password')
             ->bind([
-                    'name' => [$username , \PDO::PARAM_INT] ,
-                    'password' => [md5($password) , \PDO::PARAM_STR]
+                    'name' => [$username , PDO::PARAM_STR] ,
+                    'password' => [md5($password) , PDO::PARAM_STR]
                 ])
             ->find();
         if(!$result){

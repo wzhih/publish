@@ -105,7 +105,6 @@ class Index extends Base
         $bookId = input('bookId', 1);
 
         $bookInfo = Db::name('publication')->find(['id' => $bookId]);
-        $bookInfo['img'] = json_decode($bookInfo['img'], true);
 
         $offset = mt_rand(99, 1999);
         $rand = Db::name('publication')->limit($offset, 9)->select();
