@@ -9,6 +9,8 @@
 namespace app\index\controller;
 
 
+use think\Db;
+
 class Shop extends Base
 {
     public function index()
@@ -18,7 +20,19 @@ class Shop extends Base
 
     public function getShopCartList()
     {
+        $user = session('user');
+        $data = Db::name('cart')
+            ->alias([
+                'cart' => 'c',
+                'publication' => 'p',
+            ])
+            ->join('publication', 'c.p_id = p.id')
+            ->where([
+                'c.u_id' => $user['id']
+            ])
+            ->select();
 
+        return json_result(true, 'success', $data);
     }
 
 

@@ -15,12 +15,8 @@ class Base extends Controller
 {
     public function _initialize()
     {
-
-    }
-
-    public function test()
-    {
-        echo "Base Controller test";
+        $user = session('user');
+        $this->assign('user', $user);
     }
 
     //获取一级分类

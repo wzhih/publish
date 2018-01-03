@@ -51,7 +51,7 @@ class Login extends Controller
     public function logout(){
         //清除登陆信息
         session(null);
-        return $this->fetch('index');
+        return $this->redirect(url('index/index/index'));
     }
 
     public function resetPassword()

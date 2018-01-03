@@ -12,12 +12,19 @@
         </nav>
         <nav class="head-nav-fr fr">
             <a href="/shopping/car" class="cart">
-                <i class="icon iconfont icon-gouwuche2"></i>(
-                <span>0</span>)
+                <i class="icon iconfont icon-gouwuche2"></i>
+                (<span>{{ cartNum }}</span>)
             </a>
+
+            {if condition="$user"}
+            <a href='{:url("index/index/index")}' class="login" style="margin-left: 20px;">{$user['phone']}</a>
+            <s>|</s>
+            <a href='{:url("index/login/logout")}'>退出</a>
+            {else /}
             <a href='{:url("index/login/index")}' class="login" style="margin-left: 20px;">登录</a>
             <s>|</s>
             <a href='{:url("index/register/index")}'>注册</a>
+            {/if}
         </nav>
     </div>
 </div>
@@ -33,7 +40,7 @@
             menuList: []
         },
         mounted: function () {
-            var userName = '';
+            var userName = "{$user['phone']}";
             var _this = this;
             //购物车数量
             if (userName) {
