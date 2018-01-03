@@ -249,4 +249,10 @@ return [
     //阿里云短信
     'AccessKeyID' => 'LTAIobhHocXhN0Cw',
     'AccessKeySecret' => 'LzY422JoVFYA4uXnpyBzbSLvLEEFpJ',
+
+    //阿里云OSS
+    'OSSKeyID' => 'LTAIbfeDHJ2HLIBN',
+    'OSSKeySecret' => 'usdIxrKme3Iff29shlXmc7lOgHtznM',
+    'Endpoint' => 'oss-cn-shenzhen.aliyuncs.com',
+    'Bucket' => 'hr-publish',
 ];

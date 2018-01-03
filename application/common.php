@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+use OSS\OssClient;
+use OSS\Core\OssException;
 use api\RongCloud;
 use AliyunSms\SmsDemo;
 use think\captcha\Captcha;
@@ -142,6 +144,37 @@ function uploading($name, $path = 'uploads' . DS . 'cover', $validate = [])
         return $path . DS . $info->getSaveName();
     } else {
         return false;
+    }
+
+}
+
+/**
+ * 阿里云OSS存储上传
+ * @param string $object 文件对象在OSS的路径名字，如test/test.txt
+ * @param string $file  要上传的文件路径
+ * @param bool $del 上传后是否删除本地图片
+ * @return string
+ */
+function upload_oss(string $object, string $file, bool $del = true)
+{
+    $OSSKeyID = config('OSSKeyID');
+    $OSSKeySecret = config('OSSKeySecret');
+    $Endpoint = config('Endpoint');
+    $Bucket = config('Bucket');
+    $file = ROOT_PATH . 'public' . DS . $file;
+
+    try {
+        $ossClient = new OssClient($OSSKeyID, $OSSKeySecret, $Endpoint);
+        $ossClient->uploadFile($Bucket, $object, $file);
+
+        if ($del) {
+            unlink($file);
+        }
+
+        return "http://{$Bucket}.{$Endpoint}/{$object}";
+    } catch (OssException $e) {
+        $e->getMessage();
+        return '';
     }
 
 }

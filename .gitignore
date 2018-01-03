@@ -4,3 +4,4 @@ composer.lock
 thinkphp
 .vscode/*
 public/uploads/cover/*
+public/static/portal/img/*

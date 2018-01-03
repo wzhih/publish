@@ -77,8 +77,11 @@
             <li class="item" title="{$value.name}">
                 <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}"
                    style="background:url(__PUBLIC__static/portal/img/bg/bg{:mt_rand(1, 7)}.png)">
-                    <img class="book-img-shadow"
-                         src="{$value.cover}" style="display: inline;">
+                    {if condition="strpos($value['cover'],'http')===false"}
+                    <img src="__PUBLIC__{$value['cover']}" alt="{$value['name']}" class="book-img-shadow">
+                    {else/}
+                    <img src="{$value['cover']}" alt="{$value['name']}" class="book-img-shadow">
+                    {/if}
                 </a>
                 <p>
                     <a href="{:url('index/index/getBook',['cid' => $cid, 'bookId' => $value.id])}">{$value.name}</a>

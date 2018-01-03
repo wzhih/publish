@@ -25,6 +25,9 @@ class Front extends Base
         $data = input('post.');
         $photo_url = uploading('photo_url', 'static'. DS .'portal'. DS .'img'. DS .'swiper');
 
+        $object = "swiper/" . basename($photo_url);
+        $photo_url = upload_oss($object, $photo_url);
+
         if ($photo_url) {
             $data['photo_url'] = $photo_url;
         }

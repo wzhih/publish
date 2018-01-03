@@ -28,7 +28,11 @@
             <tr class="row">
                 <td>{$d.id}</td>
                 <td>{$d.book_url}</td>
+                {if condition="strpos($d.photo_url,'http')===false"}
                 <td class="thumbnail"><img src="__PUBLIC__{$d.photo_url}"></td>
+                {else/}
+                <td class="thumbnail"><img src="{$d.photo_url}"></td>
+                {/if}
                 <td>{$d.describe}</td>
                 <td data-id="{$d.id}" data-book="{$d.book_url}" data-photo="{$d.photo_url}" data-desc="{$d.describe}">
                     <button class="btn btn-primary saveSwiper" type="button">修改</button>
