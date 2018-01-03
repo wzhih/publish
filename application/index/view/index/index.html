@@ -132,8 +132,13 @@
                         var url = datas[i].book_url;
 
                         if (i < 5) {
-                            ele += '<div class="swiper-slide"><a href="' + url + '" target="_blank"><img src="/' + datas[i].photo_url +
-                                '"/></a></div>';
+                            if (datas[i].photo_url.indexOf('http') > -1) {
+                                ele += '<div class="swiper-slide"><a href="' + url + '" target="_blank"><img src="' + datas[i].photo_url +
+                                    '"/></a></div>';
+                            } else {
+                                ele += '<div class="swiper-slide"><a href="' + url + '" target="_blank"><img src="/' + datas[i].photo_url +
+                                    '"/></a></div>';
+                            }
                         }
                     }
                     $("#index .swiper-wrapper").append(ele);
