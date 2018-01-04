@@ -306,6 +306,11 @@
             },
             addCart: function () {
                 var _this = this;
+                var user = "{$user.id}";
+                if (!user) {
+                    window.location.href = "{:url('index/login/index')}";
+                    return;
+                }
 
                 $.ajax({
                     type: 'POST',

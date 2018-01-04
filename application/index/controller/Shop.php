@@ -13,6 +13,14 @@ use think\Db;
 
 class Shop extends Base
 {
+    public function _initialize()
+    {
+        parent::_initialize();
+        if (empty(session('user'))) {
+            return $this->success('请先登录', url('index/login/index'));
+        }
+    }
+
     private function getCartData()
     {
         $user = session('user');
