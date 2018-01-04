@@ -8,7 +8,7 @@
             <a v-for="item in menuList" v-bind:href="item.url" v-bind:title="item.category" v-bind:class="item.class">
                 {{ item.category }}
             </a>
-            <a href="#" title="关于我们">关于我们</a>
+            <a href="{:url('index/base/about')}" id="about" title="关于我们">关于我们</a>
         </nav>
         <nav class="head-nav-fr fr">
             <a href="{:url('index/shop/cart')}" class="cart">
@@ -74,6 +74,12 @@
                 success: function (res) {
 
                     if (res.status) {
+                        if (cid == 'about') {
+                            $.each(res.data, function (index, item) {
+                                item.class = '';
+                            });
+                            $('#about').addClass('active');
+                        }
                         _this.menuList = res.data;
                     }
                 },

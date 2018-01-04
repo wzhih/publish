@@ -1,0 +1,174 @@
+@charset "UTF-8";
+/*header*/
+.header {
+  padding-top: .3rem;
+  position: relative;
+}
+
+#navIcon{
+  position: absolute;
+  right:15px;
+  top:15px;
+  font-size:22px;
+  display: none;
+}
+
+.header .row {
+  padding: .24rem 0;
+  line-height: .35rem;
+  font-size: .12rem;
+}
+
+.header .logo img {
+  width: 100%;
+  max-width: 170px;
+  height: auto;
+  margin-top: -10px;
+}
+
+.user_setting a {
+  font-family: font-max;
+  font-size: 14px;
+  line-height: .35rem;
+}
+
+.user_setting .search {
+  margin-right: .5rem;
+}
+
+.user_setting .search i {
+  font-size: .2rem;
+  vertical-align: middle;
+}
+
+.user_setting span {
+  margin: 0 .03rem;
+}
+
+/*nav*/
+.nav {
+  width: 100%;
+  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox; /* TWEENER - IE 10 */
+  display: -webkit-flex; /* NEW - Chrome */
+  display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  margin-bottom: .4rem;
+  border-top: .01rem solid #808080;
+}
+
+.nav>li {
+  margin-top: -.02rem;
+  -webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+  -moz-box-flex: 1; /* OLD - Firefox 19- */
+  -webkit-flex: 1; /* Chrome */
+  -ms-flex: 1; /* IE 10 */
+  flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+.nav > li > a {
+  width: 80%;
+  margin: 0 auto;
+  font-family: font-max;
+  font-size: .2rem;
+  text-align: center;
+  /*border-top: .03rem solid transparent;*/
+  line-height: .2rem;
+  padding: .25rem 0;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+}
+
+.nav > li > a:before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  background: #0457A9;
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
+.nav > li.active > a:before, .nav > li:hover > a:before {
+  width: 100%;
+}
+
+.nav > li > a:focus, .nav > li > a:hover, .nav > li.active > a {
+  background-color: transparent;
+  color: #0457A9;
+  /*border-top: .03rem solid #0457A9;*/
+}
+
+/*search*/
+.search_box {
+  display: none;
+  width: 100%;
+  height: 34px;
+  position: relative;
+}
+
+.search_box i {
+  font-size: 20px;
+  position: absolute;
+  left: 5px;
+  top: -3px;
+  z-index: 9999;
+}
+
+.search_box input {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #dbdbdb;
+  font-size: 16px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0 30px;
+}
+
+.search_box .closed {
+  position: absolute;
+  right: 5px;
+  top: 0;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.search_list {
+  display: none;
+  width: 100%;
+  height: auto;
+  border: 1px solid #9B9B9B;
+  background: #ffffff;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 99999;
+}
+
+.search_title {
+  color: #cfcfcf;
+  padding: 0 15px;
+}
+
+.search_box ul li {
+  cursor: pointer;
+  padding: 0 15px;
+}
+
+.search_box ul li:hover {
+  background: #9B9B9B;
+  color: #ffffff;
+}
+.span-5{
+  width:20%;
+}

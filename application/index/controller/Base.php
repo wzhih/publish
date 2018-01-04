@@ -43,4 +43,10 @@ class Base extends Controller
             ->select();
     }
 
+    public function about()
+    {
+        $this->assign('cid', 'about');
+        return $this->fetch('layout/about');
+    }
+
 }
