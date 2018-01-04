@@ -22,7 +22,7 @@ class Shop extends Base
                 'publication' => 'p',
             ])
             ->join('publication', 'c.p_id = p.id')
-            ->field("c.u_id, c.p_id, c.quantity, p.id, p.cover, p.img, p.ISBN, p.`name`, p.price, p.author, p.chinaClassification, p.classificationName, p.date, p.number, p.c_id, p.pages, p.size")
+            ->field("c.id as cart_id, c.u_id, c.p_id, c.quantity, p.id, p.cover, p.img, p.ISBN, p.`name`, p.price, p.author, p.chinaClassification, p.classificationName, p.date, p.number, p.c_id, p.pages, p.size")
             ->where([
                 'c.u_id' => $user['id']
             ])

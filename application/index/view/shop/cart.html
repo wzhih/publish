@@ -115,10 +115,10 @@
                     {foreach $cart as $item}
                     <tr class="bgHover">
                         <td class="li_80">
-                            <input id="{$item.id}" name="checkIds" type="checkbox" v-model="checkId"
-                                   value="{$item.id}"
+                            <input id="{$item.cart_id}" name="checkIds" type="checkbox" v-model="checkId"
+                                   value="{$item.cart_id}"
                                    class="all_chk">
-                            <label for="{$item.id}"></label>
+                            <label for="{$item.cart_id}"></label>
                         </td>
                         <td>
                             <a href="{:url('index/index/getbook', ['bookId' => $item.id])}">
