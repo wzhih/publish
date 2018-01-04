@@ -56,7 +56,7 @@ class Shop extends Base
         return json_result(true, 'success', $data);
     }
 
-    //更新购物车商品数量，也可用于 商品加入购物车
+    //更新购物车商品数量
     public function saveCart()
     {
         $bookId = input('bookId', 0);
@@ -73,7 +73,7 @@ class Shop extends Base
         ])->find();
 
         if ($data) {
-            $data['quantity'] += $quantity;
+            $data['quantity'] = $quantity;
             $result = Db::name('cart')->update($data);
 
         } else {
@@ -103,6 +103,38 @@ class Shop extends Base
             'u_id' => $user['id'],
         ])
             ->delete();
+
+        return json_result($result);
+    }
+
+    public function addCart()
+    {
+        $bookId = input('bookId', 0);
+        $quantity = input('quantity', 0);
+        if (!$bookId || !$quantity) {
+            return json_result(false, '参数错误');
+        }
+
+        $user = session('user');
+
+        $data = Db::name('cart')->where([
+            'u_id' => $user['id'],
+            'p_id' => $bookId,
+        ])->find();
+
+        if ($data) {
+            $data['quantity'] += $quantity;
+            $result = Db::name('cart')->update($data);
+
+        } else {
+            $data = [
+                'u_id' => $user['id'],
+                'p_id' => $bookId,
+                'quantity' => $quantity,
+            ];
+            $result = Db::name('cart')->insert($data);
+
+        }
 
         return json_result($result);
     }
