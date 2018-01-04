@@ -193,161 +193,161 @@
             }
         });
 
-        var buy = new Vue({
-            el: "#buy",
-            data: {
-                carts: [],
-                checkId: [],
+    });
+    var buy = new Vue({
+        el: "#buy",
+        data: {
+            carts: [],
+            checkId: [],
+        },
+        mounted: function () {
+            var _this = this;
+            $.ajax({
+                type: 'POST',
+                url: '{:url("index/shop/getCart")}',
+                data: {},
+                dataType: 'json',
+                async: false,
+                success: function (res) {
+                    _this.carts = res.data;
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
+        },
+        computed: {
+            cartNum: function () {
+                return this.carts.length;
             },
-            mounted: function () {
+            priceSum: function () {
+                var priceSum = 0;
+                $.each(this.carts, function (index, item) {
+                    priceSum += (item.quantity * item.price);
+                });
+
+                return priceSum.toFixed(2);
+            }
+        },
+        methods: {
+            sub: function (ele) {
                 var _this = this;
+                var e = $(ele.target);
+                var bookId = e.data('id');
+                var quantity = e.next().val();
+
+                if (quantity <= 1) {
+                    return;
+                }
+                quantity = parseInt(quantity) - 1;
+
                 $.ajax({
                     type: 'POST',
-                    url: '{:url("index/shop/getCart")}',
-                    data: {},
+                    url: '{:url("index/shop/saveCart")}',
+                    data: {
+                        'bookId':bookId,
+                        'quantity':quantity
+                    },
                     dataType: 'json',
                     async: false,
                     success: function (res) {
-                        _this.carts = res.data;
-
+                        if (res.status) {
+                            $.each(_this.carts, function (index, item) {
+                                if (item.p_id == bookId) {
+                                    item.quantity = quantity;
+                                    e.parent().parent().next().text((item.quantity * item.price).toFixed(2));
+                                    return;
+                                }
+                            });
+                            e.next().val(quantity);
+                        }
                     },
                     error: function (msg) {
                         console.log(msg);
                     }
                 });
             },
-            computed: {
-                cartNum: function () {
-                    return this.carts.length;
-                },
-                priceSum: function () {
-                    var priceSum = 0;
-                    $.each(this.carts, function (index, item) {
-                        priceSum += (item.quantity * item.price);
-                    });
+            add: function (ele) {
+                var _this = this;
+                var e = $(ele.target);
+                var bookId = e.data('id');
+                var quantity = e.prev().val();
 
-                    return priceSum.toFixed(2);
-                }
-            },
-            methods: {
-                sub: function (ele) {
-                    var _this = this;
-                    var e = $(ele.target);
-                    var bookId = e.data('id');
-                    var quantity = e.next().val();
+                quantity = parseInt(quantity) + 1;
 
-                    if (quantity <= 1) {
-                        return;
+                $.ajax({
+                    type: 'POST',
+                    url: '{:url("index/shop/saveCart")}',
+                    data: {
+                        'bookId':bookId,
+                        'quantity':quantity
+                    },
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        if (res.status) {
+                            $.each(_this.carts, function (index, item) {
+                                if (item.p_id == bookId) {
+                                    item.quantity = quantity;
+                                    e.parent().parent().next().text((item.quantity * item.price).toFixed(2));
+                                    return;
+                                }
+                            });
+                            e.prev().val(quantity);
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
                     }
-                    quantity = parseInt(quantity) - 1;
+                });
+            },
+            del: function (ele) {
+                var e = $(ele.target);
+                var bookId = e.data('id');
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '{:url("index/shop/saveCart")}',
-                        data: {
-                            'bookId':bookId,
-                            'quantity':quantity
-                        },
-                        dataType: 'json',
-                        async: false,
-                        success: function (res) {
-                            if (res.status) {
-                                $.each(_this.carts, function (index, item) {
-                                    if (item.p_id == bookId) {
-                                        item.quantity = quantity;
-                                        e.parent().parent().next().text((item.quantity * item.price).toFixed(2));
-                                        return;
-                                    }
-                                });
-                                e.next().val(quantity);
-                            }
-                        },
-                        error: function (msg) {
-                            console.log(msg);
+                $.ajax({
+                    type: 'POST',
+                    url: '{:url("index/shop/delCart")}',
+                    data: {
+                        'bookId':bookId,
+                    },
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        if (res.status) {
+                            location.reload(true);
                         }
-                    });
-                },
-                add: function (ele) {
-                    var _this = this;
-                    var e = $(ele.target);
-                    var bookId = e.data('id');
-                    var quantity = e.prev().val();
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            },
+            settle: function () {
+                var _this = this;
 
-                    quantity = parseInt(quantity) + 1;
+                $.ajax({
+                    type: 'POST',
+                    url: '{:url("index/shop/settleCart")}',
+                    data: {
+                        'checkId':_this.checkId,
+                    },
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        console.log(_this.checkId);
+                        if (res.status) {
+                            //接下来应该跳转订单页面
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '{:url("index/shop/saveCart")}',
-                        data: {
-                            'bookId':bookId,
-                            'quantity':quantity
-                        },
-                        dataType: 'json',
-                        async: false,
-                        success: function (res) {
-                            if (res.status) {
-                                $.each(_this.carts, function (index, item) {
-                                    if (item.p_id == bookId) {
-                                        item.quantity = quantity;
-                                        e.parent().parent().next().text((item.quantity * item.price).toFixed(2));
-                                        return;
-                                    }
-                                });
-                                e.prev().val(quantity);
-                            }
-                        },
-                        error: function (msg) {
-                            console.log(msg);
                         }
-                    });
-                },
-                del: function (ele) {
-                    var e = $(ele.target);
-                    var bookId = e.data('id');
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '{:url("index/shop/delCart")}',
-                        data: {
-                            'bookId':bookId,
-                        },
-                        dataType: 'json',
-                        async: false,
-                        success: function (res) {
-                            if (res.status) {
-                                location.reload(true);
-                            }
-                        },
-                        error: function (msg) {
-                            console.log(msg);
-                        }
-                    });
-                },
-                settle: function () {
-                    var _this = this;
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '{:url("index/shop/settleCart")}',
-                        data: {
-                            'checkId':_this.checkId,
-                        },
-                        dataType: 'json',
-                        async: false,
-                        success: function (res) {
-                            console.log(_this.checkId);
-                            if (res.status) {
-                                //接下来应该跳转订单页面
-
-                            }
-                        },
-                        error: function (msg) {
-                            console.log(msg);
-                        }
-                    });
-                }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
             }
-        });
+        }
     });
 
 </script>

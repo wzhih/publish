@@ -285,46 +285,48 @@
             $('.tab-con > li').eq($('.tab > li').index(this)).addClass('active');
         });
 
-        var book = new Vue({
-            el: "#detail",
-            data: {
-                'bookId': {$book.id},
-                'quantity': 1,
-            },
-            methods: {
-                'no_minus': function () {
-                    var quan = this.quantity;
-                    if (quan > 1) {
-                        this.quantity = quan - 1;
-                    }
-                },
-                'plus': function () {
-                    this.quantity = this.quantity + 1;
-                },
-                addCart: function () {
-                    var _this = this;
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '{:url("index/shop/addCart")}',
-                        data: {
-                            'bookId':_this.bookId,
-                            'quantity':_this.quantity
-                        },
-                        dataType: 'json',
-                        async: false,
-                        success: function (res) {
-                            if (res.status) {
-                                window.location.href = "{:url('index/shop/cart')}";
-                            }
-                        },
-                        error: function (msg) {
-                            console.log(msg);
-                        }
-                    });
+    });
+    var bookId = {$book['id']};
+    var book = new Vue({
+        el: "#detail",
+        data: {
+            'bookId': bookId,
+            'quantity': 1,
+        },
+        methods: {
+            'no_minus': function () {
+                var quan = this.quantity;
+                if (quan > 1) {
+                    this.quantity = quan - 1;
                 }
+            },
+            'plus': function () {
+                this.quantity = this.quantity + 1;
+            },
+            addCart: function () {
+                var _this = this;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{:url("index/shop/addCart")}',
+                    data: {
+                        'bookId':_this.bookId,
+                        'quantity':_this.quantity
+                    },
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        if (res.status) {
+                            window.location.href = "{:url('index/shop/cart')}";
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
             }
-        });
+        }
     });
 
 </script>
