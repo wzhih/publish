@@ -20,7 +20,12 @@ function getBookList(contentner,array){//contentner:容器   bookTagId:图书tag
                         ele+='<a href='+ getBook +'?bookId='+datas[i].id+' target="_blank" style="background:url('+ _public +'static/portal/img/bg/bg'+(i+1)+'.png)">';
                     }
 
-                    ele+='<img src="'+datas[i].cover+'" class="book-img-shadow"/></a>';
+                    if ((datas[i].cover.indexOf('http')) > -1) {
+                        ele+='<img src="'+datas[i].cover+'" class="book-img-shadow"/></a>';
+                    } else {
+                        ele+='<img src="'+ _public + datas[i].cover+'" class="book-img-shadow"/></a>';
+                    }
+
                     ele+='<p><a target="_blank"  href='+ getBook +'?bookId='+datas[i].id+'>'+datas[i].name+'</a></p><p><a href='+ getBook +'?bookId='+datas[i].id+'">￥'+datas[i].price+'</a></p></li>';
 
                 }
