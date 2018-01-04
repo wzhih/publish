@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>购物车</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/search.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/center.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+    <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/swiper.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/common.js"></script>
+
+    <style>
+        label {
+            /*line-height: 50px;*/
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        input[type="checkbox"] {
+            /* width: 40px; */
+            /* height: 40px; */
+            /* -webkit-border-radius: 50%; */
+            display: none;
+        }
+
+        input[type="checkbox"]+label {
+            display: inline-block;
+            /*margin-top: 10px;*/
+            /*margin-left: 5px;*/
+            text-align: left;
+            -webkit-box-sizing: border-box;
+        }
+
+        label::before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background: #dfdfdf;
+            vertical-align: middle;
+            /*margin-right: 5px;*/
+            -webkit-box-sizing: border-box;
+            -webkit-transition: background ease-in .1s
+        }
+
+        input[type="checkbox"]:checked+label::before {
+            background: url(__PUBLIC__static/portal/img/cbox.png);
+        }
+
+        .li_80 label {
+            line-height: 80px;
+        }
+    </style>
+</head>
+
+<body>
+{include file="layout/head" /}
+
+<div id="buy">
+    <div class="warp">
+        <div>
+            <div class="mtb20">
+                <span class="font_20">购物车&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div class="font_16  col_gray">
+                <span class="li_32 center_cart">全部商品</span>
+            </div>
+            <div class="order_goods">
+                <table class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th style="width: 2%;"></th>
+                        <th style="width: 38%; text-align: left; padding-left: 2%;">商品信息</th>
+                        <th style="width: 8%;">单价(元)</th>
+                        <th style="width: 28%;">数量</th>
+                        <th style="width: 8%;">小计(元)</th>
+                        <th style="width: 8%;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $cart as $item}
+                    <tr class="bgHover">
+                        <td class="li_80">
+                            <input id="{$item.id}" name="checkIds" type="checkbox" v-model="checkId"
+                                   value="{$item.id}"
+                                   class="all_chk">
+                            <label for="{$item.id}"></label>
+                        </td>
+                        <td>
+                            <a href="{:url('index/index/getbook', ['bookId' => $item.id])}">
+                                <img src="{$item.cover}" title="{$item.name}"
+                                     alt="{$item.name}"
+                                     class="pull-left ">
+                            </a>
+                            <div class="pull-left text-left  w80">
+                                <a href="{:url('index/index/getbook', ['bookId' => $item.id])}">
+                                    <p class="h40-li20">{$item.name}</p>
+                                </a>
+                                <br>
+                                <a href="{:url('index/index/getbook', ['bookId' => $item.id])}">
+                                    <p class="h40-li20">{$item.author}</p>
+                                </a>
+                            </div>
+                        </td>
+                        <td style="line-height: 80px;">{$item.price}</td>
+                        <td>
+                            <div class="spinner" style="margin-top: 20px;">
+                                <i v-on:click="sub($event)" data-id="{$item.id}" class="sub">-</i>
+                                <input type="number" min="1" value="{$item.quantity}" class="quantity" disabled="disabled">
+                                <i v-on:click="add($event)" data-id="{$item.id}" class="add">+</i>
+                            </div>
+                        </td>
+                        <td class="col_yellow" style="line-height: 80px;">{:bcmul($item.quantity, $item.price, 2)}</td>
+                        <td>
+                            <i v-on:click="del($event)" data-id="{$item.id}" class="acursor font_30" style="line-height: 80px;">×</i>
+                        </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <div class="total h50 ">
+                <div class="pull-left">
+                        <span class="pl20">
+                            <a href="{url('index/index/index')}">继续购物</a>
+                        </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <span>共
+                            <i class="col_yellow">{{ cartNum }}</i>件商品
+                        </span>
+                </div>
+                <div class="pull-right">
+                    <span class="mr20">合计(包邮):
+                            <i class="col_yellow font_20">
+                                {{ priceSum }}
+                            </i>元</span>
+                    <a href="javascript:void(0);" v-on:click="settle" class="w140  pull-right bg_ff6500 col_fff text-center">去结算</a>
+                </div>
+                <div class="kong"></div>
+            </div>
+        </div>
+        <!---->
+    </div>
+</div>
+
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+        var buy = new Vue({
+            el: "#buy",
+            data: {
+                carts: [],
+                checkId: [],
+            },
+            mounted: function () {
+                var _this = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '{:url("index/shop/getCart")}',
+                    data: {},
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        _this.carts = res.data;
+
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            },
+            computed: {
+                cartNum: function () {
+                    return this.carts.length;
+                },
+                priceSum: function () {
+                    var priceSum = 0;
+                    $.each(this.carts, function (index, item) {
+                        priceSum += (item.quantity * item.price);
+                    });
+
+                    return priceSum.toFixed(2);
+                }
+            },
+            methods: {
+                sub: function (ele) {
+                    var _this = this;
+                    var e = $(ele.target);
+                    var bookId = e.data('id');
+                    var quantity = e.next().val();
+
+                    if (quantity <= 1) {
+                        return;
+                    }
+                    quantity = parseInt(quantity) - 1;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{:url("index/shop/saveCart")}',
+                        data: {
+                            'bookId':bookId,
+                            'quantity':quantity
+                        },
+                        dataType: 'json',
+                        async: false,
+                        success: function (res) {
+                            if (res.status) {
+                                $.each(_this.carts, function (index, item) {
+                                    if (item.p_id == bookId) {
+                                        item.quantity = quantity;
+                                        e.parent().parent().next().text((item.quantity * item.price).toFixed(2));
+                                        return;
+                                    }
+                                });
+                                e.next().val(quantity);
+                            }
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                        }
+                    });
+                },
+                add: function (ele) {
+                    var _this = this;
+                    var e = $(ele.target);
+                    var bookId = e.data('id');
+                    var quantity = e.prev().val();
+
+                    quantity = parseInt(quantity) + 1;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{:url("index/shop/saveCart")}',
+                        data: {
+                            'bookId':bookId,
+                            'quantity':quantity
+                        },
+                        dataType: 'json',
+                        async: false,
+                        success: function (res) {
+                            if (res.status) {
+                                $.each(_this.carts, function (index, item) {
+                                    if (item.p_id == bookId) {
+                                        item.quantity = quantity;
+                                        e.parent().parent().next().text((item.quantity * item.price).toFixed(2));
+                                        return;
+                                    }
+                                });
+                                e.prev().val(quantity);
+                            }
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                        }
+                    });
+                },
+                del: function (ele) {
+                    var e = $(ele.target);
+                    var bookId = e.data('id');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{:url("index/shop/delCart")}',
+                        data: {
+                            'bookId':bookId,
+                        },
+                        dataType: 'json',
+                        async: false,
+                        success: function (res) {
+                            if (res.status) {
+                                location.reload(true);
+                            }
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                        }
+                    });
+                },
+                settle: function () {
+                    var _this = this;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{:url("index/shop/settleCart")}',
+                        data: {
+                            'checkId':_this.checkId,
+                        },
+                        dataType: 'json',
+                        async: false,
+                        success: function (res) {
+                            if (res.status) {
+                                //接下来应该跳转订单页面
+
+                            }
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+</script>
+
+</body>
+
+</html>

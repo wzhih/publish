@@ -99,12 +99,13 @@ class Index extends Base
         return json_result(true, 'success', $result);
     }
 
+    //获取图书详情，与随机9本书籍
     public function getBook()
     {
-        $cid = $this->getInputCId();//大类型
         $bookId = input('bookId', 1);
 
         $bookInfo = Db::name('publication')->find(['id' => $bookId]);
+        $cid = Db::name('category')->where(['id' => $bookInfo['c_id']])->value('parent_id');
 
         $offset = mt_rand(99, 1999);
         $rand = Db::name('publication')->limit($offset, 9)->select();
@@ -115,6 +116,7 @@ class Index extends Base
         return $this->fetch('book');
     }
 
+    //根据二级类别，分页列出所有图书
     public function getBookList()
     {
         $cid = input('childId');
@@ -128,7 +130,7 @@ class Index extends Base
         return json_result(true, 'success', $data);
     }
 
-    //根据类别，返回书籍信息
+    //根据类别和排序选项，分页列出所有图书（用于查找图书结果页面）
     public function getBookListByCategory()
     {
         $cid = $this->getInputCId();//大类型
