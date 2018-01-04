@@ -56,7 +56,7 @@ class Shop extends Base
         return json_result(true, 'success', $data);
     }
 
-    //更新购物车商品数量
+    //更新购物车商品数量，也可用于 商品加入购物车
     public function saveCart()
     {
         $bookId = input('bookId', 0);
@@ -73,7 +73,7 @@ class Shop extends Base
         ])->find();
 
         if ($data) {
-            $data['quantity'] = $quantity;
+            $data['quantity'] += $quantity;
             $result = Db::name('cart')->update($data);
 
         } else {
@@ -117,5 +117,6 @@ class Shop extends Base
 
         return json_result($checkId);
     }
+
 
 }

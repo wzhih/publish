@@ -112,10 +112,10 @@
                 <dt>数量</dt>
                 <dd>
                     <div class="count">
-                        <span class="btn no_minus">-</span>
+                        <span v-on:click="no_minus" class="btn no_minus">-</span>
                         <input type="number" value="1" min="1" step="1" name="quantity" id="quantity" onafterpaste="return false"
-                               class="amount" style="height: 32px; line-height: 32px;">
-                        <span class="btn plus">+</span>
+                               v-model="quantity" class="amount" style="height: 32px; line-height: 32px;">
+                        <span v-on:click="plus" class="btn plus">+</span>
                     </div>
                     <!---->
                 </dd>
@@ -123,7 +123,7 @@
             <dl>
                 <dt class="cart-dt">购买</dt>
                 <dd>
-                    <a href="javascript:void(0);" class="cart-btn">立即购买</a>
+                    <a href="javascript:void(0);" v-on:click="addCart" class="cart-btn">立即购买</a>
                     <!---->
                 </dd>
             </dl>
@@ -284,20 +284,46 @@
 
             $('.tab-con > li').eq($('.tab > li').index(this)).addClass('active');
         });
-        
-        $('.no_minus').click(function () {
-            var val = $("#quantity").val();
-            if (val > 1) {
-                $("#quantity").val(val-1);
+
+        var book = new Vue({
+            el: "#detail",
+            data: {
+                'bookId': {$book.id},
+                'quantity': 1,
+            },
+            methods: {
+                'no_minus': function () {
+                    var quan = this.quantity;
+                    if (quan > 1) {
+                        this.quantity = quan - 1;
+                    }
+                },
+                'plus': function () {
+                    this.quantity = this.quantity + 1;
+                },
+                addCart: function () {
+                    var _this = this;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{:url("index/shop/saveCart")}',
+                        data: {
+                            'bookId':_this.bookId,
+                            'quantity':_this.quantity
+                        },
+                        dataType: 'json',
+                        async: false,
+                        success: function (res) {
+                            if (res.status) {
+                                window.location.href = "{:url('index/shop/cart')}";
+                            }
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                        }
+                    });
+                }
             }
-        });
-        $('.plus').click(function () {
-            var val = $("#quantity").val();
-            $("#quantity").val(Number(val)+1);
-        });
-
-        $('.cart-btn').click(function () {
-
         });
     });
 
