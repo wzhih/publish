@@ -17,7 +17,7 @@
             </a>
 
             {if condition="$user"}
-            <a href='{:url("index/index/index")}' class="login" style="margin-left: 20px;">{$user['phone']}</a>
+            <a href='{:url("index/user/user")}' class="login" style="margin-left: 20px;">{$user['phone']}</a>
             <s>|</s>
             <a href='{:url("index/login/logout")}'>退出</a>
             {else /}
