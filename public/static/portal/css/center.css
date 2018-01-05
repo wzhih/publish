@@ -414,7 +414,7 @@ i{ font-style:normal}
 
 }
 .address_def{
-    background:#fbfbfb url(/static/eleBusiness/img/personal/address_def.png) right no-repeat;
+    background:#fbfbfb url(../img/address_def.png) right no-repeat;
 }
 .address_box{
     color: #313131;
@@ -617,7 +617,7 @@ background: #fff7f6;
 .pay_address_def{
     border-radius: 8px;
     border: 1px solid #ff6500;
-    background: url(/static/eleBusiness/img/personal/pay_address_def.png) no-repeat right bottom;
+    background: url(../img/pay_address_def.png) no-repeat right bottom;
 }
 .payment_end{
     width: auto;
@@ -636,7 +636,7 @@ background: #fff7f6;
 }
 .bill_def{
     border: 1px solid #ff6500!important;
-    background: url(/static/eleBusiness/img/personal/bill_def.png) no-repeat right bottom;
+    background: url(../img/bill_def.png) no-repeat right bottom;
 }
 
 .pay_scan_ex{
@@ -762,7 +762,7 @@ background: #fff7f6;
     height: auto;
     overflow: hidden;
     margin-bottom: 20px;
-    background: url(/static/eleBusiness/img/personal/bule_line.png) 14px 15px repeat-y;
+    background: url(../img/bule_line.png) 14px 15px repeat-y;
 
 }
 .hisBox{
@@ -790,14 +790,14 @@ background: #fff7f6;
     margin-left: -10px;
     position: absolute;
     overflow: hidden;
-    background: url(/static/eleBusiness/img/personal/icon_dian.png) left no-repeat;
+    background: url(../img/icon_dian.png) left no-repeat;
 }
 .time i{
     width:115px;
     height: 20px;
     display: block;
     float: left;
-    background: url(/static/eleBusiness/img/personal/bule_line_x.png) 14px 15px repeat-x;
+    background: url(../img/bule_line_x.png) 14px 15px repeat-x;
 }
 .time span{
     border-radius: 4px;

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/center.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+
+</head>
+
+<body>
+{include file="layout/head" /}
+
+<div id="buy">
+    <div id="payment" class="order_box">
+        <div class="order_title font_14 ">
+            <span class="pull-left">选择收货地址</span>
+            <span class="pull-right">
+                    <a href="{:url('index/shop/address')}" target="_blank">管理收货地址</a>
+                </span>
+        </div>
+        <div class="payment_address ">
+            {if condition="empty($contact)"}
+            <div class="defaultData text-center">
+                <p>
+                    <a href="{:url('index/shop/address')}" class="col_yellow font_18">添加收货地址</a>
+                </p>
+            </div>
+            {else /}
+            <ul class="row">
+                {foreach $contact as $value}
+                <li class="col-md-3 col-sm-12">
+                    <div class="pay_address contact" data-id="{$value.id}">
+                        <div class="pay_address_title">
+                            <span class="pull-left w100 ovh h32">{$value.name}</span>
+                            <span class="pull-right font_14">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            </span>
+                        </div>
+                        <p class="h44 handle">
+                            <!--<span>广东省</span>-->
+                            <!--<span>广州市</span>-->
+                            <!--<span>从化市</span>-->
+                            <!--<span>13大道路</span>-->
+                            <span>地址:</span>
+                            <span>{$value.address}</span>
+                        </p>
+                        <p><span>电话:</span>{$value.phone}</p>
+                        <p class="text-right mr20 col_blue">
+                            <a href="{:url('index/shop/address')}">编辑</a>
+                        </p>
+                    </div>
+                </li>
+                {/foreach}
+            </ul>
+            {/if}
+        </div>
+        <!---->
+        <!---->
+        <div class="order_title font_14">确认订单信息</div>
+        <div class="order_goods">
+            <table class="table table-responsive">
+                <thead>
+                <tr>
+                    <th style="width: 55%; text-align: left; padding-left: 20px;">图书名称</th>
+                    <th style="width: 15%;">单价(元)</th>
+                    <th style="width: 15%;">数量</th>
+                    <th style="width: 15%;">小计(元)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $data as $value}
+                <tr>
+                    <td style="width: 42%; text-align: left; padding-left: 20px;">
+                        <a href="{:url('index/index/getbook', ['bookId' => $value.p_id])}"
+                           title="{$value.name}">
+                            <img src="{$value.cover}" title="{$value.name}"
+                                 alt="{$value.name}">
+                            <div class="pull-left text-left mtb20 w80">
+                                <p>{$value.name}</p>
+                            </div>
+                        </a>
+                    </td>
+                    <td style="line-height: 80px;">{$value.price}</td>
+                    <td style="line-height: 80px;">{$value.quantity}</td>
+                    <td style="line-height: 80px;">{:bcmul($value.price, $value.quantity, 2)}</td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            <div class="order_foot text-right pr20">
+                <p>
+                    <span>合计:&nbsp;&nbsp;</span>
+                    <span class="col_yellow">{$total_price}元</span>
+                </p>
+            </div>
+        </div>
+        <div class="payment_end">
+            <div class="pull-left col_yellow ">
+                <a href="{:url('index/shop/cart')}" class=" col_yellow">返回购物车</a>
+            </div>
+            <div class="pull-right ">总计：
+                <span class="col_yellow font_18">{$total_price}元</span>
+                <button v-on:click="payment($event)" class="center_btn_yellow ml20 ">确认支付</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+        $('.contact').click(function () {
+            $('.contact').removeClass('pay_address_def');
+            var _this = $(this);
+            buy.contact_id = _this.data('id');
+            _this.addClass('pay_address_def');
+
+            console.log(buy.contact_id);
+        });
+    });
+
+    var o_id = "{$o_id}";
+    var buy = new Vue({
+        el: "#buy",
+        data: {
+            'order_id': o_id,
+            'contact_id': 0
+        },
+        methods: {
+            payment: function (e) {
+                var _this = this;
+
+                if (_this.contact_id == 0) {
+                    alert('请选择收货地址');
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{:url("index/shop/payment")}',
+                    data: {
+                        'order_id': _this.order_id,
+                        'contact_id': _this.contact_id,
+                    },
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        if (res.status) {
+                            //应该跳转到支付二维码页面，这里先直接支付成功
+                            window.location.href = "{:url('index/shop/paymentConfirm', ['order_id' => $o_id])}";
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+        }
+    });
+
+</script>
+
+</body>
+
+</html>

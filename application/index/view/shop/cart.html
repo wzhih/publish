@@ -339,7 +339,7 @@
                         console.log(_this.checkId);
                         if (res.status) {
                             //接下来应该跳转订单页面
-
+                            window.location.href = '{:url("index/shop/order")}?order_id=' + res.msg;
                         }
                     },
                     error: function (msg) {
