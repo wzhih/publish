@@ -61,24 +61,24 @@
         <div class="row per_record">
             <div class="col-md-3  col-sm-2 ">
                     <span class="br_r">
-                        <a href="#">我的订单 </a>
+                        <a href="{:url('index/user/orderList')}">我的订单 </a>
                     </span>
             </div>
             <div class="col-md-3 col-sm-2">
                     <span class="br_r">
-                        <a href="#">待付款(
+                        <a href="{:url('index/user/orderList', ['status' => 0])}">待付款(
                             <i>0</i>)</a>
                     </span>
             </div>
             <div class="col-md-3 col-sm-2">
                     <span class="br_r">
-                        <a href="#">已付款(
+                        <a href="{:url('index/user/orderList', ['status' => 1])}">已付款(
                             <i>0</i>)</a>
                     </span>
             </div>
             <div class="col-md-3 col-sm-2">
                     <span>
-                        <a href="#">发货/收货(
+                        <a href="{:url('index/user/orderList', ['status' => 2])}">发货(
                             <i>0</i>)</a>
                     </span>
             </div>

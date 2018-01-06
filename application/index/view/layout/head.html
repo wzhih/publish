@@ -80,6 +80,12 @@
                             });
                             $('#about').addClass('active');
                         }
+                        if (cid == '') {
+                            $.each(res.data, function (index, item) {
+                                item.class = '';
+                            });
+                        }
+
                         _this.menuList = res.data;
                     }
                 },

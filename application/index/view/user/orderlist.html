@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单列表</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/index.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/center.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+
+    <style>
+        .pagination > li > a,
+        .pagination > li > span {
+            padding: 0.1rem 0.2rem;
+            font-size: 0.15rem;
+        }
+    </style>
+</head>
+
+<body>
+{include file="layout/head" /}
+
+<div id="buy">
+    <div class="per_info">
+        <div class="per_portrait">
+            <img src="__PUBLIC__static/portal/img/portrait_def.png">
+            <div class="w80">
+                <p>{$user.name}</p>
+                <p class="li-24 font_14">
+                    <span>性别: {$user['sex']}</span>
+                    <span>|</span>
+                    <span>手机: {$user['phone']}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="warp">
+        <h4 class=" pl10 ">
+            <a href="{:url('index/user/user')}" class="col_blue">个人中心 &gt;</a>
+            <span class="col_gray">我的订单</span>
+        </h4>
+        <div class="row">
+            <div class="col-md-9 col-sm-12">
+                <div class="center_title pull-left">
+                    <span><a href="{:url('index/user/orderList')}" class="center_active">全部订单</a></span>
+                    <span><a href="{:url('index/user/orderList', ['status' => 0])}" class="">待付款</a></span>
+                    <span><a href="{:url('index/user/orderList', ['status' => 1])}" class="">已付款</a></span>
+                </div>
+            </div>
+            <!--<div class="col-md-3 col-sm-12">-->
+                <!--<div class="pull-right search_input">-->
+                    <!--<input type="text" placeholder="请输入订单号" name="find_orderNum">-->
+                    <!--<i class="icon iconfont_24 icon-search1"></i>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <!---->
+    </div>
+    <div>
+        {foreach $items as $item}
+        <div id="{$item['id']}" class="warp bor_eb mb20">
+            <div class="orderList_title">
+                <div class="row">
+                    <div class="col-md-10 col-sm-24">
+                            <span class="pull-left">
+                                <span>{$item['order_time']}</span> | 订单号:
+                                <span>PTP-{$item['id']}</span> | 在线支付</span>
+                    </div>
+                    <div class="col-md-2 col-sm-24">
+                            <span class="pull-right">订单金额：
+                                <i class="col_yellow font_20">{$item['total_price']}元</i>
+                            </span>
+                    </div>
+                </div>
+            </div>
+            {foreach $item['publication'] as $publication}
+            <div class="orderList row">
+                <div class="col-md-9 col-sm-6">
+                    <div class="goodsList">
+                        <ul>
+                            <li>
+                                <a href="{:url('index/index/getBook', ['bookId' => $publication.p_id])}"
+                                   title="鸟哥的Linux私房菜 基础学习篇(第三版)">
+                                    <img src="{$publication.cover}" title="{$publication.name}" alt="{$publication.name}">
+                                </a>
+                                <div>
+                                    <a href="{:url('index/index/getBook', ['bookId' => $publication.p_id])}"
+                                       title="{$publication.name}">
+                                        <p>{$publication.name}</p>
+                                    </a>
+                                    <p>{$publication.price}元 * {$publication.quantity}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-2 text-center mtb20  li_42 ">
+                    <!--<span>{$item.status}</span>-->
+                </div>
+                <div class="col-md-2 col-sm-4 text-right mtb20 br_l">
+                    <p>
+                        <!---->
+                    </p>
+                    <p>
+                        <!---->
+                    </p>
+                    <p>
+                        <button class="center_btn_gray">{$item.status}</button>
+                    </p>
+                    <p>
+                        <!---->
+                    </p>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+        {/foreach}
+        <div class="warp text-center">
+            {$page}
+            <!--<ul class="ivu-page">-->
+                <!--&lt;!&ndash;&ndash;&gt;-->
+                <!--<li title="上一页" class="ivu-page-prev ivu-page-disabled">-->
+                    <!--<a>-->
+                        <!--<i class="ivu-icon ivu-icon-ios-arrow-left"></i>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li title="1" class="ivu-page-item ivu-page-item-active">-->
+                    <!--<a>1</a>-->
+                <!--</li>-->
+                <!--<li title="下一页" class="ivu-page-next ivu-page-disabled">-->
+                    <!--<a>-->
+                        <!--<i class="ivu-icon ivu-icon-ios-arrow-right"></i>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<div class="ivu-page-options">-->
+                    <!--&lt;!&ndash;&ndash;&gt;-->
+                    <!--<div class="ivu-page-options-elevator">-->
+                        <!--跳至-->
+                        <!--<input type="text"> 页-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</ul>-->
+        </div>
+    </div>
+</div>
+
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+
+    });
+
+
+
+</script>
+
+</body>
+
+</html>

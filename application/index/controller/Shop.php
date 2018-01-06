@@ -183,7 +183,7 @@ class Shop extends Base
             $order_id = Db::name('order')->insertGetId([
                 'u_id' => $user['id'],
                 'total_price' => $total_price,
-                'order_time' => date('Y-m-d'),
+                'order_time' => date('Y-m-d H:i:m'),
             ]);
 
             $op = [];
@@ -275,6 +275,6 @@ class Shop extends Base
 
         $result = Db::name('order')->where("id = $order_id")->update(['status' => 1]);
 
-        return $this->success('支付成功，跳转到订单列表。');
+        return $this->success('支付成功，跳转到订单列表。', url('index/user/orderList'));
     }
 }
