@@ -249,7 +249,7 @@
                 success: function (res) {
                     if (res.status) {
                         phoneCode('.user_code_btn');
-                        $('.user_ver').val(null);
+                        $('.user_verAgin').val(null);
                         $('.verCodeImg').attr('src', '{:url("index/login/getchaptcha")}?v=' + Math.random());
                     } else {
                         $('.mod_content').text(res.msg);
