@@ -207,7 +207,7 @@
                 url: '{:url("index/shop/getCart")}',
                 data: {},
                 dataType: 'json',
-                async: false,
+                async: true,
                 success: function (res) {
                     _this.carts = res.data;
 
@@ -250,7 +250,7 @@
                         'quantity':quantity
                     },
                     dataType: 'json',
-                    async: false,
+                    async: true,
                     success: function (res) {
                         if (res.status) {
                             $.each(_this.carts, function (index, item) {
@@ -284,7 +284,7 @@
                         'quantity':quantity
                     },
                     dataType: 'json',
-                    async: false,
+                    async: true,
                     success: function (res) {
                         if (res.status) {
                             $.each(_this.carts, function (index, item) {
@@ -313,7 +313,7 @@
                         'bookId':bookId,
                     },
                     dataType: 'json',
-                    async: false,
+                    async: true,
                     success: function (res) {
                         if (res.status) {
                             location.reload(true);
@@ -334,7 +334,7 @@
                         'checkId':_this.checkId,
                     },
                     dataType: 'json',
-                    async: false,
+                    async: true,
                     success: function (res) {
                         console.log(_this.checkId);
                         if (res.status) {

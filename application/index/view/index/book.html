@@ -320,7 +320,7 @@
                         'quantity':_this.quantity
                     },
                     dataType: 'json',
-                    async: false,
+                    async: true,
                     success: function (res) {
                         if (res.status) {
                             window.location.href = "{:url('index/shop/cart')}";

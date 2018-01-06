@@ -49,7 +49,7 @@
                     url: '{:url("index/shop/getShopCartList")}',
                     data: {},
                     dataType: 'json',
-                    async: false,
+                    async: true,
                     success: function (res) {
                         _this.items = res.data;
                         var carSums = 0;
