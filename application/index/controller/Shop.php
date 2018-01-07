@@ -185,6 +185,7 @@ class Shop extends Base
                 'c_id' => 0,
                 'total_price' => $total_price,
                 'order_time' => date('Y-m-d H:i:m'),
+                'status' => 0,
             ]);
 
             $op = [];
