@@ -182,6 +182,7 @@ class Shop extends Base
             //先插入订单表
             $order_id = Db::name('order')->insertGetId([
                 'u_id' => $user['id'],
+                'c_id' => 0,
                 'total_price' => $total_price,
                 'order_time' => date('Y-m-d H:i:m'),
             ]);
@@ -204,7 +205,7 @@ class Shop extends Base
             return json_result(true, $order_id);
         } catch (Throwable $e) {
             Db::rollback();
-            return json_result(false, $e.getMessage());
+            return json_result(false, $e->getMessage());
         }
 
     }
