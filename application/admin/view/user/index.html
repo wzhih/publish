@@ -16,7 +16,7 @@
                 <th>名字</th>
                 <th>电话号码</th>
                 <th>性别</th>
-                <th>地址</th>
+                <th>用户类别</th>
                 <th class="col-sm-4">操作</th>
             </tr>
             </thead>
@@ -27,8 +27,8 @@
                 <td>{$d.name}</td>
                 <td>{$d.phone}</td>
                 <td>{$d.sex}</td>
-                <td>{$d.address}</td>
-                <td data-id="{$d.id}" data-name="{$d.name}" data-phone="{$d.phone}" data-sex="{$d.sex}" data-address="{$d.address}">
+                <td>{$d.type ? '大订单客户' : '普通客户'}</td>
+                <td data-id="{$d.id}" data-name="{$d.name}" data-phone="{$d.phone}" data-sex="{$d.sex}" data-type="{$d.type}">
                     <button class="btn btn-primary saveUser" type="button">修改</button>
                     <button class="btn btn-danger delUser" type="button">删除</button>
                 </td>
@@ -115,10 +115,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="addAddress" class="col-sm-2 control-label">地址</label>
+                        <label for="addType" class="col-sm-2 control-label">类别</label>
                         <div class="col-sm-10">
-                        <textarea class="form-control" rows="3" name="address" id="addAddress"
-                                  placeholder="请输入地址"></textarea>
+                            <select id="addType" name="type" class="form-control">
+                                <option value="0">普通用户</option>
+                                <option value="1">大订单客户</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -180,10 +182,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="saveAddress" class="col-sm-2 control-label">地址</label>
+                        <label for="saveType" class="col-sm-2 control-label">类别</label>
                         <div class="col-sm-10">
-                        <textarea class="form-control" rows="3" name="address" id="saveAddress"
-                                  placeholder="请输入地址"></textarea>
+                            <select id="saveType" name="type" class="form-control">
+                                <option value="0">普通用户</option>
+                                <option value="1">大订单客户</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -224,14 +228,14 @@
         var phone = $(this).parent().data('phone');
         var pwd = $(this).parent().data('password');
         var sex = $(this).parent().data('sex');
-        var address = $(this).parent().data('address');
+        var type = $(this).parent().data('type');
 
         $('#id').val(id);
         $('#saveName').val(name);
         $('#savePhone').val(phone);
         $('#savePassword').val(pwd);
         $('#saveSex').val(sex);
-        $('#saveAddress').val(address);
+        $('#saveType').val(type);
 
         $('#saveModal').modal();
     });
