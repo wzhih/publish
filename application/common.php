@@ -83,7 +83,7 @@ function sendMessage($phone = '18814128257', $code = '123456789')
  * @param $portraitUri
  * @return mixed
  */
-function getUserToken($userId, $name = 'name', $portraitUri = 'logo')
+function getUserToken($userId, $name = 'name', $portraitUri = "http://hr-publish.oss-cn-shenzhen.aliyuncs.com/im/images/logo.png")
 {
     $appKey = config('APP_KEY');
     $appSecret = config('APP_SECRET');

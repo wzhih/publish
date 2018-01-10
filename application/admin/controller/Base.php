@@ -32,7 +32,7 @@ class Base extends Controller
 
         $result = [];
         foreach ($data as $d) {
-            $result[] = ['id' => $d['id'], 'name' => $d['name'], 'portraitUri' => 'logo'];
+            $result[] = ['id' => $d['id'], 'name' => $d['name'], 'portraitUri' => 'http://hr-publish.oss-cn-shenzhen.aliyuncs.com/im/images/logo.png'];
         }
 
         return json(['userlist' => $result]);
