@@ -13,7 +13,7 @@ use think\Db;
 class User extends Base
 {
     public function index() {
-        $data = Db::name('user')->paginate(10);
+        $data = Db::name('user')->order('id DESC')->paginate(10);
 
         $this->assign('data', $data);
         return $this->fetch();
@@ -38,6 +38,7 @@ class User extends Base
 
     public function add() {
         $user = input('post.');
+        $user['password'] = md5($user['password']);
 
         $result = Db::name('user')->data($user)->insert();
         if ($result) {
