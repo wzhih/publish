@@ -140,7 +140,7 @@
                         <td>
                             <div class="spinner" style="margin-top: 20px;">
                                 <i v-on:click="sub($event)" data-id="{$item.id}" class="sub">-</i>
-                                <input type="number" min="1" value="{$item.quantity}" class="quantity" disabled="disabled">
+                                <input type="number" min="100" value="{$item.quantity}" class="quantity" disabled="disabled">
                                 <i v-on:click="add($event)" data-id="{$item.id}" class="add">+</i>
                             </div>
                         </td>
@@ -157,7 +157,12 @@
                 <div class="pull-left">
                         <span class="pl20">
                             <a href="{:url('index/index/index')}">继续购物</a>
-                        </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                        </span>&nbsp;&nbsp;
+                    |&nbsp;&nbsp;
+                    <span>
+                            <strong>当前用户类型订单结算时，可享受八折优惠</strong>
+                        </span>
+                    |&nbsp;&nbsp;
                     <span>共
                             <i class="col_yellow">{{ cartNum }}</i>件商品
                         </span>
@@ -237,7 +242,7 @@
                 var bookId = e.data('id');
                 var quantity = e.next().val();
 
-                if (quantity <= 1) {
+                if (quantity <= 100) {
                     return;
                 }
                 quantity = parseInt(quantity) - 1;

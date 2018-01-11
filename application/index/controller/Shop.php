@@ -45,7 +45,13 @@ class Shop extends Base
         $this->assign('cid', '');
         $this->assign('cart', $data);
 
-        return $this->fetch();
+        $user = session('user');
+        switch ($user['type']) {
+            case 0:
+                return $this->fetch();
+            case 1:
+                return $this->fetch('big_cart');
+        }
     }
 
     //用于购物车页面js统计
@@ -74,6 +80,9 @@ class Shop extends Base
         }
 
         $user = session('user');
+        if ($user['type'] == 1 && $quantity < 100) {
+            $quantity = 100;
+        }
 
         $data = Db::name('cart')->where([
             'u_id' => $user['id'],
@@ -124,6 +133,9 @@ class Shop extends Base
         }
 
         $user = session('user');
+        if ($user['type'] == 1 && $quantity < 100) {
+            $quantity = 100;
+        }
 
         $data = Db::name('cart')->where([
             'u_id' => $user['id'],
@@ -184,6 +196,7 @@ class Shop extends Base
                 'u_id' => $user['id'],
                 'c_id' => 0,
                 'total_price' => $total_price,
+                'real_price' => $total_price,
                 'order_time' => date('Y-m-d H:i:m'),
                 'status' => 0,
             ]);
@@ -248,7 +261,12 @@ class Shop extends Base
         $this->assign('contact', $contact);
         $this->assign('data', $data);
         $this->assign('total_price', $total_price);
-        return $this->fetch();
+        switch ($user['type']) {
+            case 0:
+                return $this->fetch();
+            case 1:
+                return $this->fetch('big_order');
+        }
     }
 
     //订单页面确认支付（其实是更新订单的地址）
@@ -275,6 +293,7 @@ class Shop extends Base
             return json_result(false, '参数错误');
         }
 
+        //这里应该顺便更新real_price字段，保留大订单客户真实付款金额
         $result = Db::name('order')->where("id = $order_id")->update(['status' => 1]);
 
         return $this->success('支付成功，跳转到订单列表。', url('index/user/orderList'));

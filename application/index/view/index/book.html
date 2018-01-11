@@ -113,8 +113,13 @@
                 <dd>
                     <div class="count">
                         <span v-on:click="no_minus" class="btn no_minus">-</span>
+                        {if condition="$user['type'] == 1"}
+                        <input type="number" value="100" min="100" step="1" name="quantity" id="quantity" onafterpaste="return false"
+                               v-model="quantity" class="amount" style="height: 32px; line-height: 32px;">
+                        {else /}
                         <input type="number" value="1" min="1" step="1" name="quantity" id="quantity" onafterpaste="return false"
                                v-model="quantity" class="amount" style="height: 32px; line-height: 32px;">
+                        {/if}
                         <span v-on:click="plus" class="btn plus">+</span>
                     </div>
                     <!---->
@@ -288,16 +293,21 @@
 
     });
     var bookId = {$book['id']};
+    {if condition="$user['type'] == 1"}
+        var quantity = 100;
+    {else /}
+        var quantity = 1;
+        {/if}
     var book = new Vue({
         el: "#detail",
         data: {
             'bookId': bookId,
-            'quantity': 1,
+            'quantity': quantity,
         },
         methods: {
             'no_minus': function () {
                 var quan = this.quantity;
-                if (quan > 1) {
+                if (quan > 100) {
                     this.quantity = quan - 1;
                 }
             },
@@ -310,6 +320,9 @@
                 if (!user) {
                     window.location.href = "{:url('index/login/index')}";
                     return;
+                }
+                if (_this.quantity < quantity) {
+                    _this.quantity = 100;
                 }
 
                 $.ajax({
