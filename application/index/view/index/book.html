@@ -306,13 +306,13 @@
         },
         methods: {
             'no_minus': function () {
-                var quan = this.quantity;
+                var quan = parseInt(this.quantity);
                 if (quan > 100) {
                     this.quantity = quan - 1;
                 }
             },
             'plus': function () {
-                this.quantity = this.quantity + 1;
+                this.quantity = parseInt(this.quantity) + 1;
             },
             addCart: function () {
                 var _this = this;

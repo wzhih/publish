@@ -34,6 +34,7 @@ class Shop extends Base
             ->where([
                 'c.u_id' => $user['id']
             ])
+            ->order('c.id DESC')
             ->select();
     }
 
