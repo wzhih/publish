@@ -5,10 +5,10 @@
             <img src="__PUBLIC__static/portal/img/logo.png" alt="华软出版社">
         </a>
         <nav class="head-nav-fl fl">
-            <a v-for="item in menuList" v-bind:href="item.url" v-bind:title="item.category" v-bind:class="item.class">
+            <a v-for="item in menuList" v-bind:href="item.url" v-bind:title="item.category" v-bind:class="item.class" style="margin-right: 0.2rem;font-size: 0.16rem;">
                 {{ item.category }}
             </a>
-            <a href="{:url('index/base/about')}" id="about" title="关于我们">关于我们</a>
+            <a href="{:url('index/base/about')}" id="about" title="关于我们"  style="margin-right: 0.2rem;font-size: 0.16rem;">关于我们</a>
         </nav>
         <nav class="head-nav-fr fr">
             <a href="{:url('index/shop/cart')}" class="cart">
