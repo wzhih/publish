@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单详情</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/index.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/center.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+
+
+</head>
+
+<body>
+{include file="layout/head" /}
+
+<div id="buy">
+    <div class="order_box">
+        <div class="order_title  bor_b">
+            <span class="pull-left font_20">
+                {switch name="$order.status"}
+                    {case value="0"}未支付{/case}
+                    {case value="1"}已支付{/case}
+                    {case value="2"}已发货{/case}
+                    {case value="3"}已收货{/case}
+                    {default /}订单状态未知
+                {/switch}
+            </span>
+            <span class="pull-right"></span>
+        </div>
+        <div class="order_title font_20 ">订单编号：PTP-{$order.id}&nbsp;&nbsp;</div>
+        <div class="order_title font_20 bor_b">收货人信息</div>
+        <div class="order_div mtb20 ">
+            <p>
+                <span class="mr10">收货人:</span>
+                <span>{$order.name}</span>
+            </p>
+            <p>
+                <span class="mr10">收货地址:</span>
+                <span>{$order.address}</span>
+            </p>
+            <!--<p>-->
+                <!--<span class="mr10">邮政编码:</span>-->
+                <!--<span>520000</span>-->
+            <!--</p>-->
+            <p>
+                <span class="mr10">联系电话:</span>
+                <span>{$order.phone}</span>
+            </p>
+        </div>
+        <div class="order_title font_20 bor_b">物流信息</div>
+        <div class="order_div mtb20">
+            <p>暂未发货，请耐心等待！</p>
+        </div>
+        <div class="order_title font_18">商品清单</div>
+        <div class="order_goods">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th style="width: 55%; text-align: left; padding-left: 20px;">图书名称</th>
+                    <th style="width: 15%;">单价(元)</th>
+                    <th style="width: 15%;">数量</th>
+                    <th style="width: 15%;">小计(元)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $publication as $item}
+                <tr>
+                    <td>
+                        <a href="{:url('index/index/getBook', ['bookId' => $item.p_id])}"
+                           title="{$item.name}">
+                            <img src="{$item.cover}" title="{$item.name}" alt="{$item.name}" class="pull-left ">
+                        </a>
+                        <div class="pull-left text-left mtb20 w80">
+                            <span>{$item.name}</span>
+                        </div>
+                    </td>
+                    <td style="line-height: 80px;">{$item.price}</td>
+                    <td style="line-height: 80px;">{$item.quantity}</td>
+                    <td style="line-height: 80px;">{:bcmul($item.price, $item.quantity, 2)}</td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+        <div class=" text-right li_32 ">
+            <span>总额度:</span>
+            <span class="col_yellow">{$order.total_price}元</span>
+        </div>
+        <!--<div class=" text-right li_32">-->
+            <!--<span>运费:</span>-->
+            <!--<span class="col_yellow">5元</span>-->
+        <!--</div>-->
+        <div class="order_foot ">
+                <span class="pull-left text-left col_yellow">
+                    <a href="{:url('index/user/orderList')}">返回我的订单</a>
+                </span>
+            <span class="pull-right text-right">实付金额:
+                    <span class="col_yellow">{$order.real_price}元</span>
+                </span>
+        </div>
+    </div>
+</div>
+
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+
+    });
+
+
+
+</script>
+
+</body>
+
+</html>

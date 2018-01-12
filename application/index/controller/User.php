@@ -32,7 +32,6 @@ class User extends Base
         $offset = mt_rand(99, 1999);
         $rand = Db::name('publication')->limit($offset, 6)->select();
 
-        $this->assign('cid', '');
         $this->assign('rand', $rand);
         $this->assign('order', $order);
         $this->assign('user', $user);
@@ -88,23 +87,22 @@ class User extends Base
 
             switch ($item['status']) {
                 case 0:
-                    $items[$key]['status'] = '未支付';
+                    $items[$key]['status_zh'] = '未支付';
                     break;
                 case 1:
-                    $items[$key]['status'] = '已支付';
+                    $items[$key]['status_zh'] = '已支付';
                     break;
                 case 2:
-                    $items[$key]['status'] = '已发货';
+                    $items[$key]['status_zh'] = '已发货';
                     break;
                 case 3:
-                    $items[$key]['status'] = '已收货';
+                    $items[$key]['status_zh'] = '已收货';
                     break;
                 default:
-                    $items[$key]['status'] = '订单状态未知';
+                    $items[$key]['status_zh'] = '订单状态未知';
             }
         }
 
-        $this->assign('cid', '');
         $this->assign('user', $user);
         $this->assign('items', $items);
         $this->assign('page', $page);

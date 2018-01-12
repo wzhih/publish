@@ -16,6 +16,7 @@ class Base extends Controller
     public function _initialize()
     {
         $user = session('user');
+        $this->assign('cid', '');
         $this->assign('user', $user);
     }
 

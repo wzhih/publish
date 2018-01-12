@@ -231,6 +231,12 @@ class Shop extends Base
         if (!$order_id) {
             $this->error('没有此订单');
         }
+
+        $order_time = Db::name('order')->where('id', $order_id)->value('order_time');
+        if ((strtotime('now') - strtotime($order_time)) > (60 * 30)) {
+            $this->error('订单已超过支付期限');
+        }
+
         $user = session('user');
 
         $contact = Db::name('contact')->where("u_id = {$user['id']}")->select();
@@ -257,7 +263,6 @@ class Shop extends Base
             $total_price = $data[0]['total_price'];
         }
 
-        $this->assign('cid', '');
         $this->assign('o_id', $order_id);
         $this->assign('contact', $contact);
         $this->assign('data', $data);
@@ -268,6 +273,42 @@ class Shop extends Base
             case 1:
                 return $this->fetch('big_order');
         }
+    }
+
+    public function orderDetails()
+    {
+        $order_id = input('order_id');
+        if (!$order_id) {
+            $this->error('没有此订单');
+        }
+        $user = session('user');
+
+        //订单与商品分开查询，减少复杂度
+        $order = Db::name('order')->alias([
+            'order' => 'o',
+            'contact'   => 'c',
+        ])
+            ->join('contact', 'o.c_id = c.id')
+            ->where([
+                'o.u_id' => $user['id'],
+                'o.id' => $order_id,
+            ])
+            ->field("o.*, c.name, c.phone, c.address")
+            ->find();
+        $publication = Db::name('order_publication')->alias([
+            'order_publication' => 'op',
+            'publication'   => 'p',
+        ])
+            ->join('publication', 'op.p_id = p.id')
+            ->where([
+                'op.o_id' => $order_id,
+            ])
+            ->field("p.id as p_id, p.cover, p.`name`, p.author, op.quantity, op.price")
+            ->select();
+
+        $this->assign('order', $order);
+        $this->assign('publication', $publication);
+        return $this->fetch('order_details');
     }
 
     //订单页面确认支付（其实是更新订单的地址）

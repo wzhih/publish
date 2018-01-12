@@ -110,7 +110,7 @@
                         <ul>
                             <li>
                                 <a href="{:url('index/index/getBook', ['bookId' => $publication.p_id])}"
-                                   title="鸟哥的Linux私房菜 基础学习篇(第三版)">
+                                   title="{$publication.name}">
                                     <img src="{$publication.cover}" title="{$publication.name}" alt="{$publication.name}">
                                 </a>
                                 <div>
@@ -135,7 +135,12 @@
                         <!---->
                     </p>
                     <p>
-                        <button class="center_btn_gray">{$item.status}</button>
+                        <button class="center_btn_gray status"
+                                data-status="{$item.status}"
+                                data-time="{$item.order_time}"
+                                data-id="{$item.id}">
+                            {$item.status_zh}
+                        </button>
                     </p>
                     <p>
                         <!---->
@@ -191,6 +196,31 @@
             }
         });
 
+        $('.status').click(function () {
+            var status = $(this).data('status');
+            var time = Date.parse($(this).data('time'));
+            var now = Date.parse(new Date());
+            var id = $(this).data('id');
+            switch (status) {
+                case 0:
+                    //未支付,不超过30分钟,就可以继续支付
+                    if ((now - time) > (60 * 30)) {
+                        alert('已超过支付期限');
+                        break;
+                        return;
+                    }
+                    window.location.href = "{:url('index/shop/order')}" + "?order_id=" + id;
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                    //查看订单详情
+                    window.location.href = "{:url('index/shop/orderDetails')}" + "?order_id=" + id;
+                    break;
+                default:
+                    alert('订单状态未知');
+            }
+        });
 
     });
 
