@@ -24,10 +24,17 @@ class User extends Base
     public function user()
     {
         $user = session('user');
-        $order = Db::name('order')->where([
+        $status = Db::name('order')->where([
             'u_id' => $user['id']
         ])
+            ->group("`status`")
+            ->field("`status`, COUNT(*) as count")
             ->select();
+
+        $order = [0,0,0,0];
+        foreach ($status as $value) {
+            $order[$value['status']] = $value['count'];
+        }
 
         $offset = mt_rand(99, 1999);
         $rand = Db::name('publication')->limit($offset, 6)->select();

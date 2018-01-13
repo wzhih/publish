@@ -67,19 +67,19 @@
             <div class="col-md-3 col-sm-2">
                     <span class="br_r">
                         <a href="{:url('index/user/orderList', ['status' => 0])}">待付款(
-                            <i>0</i>)</a>
+                            <i>{$order[0]}</i>)</a>
                     </span>
             </div>
             <div class="col-md-3 col-sm-2">
                     <span class="br_r">
                         <a href="{:url('index/user/orderList', ['status' => 1])}">已付款(
-                            <i>0</i>)</a>
+                            <i>{$order[1]}</i>)</a>
                     </span>
             </div>
             <div class="col-md-3 col-sm-2">
                     <span>
-                        <a href="{:url('index/user/orderList', ['status' => 2])}">发货(
-                            <i>0</i>)</a>
+                        <a href="{:url('index/user/orderList', ['status' => 2])}">发货/收货(
+                            <i>{$order[2] + $order[3]}</i>)</a>
                     </span>
             </div>
         </div>
