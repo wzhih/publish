@@ -24,6 +24,14 @@ class User extends Base
     public function user()
     {
         $user = session('user');
+
+        //用户统计订单时，先更新订单状态
+        Db::name('order')
+            ->where('status', '=', 0)
+            ->where('order_time', '<', date('Y-m-d H:i:s', time() - (60 * 30)))
+            ->where('u_id', '=', $user['id'])
+            ->update(['status' => 4, 'real_price' => 0]);
+
         $status = Db::name('order')->where([
             'u_id' => $user['id']
         ])
@@ -104,6 +112,9 @@ class User extends Base
                     break;
                 case 3:
                     $items[$key]['status_zh'] = '已收货';
+                    break;
+                case 4:
+                    $items[$key]['status_zh'] = '交易关闭';
                     break;
                 default:
                     $items[$key]['status_zh'] = '订单状态未知';

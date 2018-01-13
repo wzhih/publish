@@ -288,7 +288,7 @@ class Shop extends Base
             'order' => 'o',
             'contact'   => 'c',
         ])
-            ->join('contact', 'o.c_id = c.id')
+            ->join('contact', 'o.c_id = c.id', "LEFT")
             ->where([
                 'o.u_id' => $user['id'],
                 'o.id' => $order_id,
