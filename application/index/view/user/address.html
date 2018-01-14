@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/index.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/center.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+    <script src="__PUBLIC__static/portal/js/distpicker.min.js" charset="utf-8"></script>
+
+    <style>
+        .pagination > li > a,
+        .pagination > li > span {
+            padding: 0.1rem 0.2rem;
+            font-size: 0.15rem;
+        }
+    </style>
+</head>
+
+<body>
+{include file="layout/head" /}
+
+<div id="buy">
+    <div class="per_info">
+        <div class="per_portrait">
+            <img src="__PUBLIC__static/portal/img/portrait_def.png">
+            <div class="w80">
+                <p>{$user['name']}</p>
+                <p class="li-24 font_14">
+                    <span>性别: {$user['sex']}</span>
+                    <span>|</span>
+                    <span>手机: {$user['phone']}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="setTab">
+        <div class="warp">
+            <h4 class="col_blue pl10">
+                <a href="{:url('index/user/user')}">个人中心</a>
+            </h4>
+            <div class="center_title">
+                <span class="address_active center_active" data-tab="list" href="{:url('index/user/address')}">我的收货地址</span>
+                <span class="address_active" data-tab="add">新增收货地址</span>
+            </div>
+        </div>
+        <div class="warp com_shadow">
+            <div class="my_address mb20 address_tab">
+                <!---->
+                <div class="row">
+                    {foreach $contact as $item}
+                    <div class="col-md-6 col-sm-12">
+                        <div class="center_address">
+                            <div class="address_title ">
+                                {$item.name}
+                            </div>
+                            <div class="address_box">
+                                <p>
+                                    <span>联系方式: </span><span>{$item.phone}</span>
+                                </p>
+                                <p>
+                                    <span>地址: </span>
+                                    <span>
+                                        {$item.province}
+                                        &nbsp;&nbsp;
+                                        {$item.city}
+                                        &nbsp;&nbsp;
+                                        {$item.area}
+                                    </span>
+                                </p>
+                                <p>
+                                    <span>详细: </span><span>{$item.address}</span>
+                                </p>
+                            </div>
+                            <div class="address_handle  text-right">
+                                <a class="col_gray delModal" data-toggle="modal" data-target="#delModal" data-id="{$item.id}">删除</a>
+                                &nbsp;&nbsp;|
+                                <a class="col_gray saveModal" data-id="{$item.id}"
+                                   data-name="{$item.name}" data-phone="{$item.phone}" data-province="{$item.province}"
+                                   data-city="{$item.city}" data-area="{$item.area}" data-address="{$item.address}">
+                                    编辑
+                                </a>&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+                <div class="warp text-center mtb20">
+                    {$contact->render()}
+                </div>
+            </div>
+            <div class="pass_box add_assress address_tab" style="display: none;">
+                <form class="ivu-form ivu-form-label-right" id="addaddress">
+                    <div class="ivu-form-item ivu-form-item-required">
+                        <label class="ivu-form-item-label" style="width: 80px;">收 件人</label>
+                        <div class="ivu-form-item-content" style="margin-left: 80px;">
+                            <div class="ivu-input-wrapper ivu-input-type">
+                                <i class="ivu-icon ivu-icon-load-c ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
+                                <input type="text" placeholder="请输入收件人姓名" name="name" class="ivu-input">
+                            </div>
+                            <div class="ivu-form-item-error-tip" style="display: none;">姓名不能为空</div>
+                        </div>
+                    </div>
+
+                    <div class="ivu-form-item ivu-form-item-required">
+                        <label class="ivu-form-item-label" style="width: 80px;">联系电话</label>
+                        <div class="ivu-form-item-content" style="margin-left: 80px;">
+                            <div class="ivu-input-wrapper ivu-input-type">
+                                <i class="ivu-icon ivu-icon-load-c ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
+                                <input type="text" placeholder="请输入联系电话" name="phone" data-type="phone" class="ivu-input">
+                            </div>
+                            <div class="ivu-form-item-error-tip" style="display: none;">请输入联系电话</div>
+                        </div>
+                    </div>
+
+                    <div class="ivu-form-item ivu-form-item-required">
+                        <label class="ivu-form-item-label" style="width: 80px;">地址</label>
+                        <div class="ivu-form-item-content" style="margin-left: 80px;">
+                            <div class="ivu-input-wrapper ivu-input-type">
+                                <div data-toggle="distpicker" class="form-inline">
+                                    <select class="form-control" name="province" data-province="选择省"></select>
+                                    <select class="form-control" name="city" data-city="选择市"></select>
+                                    <select class="form-control" name="area" data-district="选择区"></select>
+                                </div>
+                            </div>
+                            <div class="ivu-form-item-error-tip" style="display: none;">请输入地址</div>
+                        </div>
+                    </div>
+
+                    <div class="ivu-form-item ivu-form-item-required">
+                        <label class="ivu-form-item-label" style="width: 80px;">详细地址</label>
+                        <div class="ivu-form-item-content" style="margin-left: 80px;">
+                            <div class="ivu-input-wrapper ivu-input-type" id="detailedAddress">
+                                <textarea placeholder="填写详细地址,精确到门牌号" rows="2" class="ivu-input" name="address"
+                                          style="height: 52px; min-height: 52px; max-height: 115px;"></textarea>
+                            </div>
+                            <div class="ivu-form-item-error-tip" style="display: none;">请输入详细地址</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="ml20 col_gray">温馨提示：收货地址最多8条</p>
+                        <div class="col-sm-offset-2 col-sm-10 mtb20 ml20">
+                            <a class="btn btn-danger w120 add-btn">保存</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    删除确认
+                </h4>
+            </div>
+            <div class="modal-body">
+                确认删除吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">取消
+                </button>
+                <button type="button" id="delAddress" class="btn btn-primary delAddress">
+                    确认
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="mysaveModalLabel">
+                    编辑收货地址
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveForm" class="ivu-form ivu-form-label-right" method="post" action="{:url('index/user/saveAddress')}">
+                    <input type="hidden" name="id" value="">
+                    <div class="ivu-form-item ivu-form-item-required">
+                        <label class="ivu-form-item-label" style="width: 80px;">收 件人</label>
+                        <div class="ivu-form-item-content" style="margin-left: 80px;">
+                            <div class="ivu-input-wrapper ivu-input-type">
+                                <i class="ivu-icon ivu-icon-load-c ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
+                                <input type="text" placeholder="请输入收件人姓名" name="name" class="ivu-input">
+                            </div>
+                            <div class="ivu-form-item-error-tip" style="display: none;">姓名不能为空</div>
+                        </div>
+                    </div>
+
+                    <div class="ivu-form-item ivu-form-item-required">
+                        <label class="ivu-form-item-label" style="width: 80px;">联系电话</label>
+                        <div class="ivu-form-item-content" style="margin-left: 80px;">
+                            <div class="ivu-input-wrapper ivu-input-type">
+                                <i class="ivu-icon ivu-icon-load-c ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
+                                <input type="text" placeholder="请输入联系电话" name="phone" data-type="phone" class="ivu-input">
+                            </div>
+                            <div class="ivu-form-item-error-tip" style="display: none;">请输入联系电话</div>
+                        </div>
+                    </div>
+
+                    <div class="ivu-form-item ivu-form-item-required">
+                        <label class="ivu-form-item-label" style="width: 80px;">地址</label>
+                        <div class="ivu-form-item-content" style="margin-left: 80px;">
+                            <div class="ivu-input-wrapper ivu-input-type">
+                                <div id="distpicker1" class="form-inline">
+                                    <select class="form-control" name="province"></select>
+                                    <select class="form-control" name="city"></select>
+                                    <select class="form-control" name="area"></select>
+                                </div>
+                            </div>
+                            <div class="ivu-form-item-error-tip" style="display: none;">请输入地址</div>
+                        </div>
+                    </div>
+
+                    <div class="ivu-form-item ivu-form-item-required">
+                        <label class="ivu-form-item-label" style="width: 80px;">详细地址</label>
+                        <div class="ivu-form-item-content" style="margin-left: 80px;">
+                            <div class="ivu-input-wrapper ivu-input-type">
+                                <textarea placeholder="填写详细地址,精确到门牌号" rows="2" class="ivu-input" name="address"
+                                          style="height: 52px; min-height: 52px; max-height: 115px;"></textarea>
+                            </div>
+                            <div class="ivu-form-item-error-tip" style="display: none;">请输入详细地址</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">取消
+                </button>
+                <button type="button" id="saveAddress" class="btn btn-primary saveAddress">
+                    确认
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+        $('.address_active').click(function () {
+            $('.address_active').removeClass('center_active');
+            $(this).addClass('center_active');
+
+            $('.address_tab').css('display', 'none');
+            var tab = $(this).data('tab');
+            switch (tab) {
+                case 'list':
+                    $('.my_address').css('display', 'block');
+                    break;
+                case 'add':
+                    $('.add_assress').css('display', 'block');
+                    break;
+            }
+
+        });
+
+        $('.delModal').click(function () {
+            var id = $(this).data('id');
+            $('#delAddress').data('id', id);
+        });
+
+        $('#delAddress').click(function () {
+            var id = $(this).data('id');
+
+            $.ajax({
+                type: 'POST',
+                url: '{:url("index/user/delAddress")}',
+                data: {'id':id},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.status) {
+                        location.reload(true);
+                    }
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
+        });
+
+        //当输入框失去焦点时验证输入
+        // ivu-form-item-error
+        $('input, textarea').blur(function () {
+            var val = $(this).val();
+            var type = $(this).data('type');
+            //如果是手机，需要多加一次验证
+            if (type == 'phone') {
+                var myreg = /^(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+                if (!val) {
+                    $(this).parent().next().text('请输入联系电话');
+                } else if (!myreg.test(val)) {
+                    $(this).parent().next().text('请输入有效手机号码！');
+                    val = false;
+                }
+            }
+
+            if (val) {
+                $(this).parent().parent().parent().removeClass('ivu-form-item-error');
+                $(this).parent().next().css('display', 'none');
+            } else {
+                $(this).parent().parent().parent().addClass('ivu-form-item-error');
+                $(this).parent().next().css('display', 'block');
+            }
+        });
+        
+        $('.saveModal').click(function () {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var phone = $(this).data('phone');
+            var province = $(this).data('province');
+            var city = $(this).data('city');
+            var area = $(this).data('area');
+            var address = $(this).data('address');
+
+            $('#saveModal input[name=id]').val(id);
+            $('#saveModal input[name=name]').val(name);
+            $('#saveModal input[name=phone]').val(phone);
+
+            $("#distpicker1").distpicker({
+                province: province,
+                city: city,
+                district: area
+            });
+
+            $('#saveModal textarea[name=address]').val(address);
+
+            $('#saveModal').modal();
+        });
+
+        $('#saveModal').on('hidden.bs.modal', function () {
+            $('#saveModal input,#saveModal select,#saveModal textarea').parent().parent().parent().removeClass('ivu-form-item-error');
+            $('#saveModal input,#saveModal select,#saveModal textarea').parent().next().css('display', 'none');
+        })
+        
+        $('#saveAddress').click(function () {
+            $('#saveAddress input,#saveAddress textarea').blur();
+            var form = $('#saveForm');
+            var check = select_check(form);
+            var size = form.find('.ivu-form-item-error').size();
+            if (size == 0 && check == true) {
+                console.log('right');
+                form.submit();
+            } else {
+                console.log('error');
+            }
+        });
+        
+        //验证表单，并提交
+        $('.add-btn').click(function () {
+            $('#addaddress input, #addaddress textarea').blur();
+            var form = $(this).closest('form');
+            var check = select_check(form);
+            var size = form.find('.ivu-form-item-error').size();
+            if (size == 0 && check == true) {
+                console.log('right');
+                $.ajax({
+                    type: 'POST',
+                    url: '{:url("index/user/addAddress")}',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    async: true,
+                    success: function (res) {
+                        if (res.status) {
+                            location.href = '{:url("index/user/address")}';
+                        } else {
+                            alert(res.msg);
+                        }
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+
+            } else {
+                console.log('error');
+            }
+        });
+
+    });
+
+    //验证省份，城市，区，有没有都选中
+    function select_check(form) {
+        var count = 0;
+        console.log(form.find('select'));
+        $.each(form.find('select'), function (index,element) {
+            if ($(element).val()) {
+                count += 1;
+            }
+        });
+
+        if (count != 3) {
+            form.find('.ivu-form-item-error-tip').eq(2).css('display', 'block');
+            return false;
+        } else {
+            form.find('.ivu-form-item-error-tip').eq(2).css('display', 'none');
+            return true;
+        }
+    }
+
+
+</script>
+
+</body>
+
+</html>

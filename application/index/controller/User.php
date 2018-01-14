@@ -126,4 +126,70 @@ class User extends Base
         $this->assign('page', $page);
         return $this->fetch();
     }
+
+    public function address()
+    {
+        $user = session('user');
+        $concact = Db::name('contact')
+            ->where(['u_id' => $user['id']])
+            ->order('id DESC')
+            ->paginate(4);
+
+        $this->assign('user', $user);
+        $this->assign('contact', $concact);
+        return $this->fetch();
+    }
+
+    public function addAddress()
+    {
+        $user = session('user');
+        $data = input('post.');
+
+        $count = Db::name('contact')->where('u_id', $user['id'])->count();
+        if ($count >= 8) {
+            return json_result(false, '收货地址最多8条');
+        }
+
+        $data['u_id'] = $user['id'];
+        $result = Db::name('contact')->insertGetId($data);
+
+        if ($result) {
+            return json_result(true, '添加成功');
+        }
+
+        return json_result(false, '添加失败');
+    }
+
+    public function saveAddress()
+    {
+        $user = session('user');
+        $data = input('post.');
+        $id = $data['id'];
+        unset($data['id']);
+
+        $result = Db::name('contact')
+            ->where('u_id', $user['id'])
+            ->where('id', $id)
+            ->data($data)
+            ->update();
+
+        if ($result !== false) {
+            $this->success('编辑成功');
+        }
+
+        $this->error('编辑失败');
+    }
+
+    public function delAddress()
+    {
+        $id = input('id');
+
+        $result = Db::name('contact')->where('id', $id)->delete();
+        if ($result) {
+            return json_result(true, '删除成功');
+        }
+
+        return json_result(false, $result);
+    }
+
 }

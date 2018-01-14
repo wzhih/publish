@@ -78,8 +78,8 @@
             </div>
             <div class="col-md-3 col-sm-2">
                     <span>
-                        <a href="{:url('index/user/orderList', ['status' => 2])}">发货/收货(
-                            <i>{$order[2] + $order[3]}</i>)</a>
+                        <a href="{:url('index/user/orderList', ['status' => 2])}">发货(
+                            <i>{$order[2]}</i>)</a>
                     </span>
             </div>
         </div>
@@ -112,12 +112,12 @@
                         </div>
                         <div class="col-md-3  col-sm-3">
                             <p>
-                                <a href="#">
+                                <a href="{:url('index/user/address')}">
                                     <i class="icon iconfont_center  col_blue"></i>
                                 </a>
                             </p>
                             <p>
-                                <a href="#">收货地址</a>
+                                <a href="{:url('index/user/address')}">收货地址</a>
                             </p>
                         </div>
                         <div class="col-md-3  col-sm-3">
