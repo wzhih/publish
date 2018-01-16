@@ -206,7 +206,7 @@
             switch (status) {
                 case 0:
                     //未支付,不超过30分钟,就可以继续支付
-                    if ((now - time) > (60 * 30)) {
+                    if ((now - time) > (60 * 30 * 1000)) {
                         alert('已超过支付期限');
                         break;
                         return;
