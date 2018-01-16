@@ -191,6 +191,7 @@
                     dataType: 'json',
                     success: function (res) {
                         if (res.status) {
+                            history.go(-1);
                             window.location.href = res.data;
                         } else {
                             $('.mod_content').text(res.msg);
