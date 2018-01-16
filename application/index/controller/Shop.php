@@ -293,7 +293,7 @@ class Shop extends Base
                 'o.u_id' => $user['id'],
                 'o.id' => $order_id,
             ])
-            ->field("o.*, c.name, c.phone, c.address")
+            ->field("o.*, c.name, c.phone, c.province, c.city, c.area, c.address")
             ->find();
         $publication = Db::name('order_publication')->alias([
             'order_publication' => 'op',
