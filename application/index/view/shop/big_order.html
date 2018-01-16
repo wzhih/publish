@@ -46,14 +46,14 @@
         <div class="order_title font_14 ">
             <span class="pull-left">选择收货地址</span>
             <span class="pull-right">
-                    <a href="{:url('index/shop/address')}" target="_blank">管理收货地址</a>
+                    <a href="{:url('index/user/address')}" target="_blank">管理收货地址</a>
                 </span>
         </div>
         <div class="payment_address ">
             {if condition="empty($contact)"}
             <div class="defaultData text-center">
                 <p>
-                    <a href="{:url('index/shop/address')}" class="col_yellow font_18">添加收货地址</a>
+                    <a href="{:url('index/user/address')}" class="col_yellow font_18">添加收货地址</a>
                 </p>
             </div>
             {else /}
@@ -68,16 +68,15 @@
                             </span>
                         </div>
                         <p class="h44 handle">
-                            <!--<span>广东省</span>-->
-                            <!--<span>广州市</span>-->
-                            <!--<span>从化市</span>-->
-                            <!--<span>13大道路</span>-->
                             <span>地址:</span>
+                            <span>{$value.province}</span>
+                            <span>{$value.city}</span>
+                            <span>{$value.area}</span>
                             <span>{$value.address}</span>
                         </p>
                         <p><span>电话:</span>{$value.phone}</p>
                         <p class="text-right mr20 col_blue">
-                            <a href="{:url('index/shop/address')}">编辑</a>
+                            <!--<a href="{:url('index/user/address')}">编辑</a>-->
                         </p>
                     </div>
                 </li>
