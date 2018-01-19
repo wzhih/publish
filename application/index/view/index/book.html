@@ -44,6 +44,42 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/detail.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/cssAuto.css">
 
+    <style>
+        .fontSize {
+            font-size: 0.2rem;
+        }
+        .fontSize2 {
+            font-size: 0.15rem;
+        }
+        .fontSize3 {
+            font-size: 0.15rem;
+        }
+
+        .pagination > li > a,
+        .pagination > li > span {
+            padding: 0.1rem 0.2rem;
+            font-size: 0.15rem;
+        }
+
+        hr.style-seven {
+            overflow: visible; /* For IE */
+            height: 30px;
+            border-style: solid;
+            border-color: black;
+            border-width: 1px 0 0 0;
+            border-radius: 20px;
+        }
+        hr.style-seven:before { /* Not really supposed to work, but does */
+            display: block;
+            content: "";
+            height: 30px;
+            margin-top: -31px;
+            border-style: solid;
+            border-color: black;
+            border-width: 0 0 1px 0;
+            border-radius: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -196,6 +232,51 @@
                 </div>
             </li>
         </ul>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col-lg-4">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="badge list-group-item-success">{$evaluation->total()}</span>
+                        这里已经有很多评论啦！
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        {foreach $evaluation as $eval}
+        <div class="media">
+            <div class="media-left">
+                <img class="media-object" src="__PUBLIC__static/portal/img/head/head{:mt_rand(1,10)}.png">
+                <h4 class="text-center fontSize3">{$eval.name | hiddenName}</h4>
+            </div>
+            <div class="media-body">
+                <!--<h4 class="media-heading">{$eval.name}</h4>-->
+                <br>
+                <p>
+                    <span class="fontSize">级别:</span>
+                    {for start='0' end='$eval.star'}
+                    <img class="icon" height="30" src="__PUBLIC__static/portal/img/head/star_icon.png">
+                    {/for}
+                </p>
+                <br><br>
+                <p class="fontSize2">
+                    <b class="text-muted">评论:</b>
+                    <span>{$eval.content}</span>
+                </p>
+                <br><br><br>
+                <p class="text-right">{$eval.etime}</p>
+                <br><br>
+                <hr class="style-seven">
+            </div>
+        </div>
+        {/foreach}
+
+        <div class="text-center">
+            {$evaluation->render()}
+        </div>
     </div>
 
     <div class="book-floor">

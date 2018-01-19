@@ -249,3 +249,16 @@ function json_result($status = true, $msg = 'success', $data = [])
     ]);
 }
 
+
+function hiddenName(string $name = '')
+{
+    $len = strlen($name);
+
+    if ($len) {
+        $str = mb_substr($name, 0, 1);
+
+        return $str . '*';
+    } else {
+        return '';
+    }
+}

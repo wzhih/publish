@@ -107,12 +107,20 @@ class Index extends Base
         $bookInfo = Db::name('publication')->find(['id' => $bookId]);
         $cid = Db::name('category')->where(['id' => $bookInfo['c_id']])->value('parent_id');
 
+        $evaluation = Db::name('evaluation e')
+            ->join('user u', 'e.u_id = u.id', 'left')
+            ->field('e.*, u.name, u.phone, u.sex')
+            ->where('p_id', $bookId)
+            ->order('id DESC')
+            ->paginate(6, false, ['query' => ['bookId' => $bookId]]);
+
         $offset = mt_rand(99, 1999);
         $rand = Db::name('publication')->limit($offset, 9)->select();
 
         $this->assign('book', $bookInfo);
         $this->assign('rand', $rand);
         $this->assign('cid', $cid);
+        $this->assign('evaluation', $evaluation);
         return $this->fetch('book');
     }
 
