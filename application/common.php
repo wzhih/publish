@@ -249,7 +249,11 @@ function json_result($status = true, $msg = 'success', $data = [])
     ]);
 }
 
-
+/**
+ * （评价列表）隐藏部分用户名字
+ * @param string $name
+ * @return string
+ */
 function hiddenName(string $name = '')
 {
     $len = strlen($name);

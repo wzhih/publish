@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/index.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/center.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/star/star-rate.css">
 
     <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
@@ -37,12 +38,17 @@
     <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
     <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
     <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+    <script src="__PUBLIC__static/star/star-rate.js"></script>
 
     <style>
         .pagination > li > a,
         .pagination > li > span {
             padding: 0.1rem 0.2rem;
             font-size: 0.15rem;
+        }
+
+        .modal-title {
+            font-size: 0.2rem;
         }
     </style>
 </head>
@@ -127,7 +133,12 @@
                     </div>
                 </div>
                 <div class="col-md-1 col-sm-2 text-center mtb20  li_42 ">
-                    <!--<span>{$item.status}</span>-->
+                    {eq name='$item.status' value='3'}
+                    <button type="button" class="eval btn btn-warning btn-block"
+                            data-pid="{$publication.p_id}" data-pname="{$publication.name}">
+                        评价
+                    </button>
+                    {/eq}
                 </div>
                 <div class="col-md-2 col-sm-4 text-right mtb20 br_l">
                     <p>
@@ -181,6 +192,43 @@
     </div>
 </div>
 
+<div class="modal fade" id="evalModal" tabindex="-1" role="dialog" aria-labelledby="evalModalLabel" aria-hidden="true">
+    <form action="{:url('index/user/userEvaluation')}" method="post" class="form-horizontal">
+        <input id="p_id" type="hidden" name="p_id" value="">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="evalModalLabel">
+                        评价 <small id="pname"></small>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="star" class="col-sm-2 control-label">五星评分</label>
+                        <div class="col-sm-10">
+                            <div id="star">
+                            </div>
+                            <span class="help-block">最少选择一颗星。</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content" class="col-sm-2 control-label">文本框</label>
+                        <div class="col-sm-10">
+                        <textarea id="content" name="content" class="form-control" rows="3" placeholder="请输入评价内容"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="submit-eval">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </form>
+</div>
+
 {include file="layout/foot" /}
 
 {include file="layout/goback" /}
@@ -223,6 +271,59 @@
                 default:
                     alert('订单状态未知');
             }
+        });
+        
+        $('.eval').click(function () {
+            $('#p_id').val($(this).data('pid'));
+            $('#pname').text($(this).data('pname'));
+
+            $('#star').html('');
+            $('#content').val('');
+            $('#star').starRate({
+                size: 5,
+                onEvent: true,
+                activeSize: 0,
+                starSize: 0.25
+            });
+
+
+            $('#evalModal').modal();
+        });
+        
+        $('#submit-eval').click(function () {
+            var p_id = $('#p_id').val();
+            var star = $('.is-showXXSAQ').length;
+            var content = $('#content').val();
+
+            if (!star || (star < 1) || (star > 5)) {
+                star = 1;
+            }
+
+            if (!content) {
+                content = '用户并无详细评论！';
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '{:url("index/user/userEvaluation")}',
+                data: {
+                    'p_id':p_id,
+                    'star': star,
+                    'content': content
+                },
+                dataType: 'json',
+                async: true,
+                success: function (res) {
+                    if (res.status) {
+                        location.href = '{:url("index/index/getbook")}' + '?bookId=' + p_id + '#evaluation';
+                    } else {
+                        alert(res.msg);
+                    }
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
         });
 
     });

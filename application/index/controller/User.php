@@ -192,4 +192,40 @@ class User extends Base
         return json_result(false, $result);
     }
 
+    //用户评论出版物
+    public function userEvaluation()
+    {
+        $p_id = input('p_id');
+        $star = input('star', 1);
+        $content = input('content', '用户并无详细评论！');
+
+        if (!$p_id || !$star || !$content || ($star < 1) || ($star > 5)) {
+            return json_result(false, '参数错误');
+        }
+
+        $user = session('user');
+        $data = [
+            'u_id' => $user['id'],
+            'p_id' => $p_id,
+            'star' => $star,
+            'content' => $content,
+            'etime' => date('Y-m-d H:i:s'),
+        ];
+
+        $count = Db::name('evaluation')
+            ->where('u_id', $user['id'])
+            ->where('p_id', $p_id)
+            ->count();
+        if ($count) {
+            return json_result(false, '请勿多次评论！');
+        }
+
+        $result = Db::name('evaluation')->insertGetId($data);
+        if ($result) {
+            return json_result(true, '评论成功');
+        }
+
+        return json_result(false, '评论失败，错误:' . $result);
+    }
+
 }
