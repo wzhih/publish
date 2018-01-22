@@ -177,6 +177,18 @@
                     </a>
                 </dd>
             </dl>
+            {if condition="$book['data']"}
+            <dl>
+                <dt>下载</dt>
+                <dd>
+                    <a class="btn btn-info" href="{$book['data']}" target="_blank" style="font-size: 0.16rem;">
+                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                        随书资料
+                    </a>
+                    <!---->
+                </dd>
+            </dl>
+            {/if}
         </div>
     </div>
     <div class="book-detail-other">

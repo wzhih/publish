@@ -147,12 +147,33 @@ class Index extends Base
         $data = input('post.');
         $cover = uploading('cover');
         $img = uploading('img');
+        $bookData = uploading('data');//随书资料
+
         if ($cover) {
-            $data['cover'] = $cover;
+            $object = "book/cover/" . basename($cover);
+            $cover = upload_oss($object, $cover);
+
+            if ($cover) {
+                $data['cover'] = $cover;
+            }
         }
         if ($img) {
-            $data['img'] = $img;
+            $object = "book/img/" . basename($img);
+            $img = upload_oss($object, $img);
+
+            if ($img) {
+                $data['img'] = $img;
+            }
         }
+        if ($bookData) {
+            $object = "book/data/" . basename($bookData);
+            $bookData = upload_oss($object, $bookData);
+
+            if ($bookData) {
+                $data['data'] = $bookData;
+            }
+        }
+
         $result = Db::name('publication')->data($data)->insert();
 
         if ($result == false) {
@@ -180,7 +201,7 @@ class Index extends Base
         if ($result === false) {
             $this->error('删除失败');
         }
-        $this->success('删除成功');
+        $this->success('删除成功', url('admin/Index/showPublication'));
     }
 
     //修改出版物
@@ -189,12 +210,33 @@ class Index extends Base
         $data = input('post.');
         $cover = uploading('cover');
         $img = uploading('img');
+        $bookData = uploading('data');//随书资料
+
         if ($cover) {
-            $data['cover'] = $cover;
+            $object = "book/cover/" . basename($cover);
+            $cover = upload_oss($object, $cover);
+
+            if ($cover) {
+                $data['cover'] = $cover;
+            }
         }
         if ($img) {
-            $data['img'] = $img;
+            $object = "book/img/" . basename($img);
+            $img = upload_oss($object, $img);
+
+            if ($img) {
+                $data['img'] = $img;
+            }
         }
+        if ($bookData) {
+            $object = "book/data/" . basename($bookData);
+            $bookData = upload_oss($object, $bookData);
+
+            if ($bookData) {
+                $data['data'] = $bookData;
+            }
+        }
+
         $result = Db::name('publication')->data($data)->update();
 
         if ($result === false) {
