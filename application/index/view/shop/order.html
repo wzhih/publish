@@ -191,7 +191,7 @@
                     success: function (res) {
                         if (res.status) {
                             //应该跳转到支付二维码页面，这里先直接支付成功
-                            window.location.href = "{:url('index/shop/paymentConfirm', ['order_id' => $o_id])}";
+                            window.location.href = "{:url('index/shop/paymentSecond', ['order_id' => $o_id])}";
                         }
                     },
                     error: function (msg) {

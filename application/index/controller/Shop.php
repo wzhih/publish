@@ -326,17 +326,17 @@ class Shop extends Base
         return json_result(true);
     }
 
+    public function paymentSecond()
+    {
+        $order_id = input('order_id');
+        $data = Db::name('order')->where('id', $order_id)->find();
+
+        return (new Payment())->ali_payment($data['id'], '暂无商品信息', $data['total_price']);
+    }
+
     public function paymentConfirm()
     {
-        //支付成功，订单记录状态修改
-        $order_id = input('order_id');
 
-        if (!$order_id) {
-            return json_result(false, '参数错误');
-        }
-
-        //这里应该顺便更新real_price字段，保留大订单客户真实付款金额
-        $result = Db::name('order')->where("id = $order_id")->update(['status' => 1]);
 
         return $this->success('支付成功，跳转到订单列表。', url('index/user/orderList'));
     }
