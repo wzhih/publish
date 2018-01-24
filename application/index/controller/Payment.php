@@ -71,6 +71,7 @@ class Payment extends Controller
                 //支付成功更新订单状态
                 Db::name('order')
                     ->where("id = $order_id")
+                    ->where('status = 0')
                     ->update([
                         'status' => 1,
                         'real_price' => $total_amount,
@@ -86,5 +87,36 @@ class Payment extends Controller
     public function return_url()
     {
         $data = input('get.');
+
+        $config = config('alipay');
+        $pay = new Pay($config);
+        if (!$pay->check($config, $data)) {
+            //没有通过支付宝异步通知验签
+            return ;
+        }
+
+        if ($config['app_id'] != $data['app_id']) {
+            return ;
+        }
+        $order_id = $data['out_trade_no'];
+        $total_amount = $data['total_amount'];
+        $order_status = $data['trade_status'];
+        switch ($order_status) {
+            case 'TRADE_SUCCESS':
+            case 'TRADE_FINISHED':
+                //支付成功更新订单状态
+                Db::name('order')
+                    ->where("id = $order_id")
+                    ->where('status = 0')
+                    ->update([
+                        'status' => 1,
+                        'real_price' => $total_amount,
+                    ]);
+                break;
+            default:
+                return;
+        }
+
+        return $this->success('支付成功', url('index/User/orderList'));
     }
 }

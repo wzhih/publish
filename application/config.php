@@ -8,7 +8,6 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-use think\Url;
 
 return [
     // +----------------------------------------------------------------------
@@ -266,10 +265,10 @@ return [
         'merchant_private_key' => "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCHrQuUjePPE0tnG9Kx3TlQ/mqep8CJhU5LGv3hlUJOVqlQp3004fy4cMdgmyk7uQ/zM1fgdlbBQQJV62Vvy4OOd46QyrDhB8em71ecIMFtseynCtMtdefWL2f9ubaH8qzbGpf+IEO4ijYqr9a5ePVXdQRh3/N1pxQ68GJ521+ldzJ/L5XR5laXadJRReQmNBvgFug6N1QLhr2jdGGRtdyuZRdJLjzcFobBHa0giB2REeQvOkkatmexUk+G8pHa+3F1zkP9wUgKnkk7HbG6Mj5jWTGIEZgZpA3KKH3mnJk2zB2qimckgWcascrm6Qoz908MrV+CktMiGdSa4mSESe/BAgMBAAECggEANYLSpmywBOQfQTOADhaqnH87ngebsKGbF5Q1vdsYo70aWm00vL7E5hnVCQ0pXhzHZaxCZI1H+kChozGMeGNUJ8SPvhuzV42x+O09KJ7iq1kZdWiXkb6HCbr40OGGVGgqNOBwQhKHoykf5AYmMlC6sxu79r5VT3nuSLC2pkkXmDKsiurhZ31o25AN4J7jZDZlcFBJJ6WWr/ktTV21sCRPc2LY1CT03rnQQpwL/QZ1RkSFptSpl7dS1e7Mqnihs53qBdxgHlbXgRKGQQKOCEHDFXZRdw0E+CFesiX+STBvVdETztn7tcKAFDL30LXzDxNNkctLcvp1Zr2oyVrkJIcX4QKBgQDnVCZr9lCneGu9BOueaAT0wtM1huXSZUg0RnnKKYqmff1wfLzHULvLJz1aX2BpoLmfs49r4nVYP2ZxtmmGe72drg0eA69Aty2IqKOIvWYGhgpYdXwQBir+kWEBuJics7PrahvlFaywnG0kG5TaTJIAE+De+L6rFDcbT8X4xTur/wKBgQCWJVY2v8kuhGan3x+Ffor3giZeFLUePKD4YdyINy7wi/mOU2XhlLeGJ5SXR6rjlwg0NQxlI6UGwbE1bt5WIBjZXk/dsKHbWlBGCzgrQeP0cgNt5aygqpXpZKCoKW7JWGJXfdvSzF9kGrjYhAqzidak43oMZpdNXF/qbWHacJVkPwKBgQDMRCRBRRlnKBCKsiOUlul5b+es5ldd941Qi8LTXudNqQb4I01W+tU4yIeGm5245/HBMX89lpRjvmgplReNZwrCh4SRslM4ZAfTGoZ9IjFLJWVRQzyvsaKZc6ojKOupw4zmHaZQHVmGAjrlnW1Nbjul0efJPACxdIJMnZ6E0zSj5QKBgC00yKRrUhNjYdUhZMg4tXaYBR1GdtHHx1+Bd3i7xLJAMr8bdQ1aTXdi62Yw+c7UZm/xmO3KsaE7KDPCUcb0mwa3UqyYxeLZalnsftjnWc77lPS9tiAZvFEtLwHyl5yfs9xL1Ke/SOlG8mieOOqdkbbLlq+tI9jy+x4GGPQ/+XrZAoGATq19pwbvCSUZXqHEWkbR8If4meNsDC1GEDKpfwXFAsRg8u9zJOaOEOJz/iX06qDxokWoo8a0mnryT1BxMgf06S2tf7jd+rGk699f8/q2UJG422j0/lxCchyQiMwY6PpIC2ZMFSOl2FZ9PT5ZYx5h3+RNt2AnUtBghIhuhpDJ4eM=",
 
         //异步通知地址
-        'notify_url' => Url::build('index/Payment/notify_url'),
+        'notify_url' => 'http://winton.wang/index/Payment/notify_url.html',
 
         //同步跳转
-        'return_url' => Url::build('index/index/User/orderList'),
+        'return_url' => 'http://winton.wang/index/Payment/return_url.html',
 
         //编码格式
         'charset' => "UTF-8",
