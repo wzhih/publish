@@ -328,8 +328,12 @@ class Shop extends Base
 
     public function paymentSecond()
     {
+        $user = session('user');
         $order_id = input('order_id');
         $data = Db::name('order')->where('id', $order_id)->find();
+        if ($user['type'] == 1) {
+            $data['total_price'] = bcmul($data['total_price'], 0.8, 2);
+        }
 
         return (new Payment())->ali_payment($data['id'], '暂无商品信息', $data['total_price']);
     }
