@@ -96,9 +96,13 @@ class Index extends Base
         //默认日期倒序显示最新的出版物
         $dateSort = input('dateSort', 'desc');
 
+        //若有传入出版物id，直接显示该出版物
+        $pid = input('pid');
         //传入搜索关键字，以此搜索出版物
         $publication = input('publication');
-        if (!empty($publication)) {
+        if ($pid) {
+            $map['p.id'] = $pid;
+        } elseif (!empty($publication)) {
             $publication = urldecode($publication);
             $map['p.name'] = ['like', '%' . $publication . '%'];
 
@@ -127,6 +131,7 @@ class Index extends Base
 
         if ($pid) {
             $data = Db::name('publication')->where('id', $pid)->find();
+            $data['bookDir'] = str_replace( '<br>', "\r\n",  $data['bookDir']);
 
             $this->assign('data', $data);
         }
@@ -172,6 +177,12 @@ class Index extends Base
             if ($bookData) {
                 $data['data'] = $bookData;
             }
+        }
+
+        if (!empty($data['bookDir'])) {
+            $dir = urldecode($data['bookDir']);
+            $patten = array("\r\n", "\n", "\r");
+            $data['bookDir'] = str_replace($patten, '<br>', $dir);
         }
 
         $result = Db::name('publication')->data($data)->insert();
@@ -235,6 +246,12 @@ class Index extends Base
             if ($bookData) {
                 $data['data'] = $bookData;
             }
+        }
+
+        if (!empty($data['bookDir'])) {
+            $dir = urldecode($data['bookDir']);
+            $patten = array("\r\n", "\n", "\r");
+            $data['bookDir'] = str_replace($patten, '<br>', $dir);
         }
 
         $result = Db::name('publication')->data($data)->update();
