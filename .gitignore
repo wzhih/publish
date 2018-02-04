@@ -5,3 +5,4 @@ thinkphp
 .vscode/*
 public/uploads/cover/*
 public/static/portal/img/swiper/*
+extend/alipay/log.txt
