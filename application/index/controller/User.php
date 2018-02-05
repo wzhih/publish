@@ -69,10 +69,12 @@ class User extends Base
                 'u.id' => $user['id'],
                 'o.status' => $status,
             ]);
+            $this->assign('status', $status+1);
         } else {
             $db->where([
                 'u.id' => $user['id'],
             ]);
+            $this->assign('status', '');
         }
 
         $orders = $db->field('o.*')
@@ -115,6 +117,12 @@ class User extends Base
                     break;
                 case 4:
                     $items[$key]['status_zh'] = '交易关闭';
+                    break;
+                case 5:
+                    $items[$key]['status_zh'] = '已退款';
+                    break;
+                case 6:
+                    $items[$key]['status_zh'] = '已退货';
                     break;
                 default:
                     $items[$key]['status_zh'] = '订单状态未知';
@@ -226,6 +234,30 @@ class User extends Base
         }
 
         return json_result(false, '评论失败，错误:' . $result);
+    }
+
+    //用户退款
+    public function userRefund()
+    {
+        $o_id = input('o_id');
+
+        if ($o_id) {
+            $result = Db::name('order')
+                ->where('status', '=', 1)
+                ->where('id', '=', $o_id)
+                ->update(['status' => 5]);
+        } else {
+            return json_result(true, '没有发送订单号');
+        }
+
+        $refund_amount = Db::name('order')->where('id', '=', $o_id)->value('real_price');
+        @$r = (new Payment())->refund($o_id, $refund_amount);
+
+        if ($result === false) {
+            return json_result(true, '退款失败，请联系工作人员。');
+        }
+
+        return json_result(true, '退款成功');
     }
 
 }

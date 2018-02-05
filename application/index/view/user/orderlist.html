@@ -78,11 +78,11 @@
         <div class="row">
             <div class="col-md-9 col-sm-12">
                 <div class="center_title pull-left">
-                    <span><a href="{:url('index/user/orderList')}" class="center_active">全部订单</a></span>
-                    <span><a href="{:url('index/user/orderList', ['status' => 0])}" class="">待付款</a></span>
-                    <span><a href="{:url('index/user/orderList', ['status' => 1])}" class="">已付款</a></span>
-                    <span><a href="{:url('index/user/orderList', ['status' => 2])}" class="">已发货</a></span>
-                    <span><a href="{:url('index/user/orderList', ['status' => 3])}" class="">已收货</a></span>
+                    <span><a href="{:url('index/user/orderList')}" class="order_active">全部订单</a></span>
+                    <span><a href="{:url('index/user/orderList', ['status' => 0])}" class="order_active">待付款</a></span>
+                    <span><a href="{:url('index/user/orderList', ['status' => 1])}" class="order_active">已付款</a></span>
+                    <span><a href="{:url('index/user/orderList', ['status' => 2])}" class="order_active">已发货</a></span>
+                    <span><a href="{:url('index/user/orderList', ['status' => 3])}" class="order_active">已收货</a></span>
                 </div>
             </div>
             <!--<div class="col-md-3 col-sm-12">-->
@@ -133,6 +133,12 @@
                     </div>
                 </div>
                 <div class="col-md-1 col-sm-2 text-center mtb20  li_42 ">
+                    {eq name='$item.status' value='1'}
+                    <button type="button" class="refund btn btn-danger btn-block"
+                            data-oid="{$item.id}" data-pname="{$publication.name}">
+                        退款
+                    </button>
+                    {/eq}
                     {eq name='$item.status' value='3'}
                     <button type="button" class="eval btn btn-warning btn-block"
                             data-pid="{$publication.p_id}" data-pname="{$publication.name}">
@@ -229,11 +235,37 @@
     </form>
 </div>
 
+<div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="refundModalLabel" aria-hidden="true">
+    <form class="form-horizontal">
+        <input id="r_o_id" type="hidden" name="o_id" value="">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="">
+                        退款
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: 0.18rem;">
+                        确认退款 <strong id="r_pname"></strong> ?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="submit-refund">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </form>
+</div>
+
 {include file="layout/foot" /}
 
 {include file="layout/goback" /}
 
 <script>
+    var orderListStatus = '{$status}';
     $(function () {
         $.each($('img'), function (index, item) {
             var width = $(item).attr('width');
@@ -245,6 +277,12 @@
                 });
             }
         });
+
+        if (orderListStatus) {
+            $('.order_active').eq(orderListStatus).addClass('center_active');
+        } else {
+            $('.order_active').eq(0).addClass('center_active');
+        }
 
         $('.status').click(function () {
             var status = $(this).data('status');
@@ -265,6 +303,8 @@
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
                     //查看订单详情
                     window.location.href = "{:url('index/shop/orderDetails')}" + "?order_id=" + id;
                     break;
@@ -272,7 +312,8 @@
                     alert('订单状态未知');
             }
         });
-        
+
+        //评论商品
         $('.eval').click(function () {
             $('#p_id').val($(this).data('pid'));
             $('#pname').text($(this).data('pname'));
@@ -316,6 +357,40 @@
                 success: function (res) {
                     if (res.status) {
                         location.href = '{:url("index/index/getbook")}' + '?bookId=' + p_id + '#evaluation';
+                    } else {
+                        alert(res.msg);
+                    }
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
+        });
+
+        //退款
+        $('.refund').click(function () {
+            $('#r_o_id').val($(this).data('oid'));
+            $('#r_pname').text($(this).data('pname'));
+
+
+            $('#refundModal').modal();
+        });
+
+        $('#submit-refund').click(function () {
+            var o_id = $('#r_o_id').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '{:url("index/user/userRefund")}',
+                data: {
+                    'o_id':o_id,
+                },
+                dataType: 'json',
+                async: true,
+                success: function (res) {
+                    if (res.status) {
+                        alert(res.msg);
+                        location.reload();
                     } else {
                         alert(res.msg);
                     }

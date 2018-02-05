@@ -9,6 +9,7 @@ namespace alipay\payment;
 
 require_once dirname(dirname(__FILE__)).'/pagepay/service/AlipayTradeService.php';
 require_once dirname(dirname(__FILE__)).'/pagepay/buildermodel/AlipayTradePagePayContentBuilder.php';
+require_once dirname(dirname(__FILE__)).'/pagepay/buildermodel/AlipayTradeRefundContentBuilder.php';
 
 //SDK接口转换类
 class Pay
@@ -61,26 +62,14 @@ class Pay
         //商户订单号，商户网站订单系统中唯一订单号
         $out_trade_no = $order['order_id'];
 
-        //支付宝交易号
-        $trade_no = $order['trade_no'];
-        //请二选一设置
-
         //需要退款的金额，该金额不能大于订单金额，必填
         $refund_amount = $order['refund_amount'];
 
-        //退款的原因说明
-        $refund_reason = $order['refund_reason'];
-
-        //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
-        $out_request_no = $order['out_request_no'];
 
         //构造参数
         $RequestBuilder=new \AlipayTradeRefundContentBuilder();
         $RequestBuilder->setOutTradeNo($out_trade_no);
-        $RequestBuilder->setTradeNo($trade_no);
         $RequestBuilder->setRefundAmount($refund_amount);
-        $RequestBuilder->setOutRequestNo($out_request_no);
-        $RequestBuilder->setRefundReason($refund_reason);
 
         $aop = new \AlipayTradeService($config);
 

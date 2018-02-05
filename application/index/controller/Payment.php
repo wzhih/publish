@@ -38,10 +38,13 @@ class Payment extends Controller
     }
 
     //未完善
-    public function refund()
+    public function refund($order_id, $refund_amount)
     {
         $config = config('alipay');
-        $order = [];
+        $order = [
+            'order_id' => $order_id,
+            'refund_amount' => $refund_amount,
+        ];
 
         $pay = new Pay();
         return $pay->refundPage($config, $order);
