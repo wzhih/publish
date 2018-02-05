@@ -50,4 +50,21 @@ class Base extends Controller
         return $this->fetch('layout/about');
     }
 
+    public function proprieter()
+    {
+        $this->assign('cid', '');
+        return $this->fetch('layout/proprieter');
+    }
+
+    public function structure()
+    {
+        $this->assign('cid', '');
+        return $this->fetch('layout/structure');
+    }
+
+    public function department()
+    {
+        $this->assign('cid', '');
+        return $this->fetch('layout/department');
+    }
 }
