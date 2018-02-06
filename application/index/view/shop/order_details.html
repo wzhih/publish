@@ -54,8 +54,8 @@
                     {case value="2"}已发货{/case}
                     {case value="3"}已收货{/case}
                     {case value="4"}交易关闭{/case}
-                    {case value="5"}支付后未发货退款{/case}
-                    {case value="6"}收货后退货{/case}
+                    {case value="5"}退款{/case}
+                    {case value="6"}退货{/case}
                     {default /}订单状态未知
                 {/switch}
             </span>
@@ -82,7 +82,22 @@
         </div>
         <div class="order_title font_20 bor_b">物流信息</div>
         <div class="order_div mtb20">
-            <p>暂未发货，请耐心等待！</p>
+            <p>
+                {if condition="isset($order.fms)"}
+                <ul class="list-unstyled">
+                    <li>
+                        <strong class="text-info">快递类型:</strong>
+                        <i class="text-success">{$order.fms}</i>
+                    </li>
+                    <li>
+                        <strong class="text-info">快递单号:</strong>
+                        <i class="text-success">{$order.fms_number}</i>
+                    </li>
+                </ul>
+                {else}
+                暂未发货，请耐心等待！
+                {/if}
+            </p>
         </div>
         <div class="order_title font_18">商品清单</div>
         <div class="order_goods">

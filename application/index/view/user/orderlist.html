@@ -99,13 +99,21 @@
         <div id="{$item['id']}" class="warp bor_eb mb20">
             <div class="orderList_title">
                 <div class="row">
-                    <div class="col-md-10 col-sm-24">
+                    <div class="col-md-8 col-sm-24">
                             <span class="pull-left">
                                 <span>{$item['order_time']}</span> | 订单号:
                                 <span>PTP-{$item['id']}</span> | 在线支付</span>
                     </div>
-                    <div class="col-md-2 col-sm-24">
-                            <span class="pull-right">订单金额：
+                    <div class="col-md-4 col-sm-24">
+                            <span class="pull-right">
+                                {eq name='$item.status' value='3'}
+                                <button type="button" class="reject btn btn-default"
+                                        data-toggle="modal" data-target="#rejectModal">
+                                    退货
+                                </button>
+                                |
+                                {/eq}
+                                订单金额：
                                 <i class="col_yellow font_20">{$item['total_price']}元</i>
                             </span>
                     </div>
@@ -260,6 +268,30 @@
     </form>
 </div>
 
+<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">
+                        退货
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: 0.18rem;">
+                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1309603684&site=qq&menu=yes">
+                            <img border="0" src="__PUBLIC__static/portal/img/QQ.png" alt="联系客服" title="联系客服"/>
+                        </a>
+                        请联系客服，办理退货手续。
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+</div>
+
 {include file="layout/foot" /}
 
 {include file="layout/goback" /}
@@ -309,7 +341,9 @@
                     window.location.href = "{:url('index/shop/orderDetails')}" + "?order_id=" + id;
                     break;
                 default:
-                    alert('订单状态未知');
+                    //查看订单详情
+                    window.location.href = "{:url('index/shop/orderDetails')}" + "?order_id=" + id;
+                    console.log('订单状态未知');
             }
         });
 
