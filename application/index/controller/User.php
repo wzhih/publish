@@ -260,4 +260,34 @@ class User extends Base
         return json_result(true, '退款成功');
     }
 
+    public function changePwd()
+    {
+        $old = input('old');
+        $new = input('new');
+
+        if (!$old || !$new) {
+            return json_result(false, '发送参数错误');
+        }
+
+        $user = session('user');
+        $data = [
+            'id' => $user['id'],
+            'password' => md5($old),
+        ];
+        $u = Db::name('user')->where($data)->find();
+        if (!$u) {
+            return json_result(false, '旧密码错误！');
+        }
+
+        $result = Db::name('user')->where($data)->update(['password' => md5($new)]);
+
+        if ($result === false) {
+            return json_result(false, '修改密码失败，请联系工作人员！');
+        }
+
+        session(null);
+        return json_result(true, '修改成功，请重新登录');
+
+    }
+
 }

@@ -102,12 +102,12 @@
                         </div>
                         <div class="col-md-3  col-sm-3">
                             <p>
-                                <a href="#">
+                                <a href="#" data-toggle="modal" data-target="#pwdModal">
                                     <i class="icon iconfont_center  col_blue"></i>
                                 </a>
                             </p>
                             <p>
-                                <a href="#"> 修改密码</a>
+                                <a href="#" data-toggle="modal" data-target="#pwdModal"> 修改密码</a>
                             </p>
                         </div>
                         <div class="col-md-3  col-sm-3">
@@ -159,6 +159,46 @@
     <!---->
 </div>
 
+<div class="modal fade" id="pwdModal" tabindex="-1" role="dialog" aria-labelledby="pwdModalLabel" aria-hidden="true">
+    <form class="form-horizontal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">
+                        修改密码
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="old" class="col-sm-2 control-label">原密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="old" placeholder="请输入原密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new" class="col-sm-2 control-label">新密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="new" placeholder="请输入新密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="news" class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="news" placeholder="请再次输入新密码">
+                            <p id="p_help" class="help-block" style="display: none;color: firebrick;"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="submit-pwd">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </form>
+</div>
+
 {include file="layout/foot" /}
 
 {include file="layout/goback" /}
@@ -174,6 +214,62 @@
                     'height': height + 'px'
                 });
             }
+        });
+        
+        $('#submit-pwd').click(function () {
+            var old = $('#old').val();
+            var newp = $('#new').val();
+            var newsp = $('#news').val();
+
+            if (old && newp && newsp) {
+                if (old.length <6 || old.length > 20 || newp.length <6 || newp.length > 20 || newsp.length <6 || newsp.length > 20) {
+                    $('#p_help').text('密码长度必须为6-20位！');
+                    $('#p_help').css('display', 'block');
+                    return;
+                }
+                if (newp == newsp) {
+                    // $('#p_help').text('有值，相等');
+                    // $('#p_help').css('display', 'block');
+                } else {
+                    $('#p_help').text('两次输入的新密码不一致！');
+                    $('#p_help').css('display', 'block');
+                    return;
+                }
+            } else {
+                $('#p_help').text('请按提示，正确输入密码！');
+                $('#p_help').css('display', 'block');
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '{:url("index/user/changePwd")}',
+                data: {
+                    'old':old,
+                    'new': newp,
+                },
+                dataType: 'json',
+                async: true,
+                success: function (res) {
+                    if (res.status) {
+                        alert(res.msg);
+                        location.href = '{:url("index/login/index")}';
+                    } else {
+                        alert(res.msg);
+                    }
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+            });
+
+        });
+
+        $('#pwdModal').on('show.bs.modal', function () {
+            $('#old').val('');
+            $('#new').val('');
+            $('#news').val('');
+            $('#p_help').css('display', 'none');
         });
 
     });
