@@ -290,4 +290,59 @@ class User extends Base
 
     }
 
+    public function changeInfoPage()
+    {
+        $user = session('user');
+        $this->assign('user', $user);
+        return $this->fetch('changeInfo');
+    }
+
+    public function changeInfo()
+    {
+        $name = input('name');
+        $sex = input('sex');
+
+        if (!$name || !$sex) {
+            return $this->error('参数错误，不能为空');
+        }
+
+        switch ($sex) {
+            case 1:
+                $sex = '男';
+                break;
+            case 2:
+                $sex = '女';
+                break;
+            default:
+                $sex = '男';
+        }
+
+        $data = [
+            'name' => $name,
+            'sex' => $sex,
+        ];
+
+
+        $photo_url = uploading('img', 'static'. DS .'portal'. DS .'img'. DS .'user');
+
+        $object = "user/" . basename($photo_url);
+        $photo_url = upload_oss($object, $photo_url);
+
+        if ($photo_url) {
+            $data['img'] = $photo_url;
+        }
+
+        $user = session('user');
+
+        $result = Db::name('user')->where('id', '=', $user['id'])->update($data);
+
+        if ($result === false) {
+            return $this->error('修改失败');
+        }
+
+        $user = Db::name('user')->where('id', '=', $user['id'])->find();
+        session('user', $user);
+        return $this->success('修改成功');
+    }
+
 }

@@ -46,7 +46,11 @@
 <div id="center">
     <div class="per_info">
         <div class="per_portrait">
+            {if condition="isset($user['img'])"}
+            <img src="{$user['img']}">
+            {else /}
             <img src="__PUBLIC__static/portal/img/portrait_def.png">
+            {/if}
             <div class="w80">
                 <p>{$user['name']}</p>
                 <p class="li-24 font_14">
@@ -92,12 +96,12 @@
                     <div class="row">
                         <div class="col-md-3  col-sm-3">
                             <p>
-                                <a href="#">
+                                <a href="{:url('index/user/changeInfoPage')}">
                                     <i class="icon iconfont_center col_blue "></i>
                                 </a>
                             </p>
                             <p>
-                                <a href="#">我的信息</a>
+                                <a href="{:url('index/user/changeInfoPage')}">我的信息</a>
                             </p>
                         </div>
                         <div class="col-md-3  col-sm-3">

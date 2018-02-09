@@ -163,6 +163,10 @@ function upload_oss(string $object, string $file, bool $del = true)
     $Bucket = config('Bucket');
     $file = ROOT_PATH . 'public' . DS . $file;
 
+    if (!is_file($file)) {
+        return false;
+    }
+
     try {
         $ossClient = new OssClient($OSSKeyID, $OSSKeySecret, $Endpoint);
         $ossClient->uploadFile($Bucket, $object, $file);

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/index.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/center.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+
+</head>
+
+<body>
+{include file="layout/head" /}
+
+<div id="center">
+    <div class="per_info">
+        <div class="per_portrait">
+            {if condition="isset($user['img'])"}
+            <img src="{$user['img']}">
+            {else /}
+            <img src="__PUBLIC__static/portal/img/portrait_def.png">
+            {/if}
+            <div class="w80">
+                <p>{$user['name']}</p>
+                <p class="li-24 font_14">
+                    <span>性别: {$user['sex']}</span>
+                    <span>|</span>
+                    <span>手机: {$user['phone']}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="warp">
+        <h4 class="col_blue pl10 ">
+            <a href="{:url('index/user/user')}">个人中心</a>
+        </h4>
+        <div class="center_title ">
+            <span class="center_active">个人资料</span>
+        </div>
+    </div>
+    <div id="personal" class="warp com_shadow">
+        <div class="personal_box">
+            <form action="{:url('index/user/changeInfo')}" method="post" enctype="multipart/form-data" role="form" class="form-horizontal">
+                <span class="help-block ml20 mtb20">完善个人信息是让别人认识你的第一步!</span>
+                <div class="row center">
+                    <div class="col-md-8 col-sm-12">
+                        <form class="ivu-form ivu-form-label-right">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">名字</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" placeholder="请输入名字" name="name" value="{$user['name']}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="col-sm-2 control-label">手机号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="phone" value="{$user['phone']}" disabled="disabled">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sex" class="col-sm-2 control-label">选择性别</label>
+                                <div class="col-sm-10">
+                                    <select id="sex" class="form-control" name="sex">
+                                        {if condition="$user['sex'] == '男'"}
+                                        <option value="1" selected="selected">男</option>
+                                        <option value="2">女</option>
+                                        {else /}
+                                        <option value="1">男</option>
+                                        <option value="2" selected="selected">女</option>
+                                        {/if}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputfile" class="col-sm-2 control-label">用户头像</label>
+                                <div class="col-sm-10">
+                                    <input type="file" id="inputfile" name="img">
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" id="editUser" class="btn btn-danger w120">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+
+    });
+
+
+</script>
+
+</body>
+
+</html>
