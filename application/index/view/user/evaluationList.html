@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <!--内核渲染器-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--IE8/9及以后的版本都会以最高版本IE来渲染页面-->
+    <meta name="format-detection" content="telephone=no">
+    <!--手机号不被显示为拨号连接-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="__PUBLIC__static/portal/css/bootstrap.min.css">-->
+    <link href="https://cdn.bootcss.com/iview/2.4.0/styles/iview.css" rel="stylesheet">
+    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iview.css" charset="UTF-8">-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/iconfont(1).css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/index.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__static/portal/css/center.css">
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/jquery-1.11.3.min.js"></script>-->
+    <script src="__PUBLIC__static/portal/js/jquery.cookie.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/vue.js" charset="UTF-8"></script>-->
+    <script src="https://cdn.bootcss.com/iview/2.4.0/iview.min.js"></script>
+    <!--<script src="__PUBLIC__static/portal/js/iview.min.js" charset="utf-8"></script>-->
+    <style>
+        .fontSize {
+            font-size: 0.16rem;
+        }
+
+        .personal_box {
+            width: 90%;
+            height: auto;
+            display: block;
+            font-size: 14px;
+             padding-bottom: 0;
+            margin: 20px auto 20px auto;
+        }
+
+        .pagination > li > a,
+        .pagination > li > span {
+            padding: 0.1rem 0.2rem;
+            font-size: 0.15rem;
+        }
+
+    </style>
+
+</head>
+
+<body>
+{include file="layout/head" /}
+
+<div id="center">
+    <div class="per_info">
+        <div class="per_portrait">
+            {if condition="isset($user['img'])"}
+            <img src="{$user['img']}">
+            {else /}
+            <img src="__PUBLIC__static/portal/img/portrait_def.png">
+            {/if}
+            <div class="w80">
+                <p>{$user['name']}</p>
+                <p class="li-24 font_14">
+                    <span>性别: {$user['sex']}</span>
+                    <span>|</span>
+                    <span>手机: {$user['phone']}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="warp">
+        <h4 class="col_blue pl10 ">
+            <a href="{:url('index/user/user')}">个人中心</a>
+        </h4>
+        <div class="center_title ">
+            <span class="center_active">评价列表</span>
+        </div>
+    </div>
+    <div id="personal" class="warp com_shadow">
+        <div class="personal_box">
+            <div class="table-responsive">
+                <table class="table table-hover fontSize">
+                    <caption>评价列表</caption>
+                    <thead>
+                    <tr>
+                        <th class="col-sm-3">名称</th>
+                        <th class="col-sm-2">评价星级</th>
+                        <th class="col-sm-7">评价内容</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $eval as $item}
+                    <tr>
+                        <td><a href="{:url('index/index/getbook',['bookId' => $item.p_id])}">{$item['name']}</a></td>
+                        <!--<td class="text-center">{$item['star']}</td>-->
+                        <td>
+                            {for start='0' end='$item.star'}
+                            <img class="icon" height="16" src="__PUBLIC__static/portal/img/head/star_icon.png">
+                            {/for}
+                        </td>
+                        <td>{$item['content']}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="text-center">
+            {$eval->render()}
+        </div>
+    </div>
+</div>
+
+{include file="layout/foot" /}
+
+{include file="layout/goback" /}
+
+<script>
+    $(function () {
+        $.each($('img'), function (index, item) {
+            var width = $(item).attr('width');
+            var height = $(item).attr('height');
+            if (width != 'undefined' && width != '100%') {
+                $(item).css({
+                    'width': width + 'px',
+                    'height': height + 'px'
+                });
+            }
+        });
+
+
+    });
+
+
+</script>
+
+</body>
+
+</html>

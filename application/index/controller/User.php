@@ -236,6 +236,21 @@ class User extends Base
         return json_result(false, '评论失败，错误:' . $result);
     }
 
+    //用户评论列表
+    public function evaluationList()
+    {
+        $user = session('user');
+        $eval = Db::name('evaluation e')
+            ->join('publication p', 'e.p_id = p.id')
+            ->where('u_id', $user['id'])
+            ->field('e.*, p.cover, p.`name`')
+            ->order('e.etime', 'DESC')
+            ->paginate(10);
+
+        $this->assign('eval', $eval);
+        return $this->fetch();
+    }
+
     //用户退款
     public function userRefund()
     {
