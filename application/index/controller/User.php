@@ -248,7 +248,7 @@ class User extends Base
             ->paginate(10);
 
         $this->assign('eval', $eval);
-        return $this->fetch();
+        return $this->fetch('evaluationList');
     }
 
     //用户退款
