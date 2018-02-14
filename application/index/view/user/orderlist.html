@@ -59,7 +59,11 @@
 <div id="buy">
     <div class="per_info">
         <div class="per_portrait">
+            {if condition="isset($user['img'])"}
+            <img src="{$user['img']}">
+            {else /}
             <img src="__PUBLIC__static/portal/img/portrait_def.png">
+            {/if}
             <div class="w80">
                 <p>{$user.name}</p>
                 <p class="li-24 font_14">
