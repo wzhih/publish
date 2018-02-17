@@ -13,7 +13,19 @@ use think\Db;
 class User extends Base
 {
     public function index() {
-        $data = Db::name('user')->order('id DESC')->paginate(10);
+        $db = Db::name('user');
+
+        $name = input('name');
+        if ($name) {
+            $data = $db->whereLike('name', "%$name%")
+                ->order('id DESC')
+                ->paginate(10, false, [
+                    'query' => ['name' => $name]
+                ]);
+        } else {
+            $data = $db->order('id DESC')
+                ->paginate(10);
+        }
 
         $this->assign('data', $data);
         return $this->fetch();
