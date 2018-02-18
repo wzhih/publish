@@ -1,0 +1,148 @@
+{extend name="layout/main"}
+{block name='title'}会员管理{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <div class="panel panel-primary">
+        <div class="panel-heading">订单详细</div>
+        <div class="panel-body">
+            <form action="{:url('admin/order/update')}" method="post" class="form-horizontal" role="form">
+                <input type="hidden" name="cid" value="{$order.c_id}">
+                <input type="hidden" id="province" value="{$order.province}">
+                <input type="hidden" id="city" value="{$order.city}">
+                <input type="hidden" id="area" value="{$order.area}">
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">订单id</label>
+                    <div class="col-sm-4">
+                        <input type="text" readonly="readonly" class="form-control" name="oid" value="{$order.id}">
+                    </div>
+                    <label class="col-sm-1 control-label">用户</label>
+                    <div class="col-sm-4">
+                        <input type="text" readonly="readonly" class="form-control" value="{$order.username}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">总金额</label>
+                    <div class="col-sm-4">
+                        <input type="text" readonly="readonly" class="form-control" value="{$order.total_price}">
+                    </div>
+                    <label class="col-sm-1 control-label">实付金额</label>
+                    <div class="col-sm-4">
+                        <input type="text" readonly="readonly" class="form-control" value="{$order.real_price}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">快递</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="fms" value="{$order.fms}">
+                    </div>
+                    <label class="col-sm-1 control-label">快递单号</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="fms_number" value="{$order.fms_number}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">选择状态</label>
+                    <div class="col-sm-4">
+                        <select name="status" class="form-control">
+                            <option disabled="disabled" class="disabled">请选择订单状态</option>
+                            <option value="0" {$order.status==0?'selected':''}>未支付</option>
+                            <option value="1" {$order.status==1?'selected':''}>已支付</option>
+                            <option value="2" {$order.status==2?'selected':''}>已发货</option>
+                            <option value="3" {$order.status==3?'selected':''}>已收货</option>
+                            <option value="4" {$order.status==4?'selected':''}>交易关闭</option>
+                            <option value="5" {$order.status==5?'selected':''}>支付后未发货退款</option>
+                            <option value="6" {$order.status==6?'selected':''}>收货后退货</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label">订单生成</label>
+                    <div class="col-sm-4">
+                        <input type="text" readonly="readonly" class="form-control" value="{$order.order_time}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">收件人</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="name" {$order.c_id==0?'':'required'} value="{$order.name}">
+                    </div>
+                    <label class="col-sm-1 control-label">联系方式</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="phone" {$order.c_id==0?'':'required'} value="{$order.phone}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">地址</label>
+                    <div id="distpicker1" class="col-sm-9 form-inline">
+                        <select class="form-control" name="province" {$order.c_id==0?'':'required'}></select>
+                        <select class="form-control" name="city" {$order.c_id==0?'':'required'}></select>
+                        <select class="form-control" name="area" {$order.c_id==0?'':'required'}></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">详细地址</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" rows="3" name="address"
+                                  {$order.c_id==0?'':'required'} placeholder="请输入详细地址">{$order.address}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">订单商品</label>
+                </div>
+                <div class="row">
+                    {foreach $publication as $p}
+                    <div class="col-sm-4 col-md-3">
+                        <div class="thumbnail">
+                            <a href="{:url('admin/index/showpublication', ['pid' => $p.id])}">
+                                <img src="{$p.cover}" style="height: 12rem;">
+                            </a>
+                            <div class="caption">
+                                <h4  style="height: 6rem;">{$p.name}</h4>
+                                <p>
+                                    <small>数量:</small>&nbsp;&nbsp;<strong>{$p.quantity}</strong>
+                                    <br>
+                                    <small>单价:</small>&nbsp;&nbsp;<strong>{$p.price}</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+
+                <div class="form-group text-center" style="margin-top:20px">
+                    <button type="submit" class="btn btn-primary">确认</button>
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer">
+            <label class="">提示：如果用户并没有选择联系地址，将不会更新相关信息</label>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+{block name='js'}
+<script src="__PUBLIC__static/portal/js/distpicker.min.js" charset="utf-8"></script>
+<script>
+    $(function () {
+        $('#cm-menu-scroller > ul > li:nth-child(7)').addClass('active');
+
+        $("[data-toggle='tooltip']").tooltip();
+
+        $("#distpicker1").distpicker({
+            province: $('#province').val(),
+            city: $('#city').val(),
+            district: $('#area').val()
+        });
+    });
+
+</script>
+{/block}
