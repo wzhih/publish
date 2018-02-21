@@ -11,6 +11,11 @@
 
     <link rel="stylesheet" type="text/css" href="__PUBLIC__im/vendor/jqueryrebox/jquery-rebox-0.1.0.css"/>
     <link rel="stylesheet" type="text/css" href="__PUBLIC__im/css/RongIMWidget.css"/>
+    <style>
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
     <title>华软出版社销售系统后台管理</title>
     <!--[if lt IE 9]>
     <script src="__PUBLIC__assets/js/html5shiv.min.js"></script>
@@ -43,7 +48,7 @@
                     <li><a href="{:url('admin/Admin/showAdmin')}" class="sf-profile">管理员管理</a></li>
                     <li><a href="{:url('admin/User/index')}" class="sf-profile-group">用户管理</a></li>
                     <li><a href="#" class="sf-dashboard">销售统计</a></li>
-                    <li><a href="#" class="sf-notepad">评价管理</a></li>
+                    <li><a href="{:url('admin/Evaluation/index')}" class="sf-notepad">评价管理</a></li>
                     <li><a href="{:url('admin/Order/index')}" class="sf-notepad">交易管理</a></li>
 
                     <li class="cm-submenu">
