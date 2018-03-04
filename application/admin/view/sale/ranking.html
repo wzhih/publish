@@ -1,0 +1,135 @@
+{extend name="layout/main"}
+{block name='title'}销售统计{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <h3 style="margin:0">销售排行榜</h3>
+
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#today" data-toggle="tab">
+                日排行榜
+            </a>
+        </li>
+        <li>
+            <a href="#month" data-toggle="tab">月排行榜</a>
+        </li>
+        <li>
+            <a href="#year" data-toggle="tab">年排行榜</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="today">
+            {if condition="empty($day)"}
+            <h3>并无数据！</h3>
+            {else /}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="row">
+                    <tr>
+                        <th class="col-sm-1">id</th>
+                        <th class="col-sm-1">出版物</th>
+                        <th class="col-sm-1">销售数量</th>
+                        <th class="col-sm-1">日期</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $day as $item}
+                    <tr>
+                        <td>{$item.p_id}</td>
+                        <td>
+                            <a href="{:url('admin/index/showpublication', ['pid' => $item.p_id])}">
+                                {$item.name}
+                            </a>
+                        </td>
+                        <td>{$item.counts}</td>
+                        <td>{$item.order_time|strtotime|date='Y-m-d',###}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            {/if}
+        </div>
+        <div class="tab-pane fade" id="month">
+            {if condition="empty($day)"}
+            <h3>并无数据！</h3>
+            {else /}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="row">
+                    <tr>
+                        <th class="col-sm-1">id</th>
+                        <th class="col-sm-1">出版物</th>
+                        <th class="col-sm-1">销售数量</th>
+                        <th class="col-sm-1">日期</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $month as $item}
+                    <tr>
+                        <td>{$item.p_id}</td>
+                        <td>
+                            <a href="{:url('admin/index/showpublication', ['pid' => $item.p_id])}">
+                            {$item.name}
+                            </a>
+                        </td>
+                        <td>{$item.counts}</td>
+                        <td>{$item.order_time|strtotime|date='Y-m',###}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            {/if}
+        </div>
+        <div class="tab-pane fade" id="year">
+            {if condition="empty($day)"}
+            <h3>并无数据！</h3>
+            {else /}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="row">
+                    <tr>
+                        <th class="col-sm-1">id</th>
+                        <th class="col-sm-1">出版物</th>
+                        <th class="col-sm-1">销售数量</th>
+                        <th class="col-sm-1">日期</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $year as $item}
+                    <tr>
+                        <td>{$item.p_id}</td>
+                        <td>
+                            <a href="{:url('admin/index/showpublication', ['pid' => $item.p_id])}">
+                                {$item.name}
+                            </a>
+                        </td>
+                        <td>{$item.counts}</td>
+                        <td>{$item.order_time|strtotime|date='Y',###}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            {/if}
+        </div>
+    </div>
+
+</div>
+
+
+{/block}
+
+{block name='js'}
+<script>
+    $(function () {
+        $('#cm-menu-scroller > ul > li:nth-child(5)').addClass('active');
+
+        $("[data-toggle='tooltip']").tooltip();
+    });
+
+
+</script>
+{/block}

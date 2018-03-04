@@ -47,7 +47,12 @@
                     </li>
                     <li><a href="{:url('admin/Admin/showAdmin')}" class="sf-profile">管理员管理</a></li>
                     <li><a href="{:url('admin/User/index')}" class="sf-profile-group">用户管理</a></li>
-                    <li><a href="#" class="sf-dashboard">销售统计</a></li>
+                    <li class="cm-submenu">
+                        <a class="sf-dashboard">销售统计<span class="caret"></span></a>
+                        <ul>
+                            <li><a href="{:url('admin/Sale/ranking')}">销售排行榜</a></li>
+                        </ul>
+                    </li>
                     <li><a href="{:url('admin/Evaluation/index')}" class="sf-notepad">评价管理</a></li>
                     <li><a href="{:url('admin/Order/index')}" class="sf-notepad">交易管理</a></li>
 
