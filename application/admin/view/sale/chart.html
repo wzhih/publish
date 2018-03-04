@@ -1,0 +1,156 @@
+{extend name="layout/main"}
+{block name='title'}销售统计{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <h3 style="margin:0">
+        销售情况
+        <div class="nav nabbar-nav" role="navigation">
+            <div>
+                <form action="" method="get" class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <label style="font-size: 1.6rem;">选择年份</label>
+                        <select name="year" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="2017">2017年</option>
+                            <option value="2018">2018年</option>
+                            <option value="2019">2019年</option>
+                            <option value="2020">2020年</option>
+                            <option value="2021">2021年</option>
+                            <option value="2022">2022年</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size: 1.6rem;">选择月份</label>
+                        <select name="mon" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="1">1月</option>
+                            <option value="2">2月</option>
+                            <option value="3">3月</option>
+                            <option value="4">4月</option>
+                            <option value="5">5月</option>
+                            <option value="6">6月</option>
+                            <option value="7">7月</option>
+                            <option value="8">8月</option>
+                            <option value="9">9月</option>
+                            <option value="10">10月</option>
+                            <option value="11">11月</option>
+                            <option value="12">12月</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">提交</button>
+                </form>
+            </div>
+        </div>
+    </h3>
+
+    <div id="container" style="min-width: 720px; height: 400px; margin: 0 auto"></div>
+
+</div>
+
+
+{/block}
+
+{block name='js'}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+    var day_counts = '{$t}';
+    var calcula = JSON.parse('{$calcula}');
+    $(function () {
+        $('.cm-submenu').eq(1).click();
+        $('.cm-submenu').eq(1).children('ul').children('li').eq(1).addClass('active');
+
+        $("[data-toggle='tooltip']").tooltip();
+
+
+        var title = {
+            text: '{$datetime} - 每日销售数量'
+        };
+        var subtitle = {
+            text: 'Source: winton.wang'
+        };
+
+        //把后端渲染到页面的天数，组合成数组['1号','2号',....]
+        cate = [];
+        day_count = day_counts;
+        do {
+            cate.unshift(day_count + '号');
+        }while (day_count--);
+        cate.shift();
+
+        var xAxis = {
+            categories: cate
+        };
+        var yAxis = {
+            title: {
+                text: '销售数量 (本)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        };
+
+        var tooltip = {
+            valueSuffix: '本'
+        }
+
+        var legend = {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        };
+
+        //把后端渲染的数据，进行组合
+        var cal = [
+            0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,
+        ]
+        var sub = 31 - day_counts;
+        switch (sub) {
+            case 0:
+                cal.push(0,0,0);
+                break;
+            case 1:
+                cal.push(0,0);
+                break;
+            case 2:
+                cal.push(0);
+                break;
+        }
+        for(var i=0;i<calcula.length;i++)
+        {
+            cal[calcula[i].day] = parseInt(calcula[i].sum);
+        }
+        console.log(cal)
+
+        var series =  [
+            {
+                name: '销售',
+                data: cal
+            },
+        ];
+
+        var json = {};
+
+        json.title = title;
+        json.subtitle = subtitle;
+        json.xAxis = xAxis;
+        json.yAxis = yAxis;
+        json.tooltip = tooltip;
+        json.legend = legend;
+        json.series = series;
+        json.credits = {
+            enabled: false // 禁用版权信息
+        }
+
+        $('#container').highcharts(json);
+    });
+
+
+</script>
+{/block}
