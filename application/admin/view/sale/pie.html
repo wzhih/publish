@@ -1,0 +1,120 @@
+{extend name="layout/main"}
+{block name='title'}销售统计{/block}
+
+{block name='main'}
+<div class="container-fluid cm-container-white">
+    <h3 style="margin:0">
+        不同类型销售比例
+        <div class="nav nabbar-nav" role="navigation">
+            <div>
+                <form action="" method="get" class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <label style="font-size: 1.6rem;">选择年份</label>
+                        <select name="year" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="2017">2017年</option>
+                            <option value="2018">2018年</option>
+                            <option value="2019">2019年</option>
+                            <option value="2020">2020年</option>
+                            <option value="2021">2021年</option>
+                            <option value="2022">2022年</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size: 1.6rem;">选择月份</label>
+                        <select name="mon" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="1">1月</option>
+                            <option value="2">2月</option>
+                            <option value="3">3月</option>
+                            <option value="4">4月</option>
+                            <option value="5">5月</option>
+                            <option value="6">6月</option>
+                            <option value="7">7月</option>
+                            <option value="8">8月</option>
+                            <option value="9">9月</option>
+                            <option value="10">10月</option>
+                            <option value="11">11月</option>
+                            <option value="12">12月</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">提交</button>
+                </form>
+            </div>
+        </div>
+    </h3>
+
+    <div id="container" style="min-width: 720px; height: 400px; margin: 0 auto"></div>
+
+</div>
+
+
+{/block}
+
+{block name='js'}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+
+    var calcula = JSON.parse('{$calcula}');
+    $(function () {
+        $('.cm-submenu').eq(1).click();
+        $('.cm-submenu').eq(1).children('ul').children('li').eq(2).addClass('active');
+
+        $("[data-toggle='tooltip']").tooltip();
+
+
+        var chart = {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        };
+        var title = {
+            text: '{$datetime}各类型销售数量占有比例'
+        };
+        var tooltip = {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        };
+        var plotOptions = {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}%</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        };
+
+        calcula_data = [];
+        for (var i=0;i<calcula.length;i++)
+        {
+            calcula_data[i] = [
+                calcula[i].category,
+                calcula[i].sum
+            ];
+        }
+
+        var series= [{
+            type: 'pie',
+            name: '占有比例',
+            data: calcula_data
+        }];
+
+        var json = {};
+        json.chart = chart;
+        json.title = title;
+        json.tooltip = tooltip;
+        json.series = series;
+        json.plotOptions = plotOptions;
+        json.credits = {
+            enabled: false // 禁用版权信息
+        }
+        $('#container').highcharts(json);
+    });
+
+
+</script>
+{/block}

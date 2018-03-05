@@ -81,4 +81,55 @@ class Sale extends Base
         return $this->fetch();
     }
 
+    public function pie()
+    {
+        $year = input('year');
+        $mon = input('mon');
+        if (is_numeric($mon) && $mon > 0 && $mon < 13) {
+            if (!is_numeric($year)) {
+                //$year年$mon月每日销售情况
+                $year = date('Y');
+            }
+            $time = $year . '-' . sprintf('%02d', $mon);
+        } else {
+            //本月每日销售情况
+            $time = date('Y-m');
+        }
+
+        $sum = Db::name('order_publication op')
+            ->join('`order` o', "op.o_id = o.id", 'LEFT')
+            ->join('`publication` p', "op.p_id = p.id", 'LEFT')
+            ->join('`category` c', "p.c_id = c.id", 'LEFT')
+            ->where('order_time', 'like', "$time%")
+            ->field("c.parent_id, SUM(op.quantity) AS sum")
+            ->group('op.p_id')
+            ->select();
+
+        $category = Db::name('category')
+            ->where('id', '<>', 1)
+            ->where('parent_id', '=', 1)
+            ->field('id, category')
+            ->select();
+
+        $data = [];
+        foreach ($category as $value)
+        {
+            $data_sum = 0;
+            foreach ($sum as $item)
+            {
+                if ($value['id'] == $item['parent_id'])
+                {
+                    $data_sum += $item['sum'];
+                }
+            }
+            $data[] = [
+                'category' => $value['category'],
+                'sum' => $data_sum,
+            ];
+        }
+
+        $this->assign('calcula', json_encode($data));
+        $this->assign('datetime', $time);
+        return $this->fetch();
+    }
 }
