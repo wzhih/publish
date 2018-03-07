@@ -87,10 +87,10 @@ class Register extends Controller
             return json_result(false, '此手机号码已注册');
         }
 
-//        $code = mt_rand(1000, 9999);
-//        $result = sendMessage($phone, $code);
-        $code = 1234;
-        $result = true;
+        $code = mt_rand(1000, 9999);
+        $result = sendMessage($phone, $code);
+//        $code = 1234;
+//        $result = true;
         if ($result) {
             session('verifyCode', [
                 'phone' => $phone,
