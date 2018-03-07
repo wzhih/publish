@@ -105,7 +105,7 @@ class Sale extends Base
         $this->assign('t', date('t', strtotime($mon)));
         $this->assign('price', json_encode($price));
         $this->assign('datetime', $time);
-        return $this->fetch();
+        return $this->fetch("priceChart");
     }
 
     public function pie()
