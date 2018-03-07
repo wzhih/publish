@@ -4,7 +4,7 @@
 {block name='main'}
 <div class="container-fluid cm-container-white">
     <h3 style="margin:0">
-        销售情况
+        销售金额
         <div class="nav nabbar-nav" role="navigation">
             <div>
                 <form action="" method="get" class="navbar-form navbar-right" role="search">
@@ -55,16 +55,16 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script>
     var day_counts = '{$t}';
-    var calcula = JSON.parse('{$calcula}');
+    var price = JSON.parse('{$price}');
     $(function () {
         $('.cm-submenu').eq(1).click();
-        $('.cm-submenu').eq(1).children('ul').children('li').eq(1).addClass('active');
+        $('.cm-submenu').eq(1).children('ul').children('li').eq(2).addClass('active');
 
         $("[data-toggle='tooltip']").tooltip();
 
 
         var title = {
-            text: '{$datetime} - 每日销售数量'
+            text: '{$datetime} - 每日销售金额'
         };
         var subtitle = {
             text: 'Source: winton.wang'
@@ -83,7 +83,7 @@
         };
         var yAxis = {
             title: {
-                text: '销售数量 (本)'
+                text: '销售金额 (元)'
             },
             plotLines: [{
                 value: 0,
@@ -93,7 +93,7 @@
         };
 
         var tooltip = {
-            valueSuffix: '本'
+            valueSuffix: '元'
         }
 
         var legend = {
@@ -122,15 +122,15 @@
                 cal.push(0);
                 break;
         }
-        for(var i=0;i<calcula.length;i++)
+        for(var i=0;i<price.length;i++)
         {
-            cal[calcula[i].day-1] = parseInt(calcula[i].sum);
+            cal[price[i].day-1] = parseFloat(price[i].sum);
         }
         console.log(cal)
 
         var series =  [
             {
-                name: '销售',
+                name: '销售金额',
                 data: cal
             },
         ];

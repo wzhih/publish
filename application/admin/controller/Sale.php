@@ -81,6 +81,33 @@ class Sale extends Base
         return $this->fetch();
     }
 
+    public function priceChart()
+    {
+        $year = input('year');
+        $mon = input('mon');
+        if (is_numeric($mon) && $mon > 0 && $mon < 13) {
+            if (!is_numeric($year)) {
+                //$year年$mon月每日销售情况
+                $year = date('Y');
+            }
+            $time = $year . '-' . sprintf('%02d', $mon);
+        } else {
+            //本月每日销售情况
+            $time = date('Y-m');
+        }
+
+        $price = Db::name('`order` o')
+            ->where('order_time', 'like', "$time%")
+            ->field("DATE_FORMAT(order_time,'%e') as `day`, SUM(total_price) as sum")
+            ->group('`day`')
+            ->select();
+
+        $this->assign('t', date('t', strtotime($mon)));
+        $this->assign('price', json_encode($price));
+        $this->assign('datetime', $time);
+        return $this->fetch();
+    }
+
     public function pie()
     {
         $year = input('year');
